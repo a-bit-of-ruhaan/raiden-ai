@@ -1,0 +1,25 @@
+{
+  "fast_model": "qwen2.5-coder:3b",
+  "advanced_model": "llama3.1:8b",
+  "model_mode": "auto",
+  "context_length": 4096,
+  "temperature": 0.6,
+  "top_p": 0.85,
+  "sequential_model_loading": true,
+  "max_concurrent_inference": 1,
+  "web_search_enabled": false,
+  "search_provider": "duckduckgo",
+  "search_api_url": "",
+  "search_api_key": "YOUR_SEARCH_API_KEY_HERE",
+  "search_max_results": 3,
+  "network_timeout_seconds": 6,
+  "offline_mode": false,
+  "memory_enabled": true,
+  "memory_max_injected_items": 5,
+  "database_path": "raiden_memory.db",
+  "allowed_workspaces": [
+    "."
+  ],
+  "tool_confirm_sensitive": true,
+  "log_level": "INFO"
+}
