@@ -1,8 +1,10 @@
 import os
 import shutil
+import tempfile
 import unittest
 from unittest.mock import patch, MagicMock
 from main import BackendAPI, DEFAULT_SYSTEM_PROMPT
+from raiden_core.memory import MemoryDB
 
 class TestBackendAPI(unittest.TestCase):
     def setUp(self):
@@ -11,13 +13,17 @@ class TestBackendAPI(unittest.TestCase):
         self.bak_path = "raiden_config.json.testbak"
         if os.path.exists(self.config_path):
             shutil.copyfile(self.config_path, self.bak_path)
+        self.test_dir = tempfile.mkdtemp()
+        self.test_db_path = os.path.join(self.test_dir, "test_api_memory.db")
         self.api = BackendAPI()
+        self.api.memory_db = MemoryDB(db_path=self.test_db_path)
 
     def tearDown(self):
         # Restore original config
         if os.path.exists(self.bak_path):
             shutil.copyfile(self.bak_path, self.config_path)
             os.remove(self.bak_path)
+        shutil.rmtree(self.test_dir, ignore_errors=True)
 
     def test_initialization(self):
         self.assertIsNotNone(self.api.model_router)

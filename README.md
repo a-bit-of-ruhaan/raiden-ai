@@ -87,29 +87,50 @@ Configuration is managed centrally in `raiden_config.json`:
 
 ## 🚀 Getting Started
 
-### 1. Requirements
-- Python 3.10+ (Tested on Python 3.14)
-- [Ollama](https://ollama.ai) installed and running locally
-- Fast Model pulled:
-  ```bash
-  ollama pull qwen2.5-coder:3b
-  ```
-- (Optional) Advanced 7B-8B Model pulled:
-  ```bash
-  ollama pull llama3.1:8b
-  ```
+### 1. Requirements & Setup
+- **For Running from Source**:
+  - Python 3.10+ (Tested on Python 3.14)
+  - Install dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+- **Local AI Engine**:
+  - Install [Ollama](https://ollama.com)
+  - Pull the models:
+    ```bash
+    ollama pull qwen2.5-coder:3b
+    ollama pull llama3.1:8b
+    ```
+- **For Running the Compiled Executable (`dist/Raiden/Raiden.exe`)**:
+  - Requires **ONLY Ollama** installed! Python is not required on the target machine.
 
 ### 2. Launching RAIDEN
-```bash
-python main.py
-```
+- **Terminal Launch**:
+  ```bash
+  python main.py
+  ```
+- **Silent Native Desktop Launch (No black console window)**:
+  Double-click `launch_raiden.vbs` or `launch_raiden.bat`.
+- **Create 1-Click Windows Desktop Shortcut**:
+  ```bash
+  python create_desktop_shortcut.py
+  ```
+  This creates a native `Raiden AI.lnk` shortcut on your Windows Desktop with the official custom icon.
 
-### 3. Running Automated Tests
-- **Core Subsystem & Integration Test Suite (27 tests, <5s execution)**:
+### 3. Packaging into a Standalone Native Windows App (.exe)
+You can compile RAIDEN into a standalone native Windows executable (`Raiden.exe`) using PyInstaller:
+```bash
+python build_desktop_app.py
+```
+- Outputs to `dist/Raiden/Raiden.exe` with bundled webview assets, UI stylesheets, scripts, and icon.
+- You can distribute or pin `Raiden.exe` to your Windows Start Menu or Taskbar.
+
+### 4. Running Automated Tests
+- **Core Subsystem & Integration Test Suite (30 tests, <3s execution)**:
   ```bash
   pytest
   ```
-- **Live 12-Category Comprehensive Evaluation Suite (Deterministic checks & live inference)**:
+- **Live 12-Category Comprehensive Evaluation Suite**:
   ```bash
   python test_evaluation.py
   ```

@@ -1,5 +1,7 @@
 import os
 import sys
+import time
+import shutil
 import platform
 import subprocess
 import ctypes
@@ -133,11 +135,56 @@ class BackendAPI:
             "default": [{"role": "system", "content": self.system_prompt}]
         }
 
-        # Sync available models from Ollama runtime
+        # Ensure Ollama is running, then sync available models
+        self._ensure_ollama_running()
         self._sync_available_models()
 
     def set_window(self, window):
         self._window = window
+
+    def _ensure_ollama_running(self):
+        """Checks if Ollama is online; if not, attempts to launch it in the background."""
+        try:
+            ollama.list()
+            return True
+        except Exception:
+            pass
+
+        # Locate Ollama executable
+        ollama_bin = shutil.which("ollama")
+        if not ollama_bin:
+            local_app = os.environ.get("LOCALAPPDATA", "")
+            candidate = os.path.join(local_app, "Programs", "Ollama", "ollama.exe")
+            if os.path.exists(candidate):
+                ollama_bin = candidate
+
+        if ollama_bin:
+            logger.info("Ollama is not responding. Attempting to start 'ollama serve' in background...")
+            try:
+                creation_flags = 0
+                if hasattr(subprocess, "CREATE_NO_WINDOW"):
+                    creation_flags |= subprocess.CREATE_NO_WINDOW
+                if hasattr(subprocess, "DETACHED_PROCESS"):
+                    creation_flags |= subprocess.DETACHED_PROCESS
+
+                subprocess.Popen(
+                    [ollama_bin, "serve"],
+                    creationflags=creation_flags,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL
+                )
+                # Wait briefly for server to bind
+                for _ in range(6):
+                    time.sleep(0.5)
+                    try:
+                        ollama.list()
+                        logger.info("Ollama service started successfully.")
+                        return True
+                    except Exception:
+                        pass
+            except Exception as e:
+                logger.warning(f"Could not auto-start Ollama: {e}")
+        return False
 
     def _sync_available_models(self):
         """Discovers locally installed models to inform router of actual weights on disk."""
@@ -753,6 +800,15 @@ class BackendAPI:
 if __name__ == "__main__":
     api = BackendAPI()
     html_file = get_asset_path("index.html")
+    icon_file = get_asset_path(os.path.join("assets", "raiden.ico"))
+
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    local_app_data = os.environ.get("LOCALAPPDATA", base_dir)
+    storage_dir = os.path.join(local_app_data, "RaidenAI", "webview_data")
+    try:
+        os.makedirs(storage_dir, exist_ok=True)
+    except Exception:
+        storage_dir = None
 
     window = webview.create_window(
         title="RAIDEN",
@@ -764,4 +820,11 @@ if __name__ == "__main__":
         resizable=True
     )
     api.set_window(window)
-    webview.start()
+
+    start_kwargs = {"private_mode": False}
+    if storage_dir:
+        start_kwargs["storage_path"] = storage_dir
+    if os.path.exists(icon_file):
+        start_kwargs["icon"] = icon_file
+
+    webview.start(**start_kwargs)

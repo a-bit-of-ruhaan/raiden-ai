@@ -1,0 +1,11 @@
+# RAIDEN AI — Core Runtime Dependencies
+pywebview>=5.0.0
+ollama>=0.4.0
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+
+# Optional: Building Standalone Executable (.exe)
+pyinstaller>=6.0.0
+
+# Optional: Testing Suite
+pytest>=8.0.0

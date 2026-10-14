@@ -1,7 +1,7 @@
 {
   "fast_model": "qwen2.5-coder:3b",
   "advanced_model": "llama3.1:8b",
-  "model_mode": "advanced",
+  "model_mode": "auto",
   "context_length": 4096,
   "temperature": 0.6,
   "top_p": 0.85,

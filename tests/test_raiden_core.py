@@ -135,6 +135,19 @@ class TestMemoryDB(unittest.TestCase):
         self.assertTrue(self.mem_db.delete_memory(mem_id))
         self.assertEqual(len(self.mem_db.get_memories()), 0)
 
+    def test_extract_explicit_memory_commands(self):
+        extracted = self.mem_db.extract_and_update_profile("Remember that my favorite editor is Neovim and I prefer tabs")
+        self.assertTrue(len(extracted) > 0)
+        mems = self.mem_db.get_memories()
+        self.assertTrue(any("Neovim" in m["content"] or "tabs" in m["content"] for m in mems))
+
+    def test_memory_inquiry_retrieval(self):
+        self.mem_db.add_memory("User's primary language is Rust", category="preference")
+        self.mem_db.add_memory("User lives in Tokyo", category="fact")
+        relevant = self.mem_db.find_relevant_memories("What do you remember about me?")
+        self.assertTrue(len(relevant) > 0)
+        self.assertTrue(any("Rust" in m["content"] for m in relevant))
+
 
 class TestWebResearch(unittest.TestCase):
     def test_search_offline_or_connection_error(self):
