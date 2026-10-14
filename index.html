@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en" data-accent="black" data-density="comfortable">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAIDEN AI — Local Intelligence</title>
+
+  <!-- Highlight.js dark theme (Offline vendor) -->
+  <link rel="stylesheet" href="vendor/github-dark.min.css" />
+  <!-- RAIDEN Master Design System -->
+  <link rel="stylesheet" href="css/styles.css" />
+  <script>
+    try {
+      if (localStorage.getItem('raiden_ripper_mode') === 'true') {
+        document.documentElement.setAttribute('data-ripper-mode', 'true');
+      }
+    } catch (e) { }
+  </script>
+</head>
+
+<body>
+  <div id="app">
+    <!-- ====================================================================
+         LEFT NAVIGATION SIDEBAR
+         ==================================================================== -->
+    <aside class="sidebar" id="sidebar">
+      <!-- Brand Header -->
+      <div class="sidebar-header">
+        <a class="brand-wrapper" onclick="appController.navigateTo('chat')">
+          <div class="brand-emblem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+            </svg>
+          </div>
+          <div class="brand-info">
+            <div class="brand-title">
+              <span>RAIDEN</span>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Action: New Conversation -->
+      <div class="sidebar-action-wrap">
+        <button class="btn-new-chat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+          <span>New Chat</span>
+          <span class="shortcut-hint">Ctrl+N</span>
+        </button>
+      </div>
+
+      <!-- Primary Navigation -->
+      <nav class="sidebar-nav">
+        <a class="nav-item active" data-page="chat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
+          <span class="nav-label">Chat</span>
+        </a>
+
+        <a class="nav-item" data-page="tools">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path
+              d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+          </svg>
+          <span class="nav-label">Explore Tools</span>
+        </a>
+
+        <a class="nav-item" data-page="library">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+          </svg>
+          <span class="nav-label">Context Library</span>
+        </a>
+
+        <a class="nav-item" data-page="history">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          <span class="nav-label">Chat History</span>
+        </a>
+
+        <a class="nav-item" data-page="model-center">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <rect x="4" y="4" width="16" height="16" rx="2" />
+            <rect x="9" y="9" width="6" height="6" />
+            <line x1="9" y1="1" x2="9" y2="4" />
+            <line x1="15" y1="1" x2="15" y2="4" />
+            <line x1="9" y1="20" x2="9" y2="23" />
+            <line x1="15" y1="20" x2="15" y2="23" />
+            <line x1="20" y1="9" x2="23" y2="9" />
+            <line x1="20" y1="15" x2="23" y2="15" />
+            <line x1="1" y1="9" x2="4" y2="9" />
+            <line x1="1" y1="15" x2="4" y2="15" />
+          </svg>
+          <span class="nav-label">Model Center</span>
+        </a>
+
+        <a class="nav-item" data-page="diagnostics">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+          </svg>
+          <span class="nav-label">Diagnostics</span>
+        </a>
+
+        <a class="nav-item" data-page="settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3" />
+            <path
+              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+          </svg>
+          <span class="nav-label">Settings</span>
+        </a>
+      </nav>
+
+      <!-- Recent Conversations List -->
+      <div class="sidebar-sessions-section">
+        <div class="sessions-header">
+          <span class="sessions-title">Recent Chats</span>
+        </div>
+        <div class="sessions-list" id="sidebar-sessions-list">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Footer Hardware Telemetry -->
+      <div class="sidebar-footer">
+        <div class="hardware-pill" onclick="appController.navigateTo('diagnostics')" title="View System Telemetry">
+          <div class="status-dot pulse" id="sidebar-status-dot"></div>
+          <span id="sidebar-hw-text">Local runtime ready</span>
+        </div>
+        <button class="btn-toggle-sidebar" id="btn-toggle-sidebar" title="Toggle Sidebar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ====================================================================
+         MAIN WORKSPACE AREA
+         ==================================================================== -->
+    <main class="workspace">
+      <!-- Universal Header -->
+      <header class="workspace-header">
+        <div class="header-left">
+          <div id="header-chat-title-wrap">
+            <input type="text" class="chat-title-editable" id="chat-title-input" value="Conversation" />
+          </div>
+          <h2 class="view-title" id="header-view-title" style="display: none;">Chat</h2>
+        </div>
+
+        <div class="header-actions">
+          <!-- Model Intelligence Mode Selector -->
+          <select class="select-mode-header" id="composer-model-mode-select"
+            title="Model Intelligence Mode (Auto / Fast / Advanced)">
+            <option value="auto">Auto Router</option>
+            <option value="fast">Fast (3B)</option>
+            <option value="advanced">Advanced (8B)</option>
+          </select>
+
+          <!-- Roast My Code / Savage Mode Selector -->
+          <select class="select-mode-header select-roast-header" id="header-roast-mode-select"
+            title="Roast My Code Selector (Roasts your code or thoughts brutally & funnily)">
+            <option value="off"> Roast: Off</option>
+            <option value="playful"> Roast: Playful</option>
+            <option value="brutal"> Roast My Code (Brutal & Funny)</option>
+          </select>
+
+          <!-- Model Badge with Click to inspect -->
+          <div class="model-badge-select" onclick="appController.navigateTo('model-center')" title="Configure Model">
+            <div class="model-dot"></div>
+            <span id="header-model-name">qwen2.5-coder:3b [AUTO]</span>
+          </div>
+
+          <!-- Dynamic Persona & Mood Pill -->
+          <div class="mood-badge" id="header-mood-pill" title="RAIDEN's Current Vibe & Persona (Click to configure)"
+            onclick="appController.navigateTo('settings')">
+            <span class="mood-emoji" id="header-mood-emoji">#</span>
+            <span class="mood-text" id="header-mood-text">Best Friend</span>
+          </div>
+
+          <!-- Ripper Combat Theme Toggle (Visual Only) -->
+          <button class="btn-icon-header btn-ripper-toggle" id="btn-toggle-ripper"
+            title="Toggle Ripper Combat Theme (Visual Only)" aria-label="Toggle Ripper Combat Theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+            </svg>
+          </button>
+
+          <!-- Clear Conversation Button -->
+          <button class="btn-icon-header" id="btn-clear-chat" title="Clear Conversation">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6" />
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- View Containers -->
+      <div class="view-container">
+
+        <!-- ================================================================
+             PAGE 1: CHAT WORKSPACE
+             ================================================================ -->
+        <section class="page-view active" id="page-chat">
+          <div class="chat-scroll-area" id="chat-scroll-area">
+            <div class="chat-center-column" id="chat-messages-container">
+              <!-- Dynamically populated or Welcome Hero -->
+            </div>
+          </div>
+
+          <!-- Generation Indicator -->
+          <div class="composer-area">
+            <div class="generation-indicator" id="generation-indicator">
+              <div class="storm-loader">
+                <div class="storm-bar"></div>
+                <div class="storm-bar"></div>
+                <div class="storm-bar"></div>
+                <div class="storm-bar"></div>
+              </div>
+              <span class="gen-status-text">Generating response...</span>
+              <span class="gen-timer" id="gen-timer">0.0s</span>
+              <button class="btn-stop-gen" id="btn-stop-gen">Stop</button>
+            </div>
+
+            <!-- Composer Container -->
+            <div class="composer-container">
+              <div class="composer-attachment-bar" id="composer-attachment-bar">
+                <!-- Dynamically populated attachment chip -->
+              </div>
+
+              <!-- Fun Interactive Quick Actions Bar -->
+              <div class="interactive-quick-bar" id="composer-quick-bar">
+                <button class="quick-vibe-pill"
+                  data-prompt="Roast my code and be completely savage with zero mercy:\n\n```python\n\n```"
+                  title="Get playfully roasted">
+                  <span>🔥</span> Roast My Code
+                </button>
+                <button class="quick-vibe-pill" data-prompt="Hey Raiden, vibe check! What's good with you today?"
+                  title="Friendly check-in">
+                  <span>☕</span> Vibe Check
+                </button>
+                <button class="quick-vibe-pill"
+                  data-prompt="Give me a tricky mind-bending riddle or logic puzzle to test my brain!"
+                  title="Challenge your mind">
+                  <span>🧠</span> Brain Teaser
+                </button>
+                <button class="quick-vibe-pill"
+                  data-prompt="Bro I need some genuine hype and motivation today. Talk to me!" title="Hype squad">
+                  <span>🚀</span> Hype Me Up
+                </button>
+                <button class="quick-vibe-pill"
+                  data-prompt="Give me your spiciest, most controversial programming or tech hot take."
+                  title="Unfiltered opinion">
+                  <span>💡</span> Tech Hot Take
+                </button>
+              </div>
+
+              <div class="composer-input-row">
+                <textarea class="composer-textarea" id="composer-textarea"
+                  placeholder="Ask RAIDEN anything... (paste code, roast requests, questions, or just chat)"
+                  rows="1"></textarea>
+              </div>
+
+              <div class="composer-toolbar">
+                <div class="composer-tools-left">
+                  <button class="composer-btn-tool" id="btn-attach-file" title="Attach Code/Document">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <path
+                        d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+                    </svg>
+                  </button>
+
+                  <button class="composer-btn-tool" id="btn-toggle-web-search" title="Toggle Web Research">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <circle cx="11" cy="11" r="8" />
+                      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                    <span class="tool-btn-label">Web</span>
+                  </button>
+
+                  <select class="select-input" id="composer-mode-select" title="Active Vibe & Persona Mode">
+                    <option value="friend">⚡ Best Friend</option>
+                    <option value="brutal_roast">💀 Roast My Code (Brutal & Funny)</option>
+                    <option value="roast">🔥 Roast Master (Playful)</option>
+                    <option value="academic">🧠 Deep Reasoning</option>
+                    <option value="code">💻 Code Ninja</option>
+                    <option value="chill">☕ Chill Buddy</option>
+                    <option value="hinglish">🇮🇳 Desi Hinglish</option>
+                  </select>
+                </div>
+
+                <div class="composer-tools-right">
+                  <span class="composer-hint" id="composer-shortcut-hint">Enter to send • Shift+Enter for newline</span>
+                  <button class="btn-send-prompt" id="btn-send-prompt" disabled title="Send Prompt">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <line x1="12" y1="19" x2="12" y2="5" />
+                      <polyline points="5 12 12 5 19 12" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             PAGE 2: EXPLORE TOOLS
+             ================================================================ -->
+        <section class="page-view" id="page-tools">
+          <div class="page-content-padding">
+            <div class="page-header-block">
+              <h1 class="page-header-title">Specialized AI Workflows</h1>
+              <p class="page-header-desc">Preconfigured task templates and analysis workflows optimized for local
+                execution.</p>
+            </div>
+            <div class="tools-grid" id="tools-grid">
+              <!-- Dynamically populated by tools.js -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             PAGE 3: CONTEXT LIBRARY
+             ================================================================ -->
+        <section class="page-view" id="page-library">
+          <div class="page-content-padding">
+            <div class="library-top-actions">
+              <div class="page-header-block" style="margin-bottom: 0;">
+                <h1 class="page-header-title">Context Library</h1>
+                <p class="page-header-desc">Manage local documents, codebases, and notes for RAIDEN to inspect and
+                  query.</p>
+              </div>
+              <button class="btn-primary" id="btn-import-file">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" style="width:16px;height:16px;">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="17 8 12 3 7 8" />
+                  <line x1="12" y1="3" x2="12" y2="15" />
+                </svg>
+                <span>Import File</span>
+              </button>
+            </div>
+
+            <!-- Drag & Drop Zone -->
+            <div class="dropzone-box" id="library-dropzone">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="17 8 12 3 7 8" />
+                <line x1="12" y1="3" x2="12" y2="15" />
+              </svg>
+              <h3 class="dropzone-title">Drop code or documents here, or click to browse</h3>
+              <p class="dropzone-desc">Supports .py, .js, .json, .md, .txt, .csv, .sql (Stored 100% locally)</p>
+            </div>
+
+            <!-- Library Items List -->
+            <div class="library-items-list" id="library-items-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             PAGE 4: CHAT HISTORY
+             ================================================================ -->
+        <section class="page-view" id="page-history">
+          <div class="page-content-padding">
+            <div class="page-header-block">
+              <h1 class="page-header-title">Conversation History</h1>
+              <p class="page-header-desc">Search, export, and revisit previous dialogues with RAIDEN.</p>
+            </div>
+
+            <div class="history-search-bar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input type="text" class="history-search-input" id="history-search-input"
+                placeholder="Search conversations by title or content (Ctrl+K)..." />
+            </div>
+
+            <div class="history-cards-list" id="history-cards-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             PAGE 5: MODEL CENTER
+             ================================================================ -->
+        <section class="page-view" id="page-model-center">
+          <div class="page-content-padding">
+            <div class="page-header-block">
+              <h1 class="page-header-title">Model Center</h1>
+              <p class="page-header-desc">Hardware-accelerated neural weights, runtime configuration, and prompt
+                parameters.</p>
+            </div>
+
+            <!-- Active Model Card -->
+            <div class="model-hero-card">
+              <div class="model-hero-top">
+                <div class="model-name-badge">
+                  <div class="status-dot pulse"></div>
+                  <h2 class="model-name-text" id="active-model-name">qwen2.5-coder:3b</h2>
+                </div>
+                <span class="brand-badge" style="font-size: 11px; padding: 4px 10px;">ACTIVE & READY</span>
+              </div>
+
+              <div class="model-specs-grid">
+                <div class="spec-tile">
+                  <span class="spec-tile-label">Parameter Size</span>
+                  <span class="spec-tile-val" id="spec-param-size">3.1B</span>
+                </div>
+                <div class="spec-tile">
+                  <span class="spec-tile-label">Quantization</span>
+                  <span class="spec-tile-val" id="spec-quant-level">Q4_K_M</span>
+                </div>
+                <div class="spec-tile">
+                  <span class="spec-tile-label">Format / Engine</span>
+                  <span class="spec-tile-val" id="spec-format">GGUF (GGML)</span>
+                </div>
+                <div class="spec-tile">
+                  <span class="spec-tile-label">Context Size</span>
+                  <span class="spec-tile-val" id="spec-disk-size">1.80 GB</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Runtime Parameters -->
+            <div class="config-section-card">
+              <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">Generation Parameters</h3>
+              <p style="font-size: 12.5px; color: var(--text-secondary);">Fine-tune inference temperature and sampling
+                behavior.</p>
+
+              <div class="slider-group">
+                <div class="slider-label-row">
+                  <span>Temperature</span>
+                  <span id="temp-slider-val"
+                    style="font-family: var(--font-mono); color: var(--text-primary);">0.7</span>
+                </div>
+                <input type="range" class="range-slider" id="temp-slider" min="0" max="1" step="0.05" value="0.7" />
+              </div>
+
+              <div class="slider-group">
+                <div class="slider-label-row">
+                  <span>Top-P Sampling</span>
+                  <span id="topp-slider-val"
+                    style="font-family: var(--font-mono); color: var(--text-primary);">0.9</span>
+                </div>
+                <input type="range" class="range-slider" id="topp-slider" min="0.1" max="1" step="0.05" value="0.9" />
+              </div>
+            </div>
+
+            <!-- System Prompt Customizer -->
+            <div class="config-section-card">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <h3 style="font-size: 15px; font-weight: 600;">System Persona Prompt</h3>
+                <button class="btn-secondary" id="btn-reset-system-prompt"
+                  style="font-size: 11.5px; padding: 4px 10px;">
+                  Reset to Default
+                </button>
+              </div>
+              <p style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 12px;">Defines RAIDEN's
+                bilingual tone, coding competence, and companion personality.</p>
+              <textarea id="system-prompt-textarea" class="composer-textarea"
+                style="background: var(--bg-graphite); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 12px; font-size: 12.5px; min-height: 120px;"></textarea>
+            </div>
+
+            <!-- Dual-Model Routing Architecture Card -->
+            <div class="config-section-card">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <h3 style="font-size: 15px; font-weight: 600;">Dual-Model Architecture & Routing</h3>
+                <span class="brand-badge badge-success">Sequential Guard Active</span>
+              </div>
+              <p style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 12px;">Select routing behavior
+                and configure local Fast (3B) and Advanced (7B–8B) neural weights.</p>
+
+              <!-- Operating Mode Selection -->
+              <div class="model-mode-grid">
+                <label class="model-mode-card">
+                  <input type="radio" name="model-mode-radio" value="auto" checked />
+                  <div class="model-mode-title">
+                    <span>Auto Router</span>
+                    <span class="brand-badge" style="font-size: 9.5px;">DEFAULT</span>
+                  </div>
+                  <span class="model-mode-desc">Routes by query complexity with zero latency classification.</span>
+                </label>
+
+                <label class="model-mode-card">
+                  <input type="radio" name="model-mode-radio" value="fast" />
+                  <div class="model-mode-title">
+                    <span>Fast Mode (3B)</span>
+                  </div>
+                  <span class="model-mode-desc">Forces 3B model for lowest VRAM usage and fastest response.</span>
+                </label>
+
+                <label class="model-mode-card">
+                  <input type="radio" name="model-mode-radio" value="advanced" />
+                  <div class="model-mode-title">
+                    <span>Advanced (8B)</span>
+                  </div>
+                  <span class="model-mode-desc">Directs complex tasks to the 7B–8B model (auto-fallbacks if
+                    missing).</span>
+                </label>
+              </div>
+
+              <!-- Advanced Model Identifier Slot -->
+              <div
+                style="margin-top: 16px; padding: 12px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span style="font-size: 13px; font-weight: 600;">Advanced Model Identifier</span>
+                  <span id="adv-model-status-badge" class="brand-badge">Checking...</span>
+                </div>
+                <p style="font-size: 11.5px; color: var(--text-secondary); margin-bottom: 10px;">Set local Ollama model
+                  tag (e.g. <code>llama3.1:8b</code>, <code>qwen2.5:7b</code>). RAIDEN will not auto-download large
+                  models.</p>
+                <div style="display: flex; gap: 8px;">
+                  <input type="text" id="input-advanced-model-name" class="composer-textarea" value="llama3.1:8b"
+                    style="min-height: 38px; padding: 8px 12px; font-family: var(--font-mono); font-size: 12.5px;" />
+                  <button class="btn-primary" id="btn-save-advanced-model"
+                    style="white-space: nowrap; font-size: 12px; padding: 0 14px;">Save Model</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Routing Telemetry Card -->
+            <div class="config-section-card">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <h3 style="font-size: 15px; font-weight: 600;">Real-Time Routing & Telemetry Decisions</h3>
+                <button class="btn-secondary" id="btn-refresh-routing-log"
+                  style="font-size: 11.5px; padding: 4px 10px;">
+                  Refresh Log
+                </button>
+              </div>
+              <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">Audits deterministic
+                classification reasons, selected weights, and millisecond latencies.</p>
+              <div id="routing-history-list">
+                <!-- Dynamically populated by modelCenterController -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             PAGE 6: SYSTEM DIAGNOSTICS & TELEMETRY
+             ================================================================ -->
+        <section class="page-view" id="page-diagnostics">
+          <div class="page-content-padding">
+            <div class="library-top-actions">
+              <div class="page-header-block" style="margin-bottom: 0;">
+                <h1 class="page-header-title">System Diagnostics & Telemetry</h1>
+                <p class="page-header-desc">Real-time local hardware acceleration metrics and inference pipeline health.
+                </p>
+              </div>
+              <button class="btn-primary" id="btn-run-diagnostics">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" style="width:16px;height:16px;">
+                  <polyline points="23 4 23 10 17 10" />
+                  <polyline points="1 20 1 14 7 14" />
+                  <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                </svg>
+                <span>Run Diagnostics Check</span>
+              </button>
+            </div>
+
+            <!-- Diagnostics Metrics Grid -->
+            <div class="diagnostics-grid">
+              <!-- Ollama Server -->
+              <div class="diag-card">
+                <div class="diag-card-header">
+                  <span class="diag-card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                    </svg>
+                    Ollama Engine Daemon
+                  </span>
+                  <span class="status-dot" id="diag-ollama-dot"></span>
+                </div>
+                <span class="diag-stat-large" id="diag-ollama-status">Connected</span>
+                <span class="diag-subtext">Endpoint: http://127.0.0.1:11434</span>
+              </div>
+
+              <!-- GPU Telemetry -->
+              <div class="diag-card">
+                <div class="diag-card-header">
+                  <span class="diag-card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="4" y="4" width="16" height="16" rx="2" />
+                    </svg>
+                    GPU Telemetry
+                  </span>
+                  <span class="brand-badge">GPU</span>
+                </div>
+                <span class="diag-stat-large" id="diag-gpu-name">Detecting...</span>
+                <span class="diag-subtext" id="diag-gpu-vram">Reading telemetry...</span>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-fill" id="diag-gpu-bar" style="width: 55%;"></div>
+                </div>
+              </div>
+
+              <!-- System RAM -->
+              <div class="diag-card">
+                <div class="diag-card-header">
+                  <span class="diag-card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="2" y="2" width="20" height="20" rx="2" />
+                    </svg>
+                    Host Physical RAM
+                  </span>
+                  <span class="brand-badge">RAM</span>
+                </div>
+                <span class="diag-stat-large" id="diag-ram-load">54% Load</span>
+                <span class="diag-subtext" id="diag-ram-sub">6.4 GB free of 13.9 GB Total</span>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-fill" id="diag-ram-bar" style="width: 54%;"></div>
+                </div>
+              </div>
+
+              <!-- Active Model -->
+              <div class="diag-card">
+                <div class="diag-card-header">
+                  <span class="diag-card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polygon
+                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg>
+                    Active Model Weight
+                  </span>
+                  <span class="brand-badge">INFERENCE</span>
+                </div>
+                <span class="diag-stat-large" id="diag-model-active">qwen2.5-coder:3b</span>
+                <span class="diag-subtext">Direct GGML GPU Layer Offload</span>
+              </div>
+            </div>
+
+            <!-- Telemetry System Specs Table -->
+            <table class="telemetry-table">
+              <tr>
+                <td>Operating System Platform</td>
+                <td id="telemetry-os">Windows 10 / 11 (AMD64)</td>
+              </tr>
+              <tr>
+                <td>Python Core Runtime</td>
+                <td id="telemetry-python">Python 3.14.7</td>
+              </tr>
+              <tr>
+                <td>GUI Engine</td>
+                <td>PyWebView (Edge Chromium WebView2)</td>
+              </tr>
+              <tr>
+                <td>Inference Execution</td>
+                <td>Local Process (On-Device)</td>
+              </tr>
+            </table>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             PAGE 7: SETTINGS & PREFERENCES
+             ================================================================ -->
+        <section class="page-view" id="page-settings">
+          <div class="page-content-padding">
+            <div class="page-header-block">
+              <h1 class="page-header-title">Settings & Preferences</h1>
+              <p class="page-header-desc">Customization, data management, and assistant attribution.</p>
+            </div>
+
+            <!-- Appearance Group -->
+            <div class="settings-group">
+              <h3 class="settings-group-title">Visual Appearance</h3>
+              <div class="settings-box">
+                <div class="settings-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Cyber Ronin Theme</span>
+                    <span class="setting-desc">Jack the Ripper tactical identity: Phantom Black, Gunmetal, and Ripper
+                      Crimson.</span>
+                  </div>
+                  <span class="brand-badge"
+                    style="font-size: 11px; padding: 4px 10px; border-color: rgba(225, 29, 72, 0.4); color: var(--raiden-pulse); background: rgba(225, 29, 72, 0.12);">CYBER
+                    RONIN</span>
+                </div>
+
+                <div class="settings-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Ripper Combat Mode</span>
+                    <span class="setting-desc">Tactical Jack the Ripper visual state with intensified crimson
+                      highlights, reactive borders, and sharpened activity effects. (Visual theme only)</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="setting-ripper-toggle" />
+                    <span class="slider-switch"></span>
+                  </label>
+                </div>
+
+                <div class="settings-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Interface Density</span>
+                    <span class="setting-desc">Adjust component padding and typographic spacing.</span>
+                  </div>
+                  <select class="select-input" id="setting-density-select">
+                    <option value="comfortable">Comfortable</option>
+                    <option value="compact">Compact Desktop</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chat Behavior Group -->
+            <div class="settings-group">
+              <h3 class="settings-group-title">Chat & Keyboard Shortcuts</h3>
+              <div class="settings-box">
+                <div class="settings-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Sound Effects & Interactive Audio</span>
+                    <span class="setting-desc">Play subtle tactile audio synthesis on messages and streaming
+                      completion.</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="setting-sound-toggle" checked />
+                    <span class="slider-switch"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- User Personalization & Real-Friend Profile Group -->
+            <div class="settings-group">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <h3 class="settings-group-title" style="margin-bottom: 0;">User Personalization & Friend Dynamics</h3>
+                <span class="brand-badge badge-success">Local Memory Synced</span>
+              </div>
+              <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">RAIDEN remembers your
+                nickname, vibe, stack, and how intensely it can roast you.</p>
+
+              <div class="settings-box">
+                <div class="settings-row" style="flex-direction: column; align-items: flex-start; gap: 8px;">
+                  <div class="setting-info" style="width: 100%;">
+                    <span class="setting-title">Nickname / What should RAIDEN call you?</span>
+                    <span class="setting-desc">Used naturally in casual banter and greetings.</span>
+                  </div>
+                  <input type="text" id="setting-user-name" class="composer-textarea"
+                    placeholder="e.g. Ruhaan, Alex, Commander..."
+                    style="width: 100%; min-height: 38px; padding: 8px 12px; font-size: 13px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-xs);" />
+                </div>
+
+                <div class="settings-row" style="flex-direction: column; align-items: flex-start; gap: 8px;">
+                  <div class="setting-info" style="width: 100%;">
+                    <span class="setting-title">Role / Your Vibe</span>
+                    <span class="setting-desc">e.g. Software Engineer, Student, Night-owl Coder, Designer...</span>
+                  </div>
+                  <input type="text" id="setting-user-role" class="composer-textarea"
+                    placeholder="e.g. Computer Science Student, Full-Stack Dev..."
+                    style="width: 100%; min-height: 38px; padding: 8px 12px; font-size: 13px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-xs);" />
+                </div>
+
+                <div class="settings-row" style="flex-direction: column; align-items: flex-start; gap: 8px;">
+                  <div class="setting-info" style="width: 100%;">
+                    <span class="setting-title">Tech Stack & Favorite Topics</span>
+                    <span class="setting-desc">Languages, frameworks, or tools you work with.</span>
+                  </div>
+                  <input type="text" id="setting-user-interests" class="composer-textarea"
+                    placeholder="e.g. Python, React, PyWebView, Linux, Rust..."
+                    style="width: 100%; min-height: 38px; padding: 8px 12px; font-size: 13px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-xs);" />
+                </div>
+
+                <div class="settings-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Banter & Roast Intensity</span>
+                    <span class="setting-desc">How spicy should RAIDEN's roasts and humor be when you ask or
+                      chat?</span>
+                  </div>
+                  <select class="select-input" id="setting-user-roast" style="font-size: 12px; min-width: 160px;">
+                    <option value="Playful">🔥 Playful Teasing (Witty banter)</option>
+                    <option value="Savage">💀 Savage Roast (Comedic burns)</option>
+                    <option value="Gentle">🌿 Gentle & Supportive (No roasts)</option>
+                  </select>
+                </div>
+
+                <div class="settings-row" style="flex-direction: column; align-items: flex-start; gap: 8px;">
+                  <div class="setting-info" style="width: 100%;">
+                    <span class="setting-title">Personal Quirks / Custom Notes</span>
+                    <span class="setting-desc">Specific things RAIDEN should keep in mind about you.</span>
+                  </div>
+                  <textarea id="setting-user-notes" class="composer-textarea"
+                    placeholder="e.g. Likes clean terminal apps, hates unnecessary boilerplates, drinking too much coffee..."
+                    style="width: 100%; min-height: 60px; padding: 8px 12px; font-size: 12.5px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-xs);"></textarea>
+                </div>
+
+                <div class="settings-row" style="justify-content: flex-end; padding: 12px 16px;">
+                  <button class="btn-primary" id="btn-save-user-profile" style="font-size: 12px; padding: 6px 18px;">
+                    Save Personalization
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="settings-group">
+              <h3 class="settings-group-title">Online Web Research & Network Access</h3>
+              <div class="settings-box">
+                <div class="settings-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Enable Web Research</span>
+                    <span class="setting-desc">Allows RAIDEN to search DuckDuckGo and extract relevant public web pages
+                      to ground responses.</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="setting-web-search-toggle" />
+                    <span class="slider-switch"></span>
+                  </label>
+                </div>
+
+                <div class="settings-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Strict Offline Mode</span>
+                    <span class="setting-desc">Blocks all outbound network sockets. RAIDEN runs 100% locally with zero
+                      internet traffic.</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="setting-offline-toggle" />
+                    <span class="slider-switch"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Persistent Local Memory Group -->
+            <div class="settings-group">
+              <h3 class="settings-group-title">Local Long-Term Memory (SQLite)</h3>
+              <div class="settings-box">
+                <div class="settings-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Persistent Memory Subsystem</span>
+                    <span class="setting-desc">Retains user-approved facts and preferences across restarts in a private
+                      local SQLite database.</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="setting-memory-toggle" checked />
+                    <span class="slider-switch"></span>
+                  </label>
+                </div>
+
+                <div class="settings-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Manage Stored Memories</span>
+                    <span class="setting-desc">Inspect, add, or delete individual preferences and persistent
+                      facts.</span>
+                  </div>
+                  <button class="btn-secondary" id="btn-manage-memories">
+                    Manage Memories
+                  </button>
+                </div>
+
+                <div class="settings-row">
+                  <div class="setting-info">
+                    <span class="setting-title" style="color: var(--color-danger);">Clear Long-Term Memory</span>
+                    <span class="setting-desc">Permanently erase all stored facts from raiden_memory.db.</span>
+                  </div>
+                  <button class="btn-danger" id="btn-clear-memories-data">
+                    Clear Memories
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Safe PC Tools & Execution Group -->
+            <div class="settings-group">
+              <h3 class="settings-group-title">Personal Computer Tools & Allowlist</h3>
+              <div class="settings-box">
+                <div class="settings-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Tool Execution Policy</span>
+                    <span class="setting-desc">Allowlist strictly isolates file reads/writes to workspace and requires
+                      confirmation before executing commands.</span>
+                  </div>
+                  <span class="brand-badge badge-success">ALLOWLIST STRICT</span>
+                </div>
+
+                <div class="settings-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Audit Log</span>
+                    <span class="setting-desc">Review records of all requested and executed desktop actions.</span>
+                  </div>
+                  <button class="btn-secondary" id="btn-view-tool-audit">
+                    View Audit Log
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Data Storage & Local Persistence Group -->
+            <div class="settings-group">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <h3 class="settings-group-title" style="margin-bottom: 0;">Local Data Storage & Persistence (SQLite +
+                  JSON)</h3>
+                <span class="brand-badge badge-success" id="storage-status-badge">100% Offline & Private</span>
+              </div>
+              <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">All your dialogues,
+                memories, and personal profiles are stored exclusively on your hard drive.</p>
+
+              <div class="settings-box">
+                <!-- Storage Stats Tiles -->
+                <div class="settings-row"
+                  style="background: var(--bg-surface); padding: 12px; border-radius: var(--radius-xs); border: 1px solid var(--border);">
+                  <div
+                    style="display: grid; grid-template-columns: repeat(3, 1fr); width: 100%; gap: 12px; text-align: center;">
+                    <div>
+                      <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Saved Messages
+                      </div>
+                      <div style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-top: 2px;"
+                        id="stat-total-messages">0</div>
+                    </div>
+                    <div>
+                      <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Conversations
+                      </div>
+                      <div style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-top: 2px;"
+                        id="stat-total-convs">0</div>
+                    </div>
+                    <div>
+                      <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">SQLite DB Size
+                      </div>
+                      <div style="font-size: 16px; font-weight: 700; color: var(--raiden-primary); margin-top: 2px;"
+                        id="stat-db-size">0 KB</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="settings-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Export All Conversations & Data</span>
+                    <span class="setting-desc">Download a comprehensive JSON backup of all your sessions, user profile,
+                      and memories.</span>
+                  </div>
+                  <button class="btn-secondary" id="btn-export-all-data">
+                    Export Backup
+                  </button>
+                </div>
+
+                <div class="settings-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Import Data Backup</span>
+                    <span class="setting-desc">Restore conversations, user personalization, and memories from a previous
+                      JSON backup.</span>
+                  </div>
+                  <button class="btn-secondary" id="btn-import-data-file">
+                    Import Backup
+                  </button>
+                  <input type="file" id="backup-file-input" accept=".json" style="display: none;" />
+                </div>
+
+                <div class="settings-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Sync Active Chat to SQLite</span>
+                    <span class="setting-desc">Force immediate write-back of all in-memory turns to
+                      raiden_memory.db.</span>
+                  </div>
+                  <button class="btn-secondary" id="btn-sync-sqlite">
+                    Sync to SQLite
+                  </button>
+                </div>
+
+                <div class="settings-row">
+                  <div class="setting-info">
+                    <span class="setting-title" style="color: var(--color-danger);">Reset All Data</span>
+                    <span class="setting-desc">Permanently erase conversation history, user profile, and clear local
+                      cache.</span>
+                  </div>
+                  <button class="btn-danger" id="btn-clear-all-data">
+                    Clear Data
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- About RAIDEN Group -->
+            <div class="settings-group">
+              <h3 class="settings-group-title">About RAIDEN</h3>
+              <div class="settings-box">
+                <div class="settings-row">
+                  <div class="setting-info">
+                    <span class="setting-title">RAIDEN — Version 2.0</span>
+                    <span class="setting-desc">Local AI assistant for coding, analysis, and problem-solving.</span>
+                  </div>
+                  <span class="brand-badge" style="font-size: 11px; padding: 4px 8px;">LOCAL RUNTIME</span>
+                </div>
+                <div class="settings-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Execution Architecture</span>
+                    <span class="setting-desc">On-device inference powered by local Ollama engine without external
+                      network dependencies.</span>
+                  </div>
+                  <span style="font-size: 12px; color: var(--color-success); font-weight: 500;">Active</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- Hidden File Inputs -->
+    <input type="file" id="chat-file-input" style="display: none;" onchange="chatController.onHtmlFileInput(event)" />
+    <input type="file" id="library-file-input" style="display: none;" multiple />
+
+    <!-- ====================================================================
+         MODALS & DIALOGS
+         ==================================================================== -->
+    <!-- Delete Session Modal -->
+    <div class="modal-backdrop" id="confirm-delete-modal">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h3 class="modal-title">Delete Conversation</h3>
+          <button class="session-btn-icon" onclick="closeModal('confirm-delete-modal')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete this conversation? This action cannot be undone.
+        </div>
+        <div class="modal-footer">
+          <button class="btn-secondary" onclick="closeModal('confirm-delete-modal')">Cancel</button>
+          <button class="btn-danger" id="btn-confirm-delete-session">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reset Data Modal -->
+    <div class="modal-backdrop" id="confirm-reset-modal">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h3 class="modal-title">Reset All Data</h3>
+          <button class="session-btn-icon" onclick="closeModal('confirm-reset-modal')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          This will permanently delete all saved chat sessions, library documents, and preferences. Are you sure?
+        </div>
+        <div class="modal-footer">
+          <button class="btn-secondary" onclick="closeModal('confirm-reset-modal')">Cancel</button>
+          <button class="btn-danger" id="btn-confirm-reset-all">Reset Everything</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview File Modal -->
+    <div class="modal-backdrop" id="preview-file-modal">
+      <div class="modal-box" style="max-width: 720px;">
+        <div class="modal-header">
+          <h3 class="modal-title" id="preview-modal-title">File Preview</h3>
+          <button class="session-btn-icon" onclick="closeModal('preview-file-modal')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body" id="preview-modal-body" style="padding: 16px;">
+          <!-- Highlighted preview -->
+        </div>
+        <div class="modal-footer">
+          <button class="btn-secondary" onclick="closeModal('preview-file-modal')">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Long-Term Memories Manager Modal -->
+    <div class="modal-backdrop" id="memories-manager-modal">
+      <div class="modal-box" style="max-width: 680px;">
+        <div class="modal-header">
+          <h3 class="modal-title">Persistent Long-Term Memories (SQLite)</h3>
+          <button class="session-btn-icon" onclick="closeModal('memories-manager-modal')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body" style="padding: 16px;">
+          <!-- Add new memory input row -->
+          <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+            <input type="text" id="input-new-memory-text" class="composer-textarea"
+              placeholder="Add custom preference or fact (e.g. 'Prefers TypeScript over JS')..."
+              style="min-height: 38px; font-size: 12.5px; padding: 8px 12px;" />
+            <select class="select-input" id="select-new-memory-category" style="font-size: 12px; width: 120px;">
+              <option value="preference">Preference</option>
+              <option value="fact">Fact</option>
+              <option value="project">Project</option>
+            </select>
+            <button class="btn-primary" id="btn-add-memory-confirm"
+              style="white-space: nowrap; font-size: 12px; padding: 0 14px;">Add</button>
+          </div>
+          <!-- Memory cards list -->
+          <div id="memories-modal-list" style="max-height: 340px; overflow-y: auto;">
+            <!-- Dynamically populated by settingsController -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-secondary" onclick="closeModal('memories-manager-modal')">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tool Execution Audit Log Modal -->
+    <div class="modal-backdrop" id="tool-audit-modal">
+      <div class="modal-box" style="max-width: 720px;">
+        <div class="modal-header">
+          <h3 class="modal-title">PC Tool Execution Audit Log</h3>
+          <button class="session-btn-icon" onclick="closeModal('tool-audit-modal')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body" style="padding: 16px;">
+          <div id="tool-audit-modal-list" style="max-height: 360px; overflow-y: auto;">
+            <!-- Dynamically populated by settingsController -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-secondary" onclick="closeModal('tool-audit-modal')">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container"></div>
+  </div>
+
+  <!-- Vendor Scripts (Offline) -->
+  <script src="vendor/marked.min.js"></script>
+  <script src="vendor/highlight.min.js"></script>
+
+  <!-- Modular RAIDEN Scripts -->
+  <script src="js/state.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/tools.js"></script>
+  <script src="js/library.js"></script>
+  <script src="js/history.js"></script>
+  <script src="js/model-center.js"></script>
+  <script src="js/diagnostics.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
