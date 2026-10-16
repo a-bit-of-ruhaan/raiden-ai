@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RAIDEN — Cyber-Ronin Desktop Companion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-glass: rgba(10, 12, 16, 0.88);
+      --border-glass: rgba(255, 255, 255, 0.12);
+      --accent-cyan: #00f0ff;
+      --accent-glow: rgba(0, 240, 255, 0.28);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      user-select: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #desktop-pet-container {
+      width: 240px;
+      height: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      position: relative;
+      padding-bottom: 6px;
+    }
+
+    /* Activity Badge */
+    #activity-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      font-weight: 600;
+      color: var(--accent-cyan);
+      background: rgba(10, 15, 25, 0.82);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-bottom: 4px;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    #activity-badge.pulse::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #00ff88;
+      box-shadow: 0 0 6px #00ff88;
+      animation: badgeBlink 1.4s infinite ease-in-out;
+    }
+
+    @keyframes badgeBlink {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    /* Dialogue Box — Modern Glassmorphism */
+    #dialogue-bubble {
+      background: var(--bg-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 240, 255, 0.32);
+      padding: 8px 12px;
+      color: var(--text-main);
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 1.4;
+      width: 220px;
+      min-height: 36px;
+      border-radius: 12px;
+      box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.6), 0 0 15px -3px var(--accent-glow);
+      display: none;
+      word-wrap: break-word;
+      margin-bottom: 6px;
+      pointer-events: auto;
+      animation: bubbleFloat 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes bubbleFloat {
+      from { opacity: 0; transform: translateY(6px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    #dialogue-bubble.visible {
+      display: block;
+    }
+
+    /* Mascot Canvas */
+    #mascotCanvas {
+      width: 170px;
+      height: 170px;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      cursor: grab;
+      border-radius: 16px;
+      border: 1px solid var(--border-glass);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+      background: radial-gradient(circle at center, rgba(0, 240, 255, 0.08) 0%, rgba(10, 12, 16, 0.45) 75%);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+    }
+
+    #mascotCanvas:hover {
+      box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.6), 0 0 20px -5px var(--accent-glow);
+    }
+
+    #mascotCanvas:active {
+      cursor: grabbing;
+      transform: scale(0.98);
+    }
+
+    /* Desktop Controls — Floating Pill Dock */
+    .pet-controls {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      margin-top: 6px;
+      background: var(--bg-glass);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border-glass);
+      padding: 4px 6px;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px -2px rgba(0, 0, 0, 0.5), 0 0 12px -2px rgba(0, 240, 255, 0.12);
+    }
+
+    .pet-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      color: var(--text-main);
+      cursor: pointer;
+      padding: 3px 7px;
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      border-radius: 12px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+    }
+
+    .pet-btn:hover {
+      background: rgba(0, 240, 255, 0.16);
+      border-color: rgba(0, 240, 255, 0.38);
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px var(--accent-glow);
+    }
+
+    .pet-btn:active {
+      transform: translateY(0);
+    }
+
+    .pet-btn.dock:hover {
+      background: rgba(121, 40, 202, 0.25);
+      border-color: rgba(121, 40, 202, 0.5);
+      box-shadow: 0 2px 8px rgba(121, 40, 202, 0.4);
+    }
+
+    .pet-btn.close:hover {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #ef4444;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+    }
+
+    /* Compact Settings Popover */
+    #pet-settings-menu {
+      position: absolute;
+      bottom: 46px;
+      left: 10px;
+      width: 220px;
+      background: rgba(12, 15, 24, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 240, 255, 0.35);
+      border-radius: 14px;
+      padding: 10px 12px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7), 0 0 20px -3px var(--accent-glow);
+      display: none;
+      flex-direction: column;
+      gap: 7px;
+      z-index: 100;
+    }
+
+    #pet-settings-menu.visible {
+      display: flex;
+    }
+
+    .settings-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 4px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .settings-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10.5px;
+      color: var(--text-main);
+    }
+
+    .settings-row span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .settings-toggle-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #94a3b8;
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .settings-toggle-btn.active {
+      background: rgba(0, 240, 255, 0.2);
+      border-color: rgba(0, 240, 255, 0.5);
+      color: #00f0ff;
+    }
+
+    .settings-action-btn {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+      padding: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 2px;
+    }
+
+    .settings-action-btn:hover {
+      background: rgba(0, 240, 255, 0.15);
+      border-color: rgba(0, 240, 255, 0.35);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div id="desktop-pet-container">
+    <div id="activity-badge" class="pulse">● READY</div>
+    <div id="dialogue-bubble"></div>
+    <canvas id="mascotCanvas" width="180" height="180" title="Drag anywhere on desktop • Click to chat • Double-click to stretch"></canvas>
+    
+    <!-- Floating Pet Dock -->
+    <div class="pet-controls">
+      <button class="pet-btn dock" id="btn-dock" title="Dock in Raiden Main App">📥 Dock</button>
+      <button class="pet-btn" id="btn-talk" title="Talk / Context Banter">💬</button>
+      <button class="pet-btn" id="btn-pat" title="Head Pat">🐾</button>
+      <button class="pet-btn" id="btn-zap" title="Tail Lightning">⚡</button>
+      <button class="pet-btn" id="btn-stance" title="Pose">Pose</button>
+      <button class="pet-btn" id="btn-switch-companion" title="Switch Companion">🔄</button>
+      <button class="pet-btn" id="btn-audio" title="Audio">🔊</button>
+      <button class="pet-btn" id="btn-settings" title="Settings">⚙️</button>
+      <button class="pet-btn close" id="btn-close" title="Exit">✕</button>
+    </div>
+
+    <!-- Compact Settings Popover -->
+    <div id="pet-settings-menu">
+      <div class="settings-title">
+        <span>COMPANION SETTINGS</span>
+        <span style="cursor: pointer;" id="btn-close-settings">✕</span>
+      </div>
+      <div class="settings-row">
+        <span>Activity Awareness</span>
+        <button class="settings-toggle-btn active" id="toggle-activity">ON</button>
+      </div>
+      <div class="settings-row">
+        <span>Screen Perception</span>
+        <button class="settings-toggle-btn" id="toggle-screen">OFF</button>
+      </div>
+      <div class="settings-row">
+        <span>Desktop Roaming</span>
+        <button class="settings-toggle-btn active" id="toggle-roaming">ON</button>
+      </div>
+      <div class="settings-row">
+        <span>Always On Top</span>
+        <button class="settings-toggle-btn active" id="toggle-always-top">ON</button>
+      </div>
+      <button class="settings-action-btn" id="btn-reset-pos">Reset Screen Position</button>
+      <button class="settings-action-btn" id="btn-clear-mem">Clear Memory &amp; Jokes</button>
+    </div>
+  </div>
+
+  <script src="js/companion/CompanionEventBus.js"></script>
+  <script src="js/companion/CompanionSettings.js"></script>
+  <script src="js/companion/CompanionThemes.js"></script>
+  <script src="js/companion/CompanionStateMachine.js"></script>
+  <script src="js/companion/CompanionPacksData.js"></script>
+  <script src="js/companion/CompanionRegistry.js"></script>
+  <script src="js/companion/DialogueEngine.js"></script>
+  <script src="js/companion/AnimationManifest.js"></script>
+  <script src="js/companion/AnimationPlayer.js"></script>
+  <script src="js/companion/BehaviorScheduler.js"></script>
+  <script src="js/mascot.js"></script>
+  <script src="renderer.js"></script>
+</body>
+</html>

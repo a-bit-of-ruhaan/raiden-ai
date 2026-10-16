@@ -1,0 +1,12 @@
+{
+    "name": "raiden-desktop-assistant",
+    "version": "1.0.0",
+    "description": "Retro Cyber-Ronin Cat Mascot Assistant",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "dependencies": {
+        "electron": "^32.0.0"
+    }
+}

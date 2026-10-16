@@ -21,5 +21,23 @@
     "."
   ],
   "tool_confirm_sensitive": true,
-  "log_level": "INFO"
+  "log_level": "INFO",
+  "screen_perception_enabled": false,
+  "vision_model": "llava-phi3",
+  "screen_observation_interval_seconds": 5.0,
+  "screen_inference_cooldown_seconds": 12.0,
+  "screen_commentary_cooldown_seconds": 30.0,
+  "screen_change_threshold": 0.035,
+  "screen_social_mode": "companion",
+  "screen_confidence_threshold": 0.60,
+  "screen_excluded_apps": [
+    "keepass",
+    "1password",
+    "bitwarden",
+    "lastpass",
+    "authenticator",
+    "credential"
+  ],
+  "screen_capture_source": "primary_monitor",
+  "screen_save_history": false
 }

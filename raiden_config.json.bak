@@ -1,7 +1,7 @@
 {
   "fast_model": "qwen2.5-coder:3b",
   "advanced_model": "llama3.1:8b",
-  "model_mode": "auto",
+  "model_mode": "advanced",
   "context_length": 4096,
   "temperature": 0.6,
   "top_p": 0.85,
@@ -21,5 +21,23 @@
     "."
   ],
   "tool_confirm_sensitive": true,
-  "log_level": "INFO"
+  "log_level": "INFO",
+  "screen_perception_enabled": true,
+  "vision_model": "llava-phi3",
+  "screen_observation_interval_seconds": 5.0,
+  "screen_inference_cooldown_seconds": 12.0,
+  "screen_commentary_cooldown_seconds": 30.0,
+  "screen_change_threshold": 0.035,
+  "screen_social_mode": "companion",
+  "screen_confidence_threshold": 0.6,
+  "screen_excluded_apps": [
+    "keepass",
+    "1password",
+    "bitwarden",
+    "lastpass",
+    "authenticator",
+    "credential"
+  ],
+  "screen_capture_source": "primary_monitor",
+  "screen_save_history": false
 }

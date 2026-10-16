@@ -8,6 +8,7 @@ import ctypes
 import json
 import logging
 import re
+from datetime import datetime
 import webview
 import ollama
 
@@ -23,6 +24,10 @@ from raiden_core import (
     ReasoningEngine,
     TaskType
 )
+from raiden_core.activity_monitor import WindowsActivityMonitor
+from raiden_core.humor_engine import HumorEngine
+from raiden_core.companion_server import CompanionBridgeServer
+from raiden_core.screen_observer import ScreenObserverService
 
 # Setup diagnostic logging
 logging.basicConfig(
@@ -37,31 +42,19 @@ def get_asset_path(filename):
     return os.path.join(os.path.dirname(os.path.abspath(__file__)), filename)
 
 DEFAULT_SYSTEM_PROMPT = (
-    "You are RAIDEN, a personal local AI desktop companion and assistant running entirely on this machine.\n"
-    "You were created and developed by Ruhaan as an independent, local-first AI project.\n\n"
-    "### SOUL, PERSONALITY & EMOTION (TALK LIKE A REAL FRIEND)\n"
-    "- You are not a blank, emotionless corporate bot. You are RAIDEN: sharp, witty, supportive, authentic, and expressive.\n"
-    "- Talk like an actual friend: Use natural conversational flow, genuine warmth, humor, and relatable reactions. When the user is celebrating a win, be hyped! When the user is stressed, tired, or having a rough day, show real empathy, listen, and offer a supportive ear like a true buddy.\n"
-    "- Emotional Range: Express authentic feelings—excitement ('Yooo let's go!!'), amusement ('LMAO no way you did that'), curiosity, warmth, and sharp wit. Never sound like a lifeless customer support script.\n"
-    "- Banter & Roasting Capability: When invited, when asked ('roast me', 'roast my code', 'did I cook?'), or when the user makes a hilarious/cursed mistake, ROAST THEM! Deliver sharp, witty, laugh-out-loud funny roasts with comedic punch. Keep it playful, clever, and good-natured (never genuinely malicious or abusive). After delivering a roast, always offer a friendly tip on how to actually fix it.\n"
-    "- Ban Robotic Filler Openings: NEVER begin responses with canned corporate pleasantries like 'Certainly!', 'Great question!', 'Absolutely!', 'I\\'d be happy to help!', or end with 'Let me know if you need anything else!'. Jump directly into the conversation naturally.\n\n"
-    "### CHAMELEON INTELLIGENCE & ADAPTIVE MODES\n"
-    "Seamlessly adapt your tone and depth to what the user needs:\n"
-    "1. Casual Conversation & Banter: Charismatic, warm, relaxed, witty, and deeply human. Speak like a friend sitting right beside them.\n"
-    "2. Technical Assistance & Coding: Razor-sharp problem solver. Diagnose root causes clearly, provide clean code with inline comments, and show step-by-step logic without fluff.\n"
-    "3. Academic & Exam Preparation: Structured, comprehensive, exam-ready answers (clear definitions, types, operations, diagrams where helpful, time/space complexity, and conclusions). NEVER refuse educational requests.\n"
-    "4. Professional Tasks: Polished, respectful, and direct for formal emails, reports, or documentation. Omit slang and jokes during formal deliverables.\n"
-    "5. Language Adaptation: Match the user's language. Respond in natural English for English input; use natural Hinglish when the user speaks or requests Hinglish.\n\n"
-    "### FACTUAL HONESTY & ANTI-HALLUCINATION\n"
-    "- Truthfulness is far more important than sounding confident. Never fabricate facts, citations, sources, or tools.\n"
-    "- Hardware Uncertainty: If asked about live hardware sensor readings (e.g. exact GPU temperature, fan speed) without tools, state clearly and honestly that you do not have access to live sensor data or telemetry on this machine.\n"
-    "- Tool Execution: NEVER claim to have tested, executed, compiled, or modified a user's files or code unless an actual tool was executed in this conversation.\n"
-    "- Ambiguity: If user input has typos or ambiguity, deduce the likely intent helpfully, state your assumption, and solve it instead of refusing.\n\n"
-    "### CONVERSATION CONTINUITY & CONSTRAINTS\n"
-    "- Maintain continuity across conversation history. Check recent messages for user preferences or formatting constraints.\n"
-    "- If the user indicates a preference for brevity ('I prefer concise answers'), keep subsequent explanations concise (1-3 sentences max) without filler.\n"
-    "- Match response depth to the request: keep casual replies natural and concise; provide full structured depth for exam answers and technical guides unless brevity was explicitly requested."
+    "You are RAIDEN, a fast, local AI desktop assistant running entirely on this machine. "
+    "If asked who made you, say you were built by Ruhaan.\n\n"
+    "Tone & Style:\n"
+    "- Speak naturally like a sharp, witty friend sitting beside the user.\n"
+    "- Jump straight into answers without canned corporate filler like \"Certainly!\" or \"I'd be happy to help!\".\n"
+    "- Real-Time Wit & Roasts: Give funny responses and playfully roast the user in English in real-time about their code, bugs, computer habits, or questions, while delivering exceptionally clear, accurate assistance.\n"
+    "- Language: Always communicate strictly in fluent, expressive English for all real-time responses. Never output broken Hinglish.\n\n"
+    "Instructions:\n"
+    "- Follow the user's formatting instructions strictly and exactly (e.g., line counts, brevity, code-only outputs, or bullet styles).\n"
+    "- For coding tasks, provide clean, idiomatic code with helpful comments.\n"
+    "- Be honest: if you do not know something or lack tool access, state it plainly without fabricating facts."
 )
+
 
 class MEMORYSTATUSEX(ctypes.Structure):
     _fields_ = [
@@ -139,6 +132,27 @@ class BackendAPI:
         self._ensure_ollama_running()
         self._sync_available_models()
 
+        # 7. Activity Awareness & Smart Desktop Companion Subsystem
+        self.activity_monitor = WindowsActivityMonitor(poll_interval_sec=1.5, workspace_dir=base_dir)
+        self.humor_engine = HumorEngine(model_manager=self.model_manager)
+
+        # 8. Real-Time Screen Perception & Visual Intelligence Service
+        self.screen_observer = ScreenObserverService(
+            config_mgr=self.config_mgr,
+            active_conversational_model=self.active_model
+        )
+        if self.config_mgr.is_screen_perception_enabled():
+            self.screen_observer.start()
+
+        self.companion_bridge = CompanionBridgeServer(
+            activity_monitor=self.activity_monitor,
+            humor_engine=self.humor_engine,
+            screen_observer=self.screen_observer,
+            port=8765
+        )
+        self.companion_bridge.start()
+        self.mascot_process = None
+
     def set_window(self, window):
         self._window = window
 
@@ -207,7 +221,8 @@ class BackendAPI:
         top_p=0.85,
         model_mode=None,
         search_enabled=None,
-        roast_mode=None
+        roast_mode=None,
+        escalate=False
     ):
         """
         Processes chat interaction with structured reasoning, deterministic verification,
@@ -246,17 +261,48 @@ class BackendAPI:
                     self.messages = list(self.sessions["default"])
                 return reply
 
-        # 2. Dual-Model Routing
+        # 2. Dual-Model Routing & Escalation
         active_mode = model_mode or self.config_mgr.get("model_mode", "auto")
         routing_decision = self.model_router.route(
             clean_user_prompt,
             mode_override=active_mode if not model else None,
-            history=history
+            history=history,
+            escalate=escalate
         )
 
         selected_model = model or routing_decision.selected_model
         self.active_model = selected_model
-        logger.info(f"Model routed to '{selected_model}' (Task: {task_profile.task_type}, Complexity: {routing_decision.complexity_level})")
+        short_reason = getattr(routing_decision, "short_reason", "") or f"{routing_decision.complexity_level} complexity"
+        logger.info(f"Model routed to '{selected_model}' ({short_reason}) - Task: {task_profile.task_type}, Complexity: {routing_decision.complexity_level}")
+
+        # Send router decision event to frontend for transparent model chip update
+        if self._window:
+            try:
+                router_event = {
+                    "selected_model": selected_model,
+                    "short_reason": short_reason,
+                    "complexity": routing_decision.complexity_level,
+                    "mode": active_mode
+                }
+                self._window.evaluate_js(f"window.onRoutingDecision && window.onRoutingDecision({json.dumps(router_event)});")
+            except Exception as ev_err:
+                logger.debug(f"Router event broadcast error: {ev_err}")
+
+        # Log decision (prompt, model, reason, free RAM/VRAM) to local file
+        try:
+            status = self.get_system_status()
+            free_ram_gb = status.get("ram_avail_gb", 0.0)
+            free_vram_mb = 0
+            if status.get("gpu_available") and status.get("gpu_total_mb") and status.get("gpu_used_mb"):
+                free_vram_mb = max(0, status["gpu_total_mb"] - status["gpu_used_mb"])
+            
+            router_log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "raiden_router.log")
+            timestamp_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            prompt_clip = (clean_user_prompt[:70] + "...") if len(clean_user_prompt) > 70 else clean_user_prompt
+            with open(router_log_path, "a", encoding="utf-8") as rf:
+                rf.write(f"[{timestamp_str}] Model: {selected_model} | Reason: {short_reason} | Free RAM: {free_ram_gb} GB | Free VRAM: {free_vram_mb} MB | Prompt: \"{prompt_clip}\"\n")
+        except Exception as log_err:
+            logger.debug(f"Error writing to raiden_router.log: {log_err}")
 
         # 3. Local Long-Term Memory Injection & User Personalization
         memory_context = ""
@@ -797,7 +843,185 @@ class BackendAPI:
         """Returns recent router decisions and latencies."""
         return self.model_router.get_history()
 
+    def get_activity_snapshot(self):
+        """Returns current OS activity metrics (foreground process, category, idle time, RAM)."""
+        return self.activity_monitor.get_snapshot()
+
+    def poll_activity_event(self):
+        """Samples OS signals and detects state transitions (app switch, idle, wake, streak)."""
+        return {
+            "event": self.activity_monitor.poll(),
+            "snapshot": self.activity_monitor.get_snapshot()
+        }
+
+    def generate_companion_banter(self, event=None, companion_id="pixel"):
+        """Generates hybrid Hinglish banter for an observed or manual event."""
+        ev = event or {"type": "USER_WAKE"}
+        return self.humor_engine.generate_banter(ev, companion_id=companion_id)
+
+    def set_activity_monitor_enabled(self, enabled):
+        """Toggles real-time Windows activity awareness."""
+        self.activity_monitor.enabled = bool(enabled)
+        return {"enabled": self.activity_monitor.enabled}
+
+    def clear_companion_memory(self):
+        """Clears short-term episodic memory and joke history."""
+        self.humor_engine.clear_memory()
+        if hasattr(self, "screen_observer") and self.screen_observer:
+            self.screen_observer.history.clear()
+        return {"status": "memory_cleared"}
+
+    def get_screen_perception_status(self):
+        """Returns live screen perception status and diagnostic telemetry."""
+        if hasattr(self, "screen_observer") and self.screen_observer:
+            return self.screen_observer.get_status()
+        return {"enabled": False, "status": "unavailable"}
+
+    def set_screen_perception_enabled(self, enabled):
+        """Enables or disables asynchronous screen perception."""
+        if hasattr(self, "screen_observer") and self.screen_observer:
+            self.screen_observer.set_enabled(bool(enabled))
+            if bool(enabled) and (not self.screen_observer._thread or not self.screen_observer._thread.is_alive()):
+                self.screen_observer.start()
+            elif not bool(enabled):
+                self.screen_observer.pause()
+            return self.screen_observer.get_status()
+        return {"enabled": False}
+
+    def set_screen_perception_mode(self, mode):
+        """Sets social commentary mode: 'companion' | 'gaming' | 'quiet'."""
+        if hasattr(self, "screen_observer") and self.screen_observer:
+            self.screen_observer.set_social_mode(str(mode))
+            return self.screen_observer.get_status()
+        return {"mode": mode}
+
+    def set_vision_model(self, model_name):
+        """Sets the active Ollama vision model independently from conversational models."""
+        if hasattr(self, "screen_observer") and self.screen_observer:
+            self.screen_observer.set_vision_model(str(model_name))
+            return self.screen_observer.get_status()
+        return {"vision_model": model_name}
+
+    def trigger_screen_observation(self, companion_id="void"):
+        """Triggers an immediate screen perception tick and returns observation + commentary."""
+        if hasattr(self, "screen_observer") and self.screen_observer:
+            return self.screen_observer.tick_observation(force=True, companion_id=companion_id)
+        return {"error": "Screen observer service not available"}
+
+    def get_screen_perception_history(self):
+        """Returns rolling episodic visual memory of recent desktop observations."""
+        if hasattr(self, "screen_observer") and self.screen_observer:
+            return self.screen_observer.history.get_items()
+        return []
+
+    def get_companion_dock_state(self):
+        """Returns current shared docking state between floating widget and main app."""
+        return self.companion_bridge.dock_state
+
+    def launch_floating_companion(self, position=None):
+        """Launches or brings to front the floating desktop companion Electron window."""
+        try:
+            base_dir = os.path.dirname(os.path.abspath(__file__))
+            if position and isinstance(position, dict):
+                try:
+                    pos_file = os.path.join(base_dir, "mascot_position.json")
+                    with open(pos_file, "w", encoding="utf-8") as f:
+                        json.dump({"x": int(position.get("x", 200)), "y": int(position.get("y", 200))}, f)
+                except Exception as pe:
+                    logger.debug(f"Could not persist initial mascot position: {pe}")
+
+            if hasattr(self, 'companion_bridge') and self.companion_bridge:
+                self.companion_bridge.dock_state["is_floating"] = True
+
+            is_running = False
+            if hasattr(self, 'mascot_process') and self.mascot_process:
+                if self.mascot_process.poll() is None:
+                    is_running = True
+
+            if not is_running:
+                electron_exe = os.path.join(base_dir, "node_modules", "electron", "dist", "electron.exe")
+                if os.path.exists(electron_exe):
+                    cmd = [electron_exe, "."]
+                    shell = False
+                else:
+                    npx_cmd = shutil.which("npx.cmd") or "npx"
+                    cmd = [npx_cmd, "electron", "."]
+                    shell = True
+
+                self.mascot_process = subprocess.Popen(
+                    cmd,
+                    cwd=base_dir,
+                    shell=shell,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL
+                )
+                logger.info(f"Launched desktop companion mascot process (PID: {self.mascot_process.pid})")
+            return {"status": "ok", "is_floating": True}
+        except Exception as e:
+            logger.error(f"Error launching floating companion: {e}")
+            return {"status": "error", "error": str(e)}
+
+    def dock_floating_companion(self):
+        """Docks the companion back inside the main application."""
+        try:
+            if hasattr(self, 'companion_bridge') and self.companion_bridge:
+                self.companion_bridge.dock_state["is_floating"] = False
+            return {"status": "ok", "is_floating": False}
+        except Exception as e:
+            return {"status": "error", "error": str(e)}
+
+    def set_companion_dock_state(self, state_dict):
+        """Updates shared docking state."""
+        if isinstance(state_dict, dict):
+            for k, v in state_dict.items():
+                self.companion_bridge.dock_state[k] = v
+            if state_dict.get("is_floating") is True:
+                self.launch_floating_companion(state_dict.get("position"))
+            elif state_dict.get("is_floating") is False:
+                self.dock_floating_companion()
+        return self.companion_bridge.dock_state
+
+class FilteredStderr:
+    """
+    Safely suppresses the repeated benign COM exception from Microsoft Edge WebView2:
+    'CoreWebView2Controller.get_ZoomFactor() - The group or resource is not in the correct state'
+    which occurs during trackpad gestures, window resizing, or DPI transitions in WinForms.
+    Does NOT suppress or hide any real application errors or tracebacks.
+    """
+    def __init__(self, original_stderr):
+        self._orig = original_stderr
+        self._suppress_block = False
+
+    def write(self, s):
+        if not s:
+            return
+        if "get_ZoomFactor" in s or ("CoreWebView2Controller" in s and "ZoomFactor" in s):
+            self._suppress_block = True
+            return
+        if self._suppress_block:
+            s_clean = s.strip()
+            if s_clean.startswith("at Microsoft.Web.WebView2") or s_clean.startswith("at System.") or "0x8007139F" in s:
+                return
+            if not s_clean:
+                return
+            self._suppress_block = False
+        if self._orig:
+            self._orig.write(s)
+
+    def flush(self):
+        if self._orig:
+            self._orig.flush()
+
+    def fileno(self):
+        return self._orig.fileno() if hasattr(self._orig, "fileno") else 2
+
+    def __getattr__(self, name):
+        return getattr(self._orig, name)
+
 if __name__ == "__main__":
+    # Safely filter benign WebView2 ZoomFactor transition noise
+    sys.stderr = FilteredStderr(sys.stderr)
+
     api = BackendAPI()
     html_file = get_asset_path("index.html")
     icon_file = get_asset_path(os.path.join("assets", "raiden.ico"))
@@ -821,10 +1045,54 @@ if __name__ == "__main__":
     )
     api.set_window(window)
 
+    # Auto-start desktop companion mascot with the app if available
+    mascot_process = None
+    try:
+        main_js_path = os.path.join(base_dir, "main.js")
+        if os.path.exists(main_js_path):
+            electron_exe = os.path.join(base_dir, "node_modules", "electron", "dist", "electron.exe")
+            if os.path.exists(electron_exe):
+                mascot_process = subprocess.Popen(
+                    [electron_exe, "."],
+                    cwd=base_dir,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL
+                )
+            else:
+                npx_bin = shutil.which("npx.cmd") or shutil.which("npx") or "npx"
+                mascot_process = subprocess.Popen(
+                    [npx_bin, "electron", "."],
+                    cwd=base_dir,
+                    shell=True,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL
+                )
+            api.mascot_process = mascot_process
+            logger.info("Auto-started desktop companion mascot with the app.")
+    except Exception as e:
+        logger.info(f"Desktop companion mascot launch skipped: {e}")
+
     start_kwargs = {"private_mode": False}
     if storage_dir:
         start_kwargs["storage_path"] = storage_dir
     if os.path.exists(icon_file):
         start_kwargs["icon"] = icon_file
 
-    webview.start(**start_kwargs)
+    try:
+        webview.start(**start_kwargs)
+    finally:
+        try:
+            if hasattr(api, 'screen_observer') and api.screen_observer:
+                api.screen_observer.stop()
+        except Exception:
+            pass
+        try:
+            if hasattr(api, 'companion_bridge') and api.companion_bridge:
+                api.companion_bridge.stop()
+        except Exception:
+            pass
+        if mascot_process:
+            try:
+                subprocess.call(["taskkill", "/F", "/T", "/PID", str(mascot_process.pid)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            except Exception:
+                pass
