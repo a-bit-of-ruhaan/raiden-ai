@@ -78,7 +78,7 @@ class HistoryController {
               ${ICONS.download}
               <span>Export</span>
             </button>
-            <button class="btn-danger" onclick="historyController.promptDeleteSession('${session.id}')" title="Delete">
+            <button class="btn-danger" onclick="historyController.promptDeleteSession('${session.id}')" title="Delete Conversation">
               ${ICONS.trash}
               <span>Delete</span>
             </button>

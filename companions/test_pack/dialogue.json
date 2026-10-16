@@ -1,0 +1,13 @@
+{
+  "greeting": [
+    {
+      "weight": 5,
+      "mood": "neutral",
+      "text": {
+        "en": "Test pack loaded without core code changes!",
+        "hinglish": "5th companion pack successfully loaded bina kisi code change ke!",
+        "hi": "परीक्षण साथी तैयार है!"
+      }
+    }
+  ]
+}

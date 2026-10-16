@@ -110,23 +110,23 @@ class LibraryController {
       <div class="library-item-card">
         <div class="lib-item-left">
           <div class="lib-file-icon">
-            ${ICONS.file}
+            <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.5px;">${(item.extension || '.TXT').replace('.', '').toUpperCase()}</span>
           </div>
           <div class="lib-file-meta">
-            <span class="lib-file-name">${item.name}</span>
+            <span class="lib-file-name">${escapeHtml(item.name)}</span>
             <span class="lib-file-sub">${formatBytes(item.size)} • ${item.lineCount || 0} lines • Added ${timeAgo(item.dateAdded)}</span>
           </div>
         </div>
         <div class="lib-actions">
-          <button class="btn-secondary" onclick="libraryController.previewItem('${item.id}')">
-            ${ICONS.file}
+          <button class="btn-secondary" onclick="libraryController.previewItem('${item.id}')" title="Inspect Content">
+            ${ICONS.eye}
             <span>Inspect</span>
           </button>
-          <button class="btn-primary" onclick="libraryController.queryInChat('${item.id}')">
+          <button class="btn-primary" onclick="libraryController.queryInChat('${item.id}')" title="Reference in Chat">
             ${ICONS.chat}
-            <span>Ask Raiden</span>
+            <span>Ask RAIDEN</span>
           </button>
-          <button class="btn-icon-header" onclick="libraryController.deleteItem('${item.id}')" title="Delete">
+          <button class="btn-icon-header" onclick="libraryController.deleteItem('${item.id}')" title="Delete Document">
             ${ICONS.trash}
           </button>
         </div>

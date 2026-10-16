@@ -1,0 +1,100 @@
+{
+  "id": "nova",
+  "name": "NOVA",
+  "species": "Pixel Starlight",
+  "tagline": "Mischievous, expressive, dramatic retro-pixel girl.",
+  "palette": {
+    "accent": "#ff2a85",
+    "secondary": "#b5179e",
+    "dark": "#130919",
+    "glow": "rgba(255, 42, 133, 0.32)",
+    "bgGlass": "rgba(18, 12, 22, 0.88)"
+  },
+  "spriteSheet": {
+    "frameWidth": 48,
+    "frameHeight": 48,
+    "fps": 10,
+    "loop": true
+  },
+  "states": {
+    "idle": {
+      "frames": 4,
+      "hold": 8
+    },
+    "listening": {
+      "frames": 3,
+      "hold": 5
+    },
+    "thinking": {
+      "frames": 4,
+      "hold": 6
+    },
+    "generating": {
+      "frames": 6,
+      "hold": 4
+    },
+    "celebrating": {
+      "frames": 6,
+      "hold": 4
+    },
+    "error": {
+      "frames": 4,
+      "hold": 8
+    },
+    "waiting": {
+      "frames": 4,
+      "hold": 10
+    },
+    "sleeping": {
+      "frames": 2,
+      "hold": 18
+    }
+  },
+  "personality": {
+    "idleFrequency": 0.7,
+    "chattiness": 0.75,
+    "mischief": 0.95,
+    "reactionIntensity": 0.85
+  },
+  "costumes": [
+    {
+      "id": "default",
+      "name": "Starlight Hoodie",
+      "accent": "#ff2a85"
+    },
+    {
+      "id": "cyberpunk",
+      "name": "Neon Arcade Jacket",
+      "accent": "#00f0ff"
+    },
+    {
+      "id": "witch",
+      "name": "Pixel Sorceress",
+      "accent": "#a855f7"
+    }
+  ],
+  "clickInteractions": [
+    {
+      "trigger": "click",
+      "action": "giggle_twirl",
+      "cooldown": 1800
+    },
+    {
+      "trigger": "triple_click",
+      "action": "cookie_sparkle",
+      "cooldown": 5000
+    }
+  ],
+  "easterEggs": [
+    {
+      "id": "triple_click_burst",
+      "name": "Secret Cookie Stash",
+      "hint": "Tickle Nova 3 times"
+    },
+    {
+      "id": "starry_night",
+      "name": "Starry Eyed",
+      "hint": "Keep prompt streak alive"
+    }
+  ]
+}

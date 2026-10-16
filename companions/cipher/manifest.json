@@ -1,0 +1,100 @@
+{
+  "id": "cipher",
+  "name": "CIPHER",
+  "species": "Terminal Mentor",
+  "tagline": "Calm, intelligent, technical dev mentor & terminal hacker.",
+  "palette": {
+    "accent": "#00ff88",
+    "secondary": "#059669",
+    "dark": "#07100b",
+    "glow": "rgba(0, 255, 136, 0.28)",
+    "bgGlass": "rgba(8, 16, 12, 0.88)"
+  },
+  "spriteSheet": {
+    "frameWidth": 48,
+    "frameHeight": 48,
+    "fps": 8,
+    "loop": true
+  },
+  "states": {
+    "idle": {
+      "frames": 4,
+      "hold": 10
+    },
+    "listening": {
+      "frames": 3,
+      "hold": 6
+    },
+    "thinking": {
+      "frames": 4,
+      "hold": 6
+    },
+    "generating": {
+      "frames": 6,
+      "hold": 4
+    },
+    "celebrating": {
+      "frames": 4,
+      "hold": 6
+    },
+    "error": {
+      "frames": 3,
+      "hold": 8
+    },
+    "waiting": {
+      "frames": 4,
+      "hold": 12
+    },
+    "sleeping": {
+      "frames": 2,
+      "hold": 18
+    }
+  },
+  "personality": {
+    "idleFrequency": 0.35,
+    "chattiness": 0.45,
+    "mischief": 0.15,
+    "reactionIntensity": 0.5
+  },
+  "costumes": [
+    {
+      "id": "default",
+      "name": "Matrix Trench Coat",
+      "accent": "#00ff88"
+    },
+    {
+      "id": "amber",
+      "name": "Retro Amber CRT",
+      "accent": "#f59e0b"
+    },
+    {
+      "id": "ice",
+      "name": "Quantum Frost Visor",
+      "accent": "#38bdf8"
+    }
+  ],
+  "clickInteractions": [
+    {
+      "trigger": "click",
+      "action": "holo_scan",
+      "cooldown": 2000
+    },
+    {
+      "trigger": "triple_click",
+      "action": "terminal_matrix_rain",
+      "cooldown": 6000
+    }
+  ],
+  "easterEggs": [
+    {
+      "id": "triple_click_burst",
+      "name": "Matrix Digital Rain",
+      "hint": "Hack Cipher with 3 clicks"
+    },
+    {
+      "id": "clean_architecture",
+      "name": "Clean Code Zen",
+      "hint": "Fix error on first attempt"
+    }
+  ]
+}

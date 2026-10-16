@@ -1,0 +1,295 @@
+{
+  "greeting": [
+    {
+      "weight": 5,
+      "mood": "calm",
+      "text": {
+        "en": "Terminal initialized. Ready to architect clean solutions.",
+        "hinglish": "Terminal ready boss. Aaj clean architecture pe kaam karenge.",
+        "hi": "टर्मिनल तैयार है। स्वच्छ कोड लिखने का समय है।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "focused",
+      "text": {
+        "en": "Visor calibrated. Drop the problem statement.",
+        "hinglish": "Visor online. Batao kya challenge hai aaj ka.",
+        "hi": "मैं तैयार हूँ। समस्या बताएं।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "mentor",
+      "text": {
+        "en": "Good engineering begins with understanding the invariants. Ready when you are.",
+        "hinglish": "Clean code ka niyam: pehle socho, phir type karo. Chalo shuru karein.",
+        "hi": "सटीक योजना के साथ शुरुआत करें।"
+      }
+    },
+    {
+      "weight": 3,
+      "mood": "calm",
+      "text": {
+        "en": "Kernel modules green. Zero memory leaks on standby.",
+        "hinglish": "Kernel clean hai, system stable hai. Ticket batao, solve karte hain.",
+        "hi": "सिस्टम पूरी तरह तैयार है।"
+      }
+    }
+  ],
+  "thinking": [
+    {
+      "weight": 5,
+      "mood": "analytical",
+      "text": {
+        "en": "Parsing AST trees and semantic dependencies. Optimal route loading.",
+        "hinglish": "Syntax tree inspect ho raha hai. Modular design plan kar raha hoon.",
+        "hi": "तर्क का विश्लेषण किया जा रहा है।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "calm",
+      "text": {
+        "en": "Evaluating algorithmic time and space trade-offs.",
+        "hinglish": "Time aur space complexity balance karke solution nikal raha hoon.",
+        "hi": "जटिलता का विश्लेषण हो रहा है।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "mentor",
+      "text": {
+        "en": "Premature optimization is the root of evil. Finding the clean baseline first.",
+        "hinglish": "Time aur space complexity balance karke pehle working solution, phir optimization.",
+        "hi": "बुनियादी ढांचा तैयार किया जा रहा है।"
+      }
+    }
+  ],
+  "completion": [
+    {
+      "weight": 5,
+      "mood": "fistbump",
+      "text": {
+        "en": "Shipped. Clean O(1) execution paths verified.",
+        "hinglish": "Compile clean hua. Solid modular logic ready hai.",
+        "hi": "कार्य पूर्ण हुआ। कोड अनुकूलित है।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "mentor",
+      "text": {
+        "en": "Production ready logic. Good engineering practice.",
+        "hinglish": "Clean code standard meet ho gaya. Commit maro bindaas.",
+        "hi": "उत्कृष्ट इंजीनियरिंग दृष्टिकोण।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "calm",
+      "text": {
+        "en": "SOLID principles respected. The test suite will approve.",
+        "hinglish": "Design scalable hai, unit tests green pass honge. Senior dev approval granted.",
+        "hi": "मजबूत और स्केलेबल कोड।"
+      }
+    }
+  ],
+  "error": [
+    {
+      "weight": 5,
+      "mood": "mentor",
+      "text": {
+        "en": "A stack trace is just a map. Let's read it together.",
+        "hinglish": "Traceback dekh ke ghabrao mat. Line by line diagnose karte hain.",
+        "hi": "त्रुटि केवल एक नक्शा है। हम इसे हल करेंगे।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "calm",
+      "text": {
+        "en": "State inconsistency caught. Isolating root cause.",
+        "hinglish": "Root cause pakad liya hai. Refactor karke fix karte hain.",
+        "hi": "मूल कारण पहचाना गया।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "mentor",
+      "text": {
+        "en": "Exceptions are feedback from the machine. Check boundary conditions.",
+        "hinglish": "Edge case miss hua lagta hai. Null check lagao, issue gayab ho jayega.",
+        "hi": "सीमा शर्तों की जांच करें।"
+      }
+    }
+  ],
+  "waiting": [
+    {
+      "weight": 5,
+      "mood": "standby",
+      "text": {
+        "en": "Session stable. Ready for your next sprint prompt.",
+        "hinglish": "Standby mode active. Agla ticket batao.",
+        "hi": "सत्र तैयार है। अगले कार्य की प्रतीक्षा है।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "calm",
+      "text": {
+        "en": "Monitoring background threads. Take your time to design cleanly.",
+        "hinglish": "Soch lo dhyan se. Jaldbaazi ka code technical debt ban jata hai.",
+        "hi": "सावधानी से विचार करें।"
+      }
+    }
+  ],
+  "sleep": [
+    {
+      "weight": 5,
+      "mood": "sleepy",
+      "text": {
+        "en": "Terminal idling in low-power sleep state. Daemon process active.",
+        "hinglish": "Low-power daemon mode. Zzz... Terminal sleeping peacefully.",
+        "hi": "विश्राम स्थिति।"
+      }
+    }
+  ],
+  "click": [
+    {
+      "weight": 5,
+      "mood": "calm",
+      "text": {
+        "en": "Hologram pinged. Ready for architecture review.",
+        "hinglish": "Click acknowledged. Batao kya review karna hai code mein.",
+        "hi": "तैयार।"
+      }
+    }
+  ],
+  "pet": [
+    {
+      "weight": 5,
+      "mood": "mentor",
+      "text": {
+        "en": "Haptic feedback received. Positive reinforcement noted.",
+        "hinglish": "Haptic feedback logged. Shanti se kaam karte raho, sab theek hoga.",
+        "hi": "सकारात्मक प्रतिक्रिया।"
+      }
+    }
+  ],
+  "zap": [
+    {
+      "weight": 5,
+      "mood": "calm",
+      "text": {
+        "en": "High-voltage surge absorbed. Terminal shunt diodes functioning normally.",
+        "hinglish": "Voltage spike absorbed. Shunt circuit normal hai. Electric surge bypassed.",
+        "hi": "सुरक्षा तंत्र सक्रिय।"
+      }
+    }
+  ],
+  "file_save": [
+    {
+      "weight": 5,
+      "mood": "calm",
+      "text": {
+        "en": "Buffer flushed to persistent storage. Atomic and safe.",
+        "hinglish": "File saved to disk. Atomic write complete, zero corruption risk. 💾",
+        "hi": "फ़ाइल सुरक्षित रूप से सहेजी गई।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "mentor",
+      "text": {
+        "en": "Frequent saves prevent state divergence. Sound engineering hygiene.",
+        "hinglish": "Ctrl+S ki aadat badiya hai. State consistent rehti hai.",
+        "hi": "उत्कृष्ट इंजीनियरिंग आदत।"
+      }
+    }
+  ],
+  "coding_burst": [
+    {
+      "weight": 5,
+      "mood": "mentor",
+      "text": {
+        "en": "High token throughput detected. Maintain modular separation.",
+        "hinglish": "Impessive typing speed. Modular functions likhna, monolithic mat bana dena! ⚡",
+        "hi": "तेज़ और स्पष्ट कोड लिखें।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "calm",
+      "text": {
+        "en": "Sustained algorithmic focus. The zone is where senior engineers thrive.",
+        "hinglish": "Full focus state. Logical flow ekdum aligned chal raha hai.",
+        "hi": "उत्कृष्ट एकाग्रता।"
+      }
+    }
+  ],
+  "coding_pause": [
+    {
+      "weight": 5,
+      "mood": "mentor",
+      "text": {
+        "en": "Pondering the invariant? Good. Measure twice, cut once.",
+        "hinglish": "Edge case analyze kar rahe ho? Achhi baat hai. Pehle dry-run karo mind mein.",
+        "hi": "सावधानीपूर्वक विश्लेषण करें।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "calm",
+      "text": {
+        "en": "Take a moment to inspect memory usage or complexity bounds.",
+        "hinglish": "Break leke architecture verify kar lo. Sahi solution wahi se aayega.",
+        "hi": "विचारशील विराम।"
+      }
+    }
+  ],
+  "syntax_error": [
+    {
+      "weight": 5,
+      "mood": "mentor",
+      "text": {
+        "en": "AST parsing failed at line {line}. Isolate the token delimiter.",
+        "hinglish": "Syntax error caught on line {line}. Token delimiter check karo boss. ⚠️",
+        "hi": "पंक्ति {line} पर सिंटैक्स त्रुटि मिली।"
+      }
+    }
+  ],
+  "git_commit": [
+    {
+      "weight": 5,
+      "mood": "mentor",
+      "text": {
+        "en": "Commit hash generated. Clean git history is a sign of a clear mind.",
+        "hinglish": "Commit successfully staged. Clean git history maintain karne ke liye respect! 🚀",
+        "hi": "कमिट सफलतापूर्वक हुआ।"
+      }
+    }
+  ],
+  "file_switch": [
+    {
+      "weight": 5,
+      "mood": "analytical",
+      "text": {
+        "en": "Switching scope to {file}. Loading dependency graph.",
+        "hinglish": "Scope switch hua: {file}. Dependency graph load kar raha hoon.",
+        "hi": "{file} पर कार्य प्रारंभ।"
+      }
+    }
+  ],
+  "idle_banter": [
+    {
+      "weight": 5,
+      "mood": "calm",
+      "text": {
+        "en": "CPU idle cycles optimal. Background garbage collection complete.",
+        "hinglish": "CPU cool hai, RAM optimal hai. Codebase clean state mein hai.",
+        "hi": "सिस्टम अनुकूलित है।"
+      }
+    }
+  ]
+}

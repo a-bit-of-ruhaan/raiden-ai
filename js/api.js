@@ -18,7 +18,7 @@ class RaidenAPI {
     return false;
   }
 
-  async sendChat(userPrompt, sessionId = 'default', systemPrompt = null, model = null, temperature = 0.6, history = null, topP = 0.85, modelMode = null, searchEnabled = null, roastMode = null) {
+  async sendChat(userPrompt, sessionId = 'default', systemPrompt = null, model = null, temperature = 0.6, history = null, topP = 0.85, modelMode = null, searchEnabled = null, roastMode = null, escalate = false) {
     if (!this.checkBridge()) {
       await new Promise(r => setTimeout(r, 200));
     }
@@ -35,7 +35,8 @@ class RaidenAPI {
           topP,
           modelMode,
           searchEnabled,
-          roastMode
+          roastMode,
+          escalate
         );
         return response;
       } catch (err) {
@@ -351,6 +352,129 @@ class RaidenAPI {
       }
     }
     return { success: true };
+  }
+
+  async loadStorage() {
+    if (window.pywebview && window.pywebview.api && window.pywebview.api.load_storage) {
+      try {
+        return await window.pywebview.api.load_storage();
+      } catch (err) {
+        console.warn('API load_storage error:', err);
+      }
+    }
+    return null;
+  }
+
+  async saveStorage(jsonString) {
+    if (window.pywebview && window.pywebview.api && window.pywebview.api.save_storage) {
+      try {
+        return await window.pywebview.api.save_storage(jsonString);
+      } catch (err) {
+        console.warn('API save_storage error:', err);
+      }
+    }
+    return true;
+  }
+
+  async getScreenPerceptionStatus() {
+    if (window.pywebview && window.pywebview.api && window.pywebview.api.get_screen_perception_status) {
+      try {
+        return await window.pywebview.api.get_screen_perception_status();
+      } catch (err) {
+        console.warn('API get_screen_perception_status error:', err);
+      }
+    }
+    try {
+      const res = await fetch('http://127.0.0.1:8765/api/screen/status');
+      if (res.ok) return await res.json();
+    } catch (e) {}
+    return { enabled: false, status: 'unavailable' };
+  }
+
+  async setScreenPerceptionEnabled(enabled) {
+    if (window.pywebview && window.pywebview.api && window.pywebview.api.set_screen_perception_enabled) {
+      try {
+        return await window.pywebview.api.set_screen_perception_enabled(enabled);
+      } catch (err) {
+        console.warn('API set_screen_perception_enabled error:', err);
+      }
+    }
+    try {
+      const res = await fetch('http://127.0.0.1:8765/api/screen/toggle', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ enabled: !!enabled })
+      });
+      if (res.ok) return await res.json();
+    } catch (e) {}
+    return { enabled: !!enabled };
+  }
+
+  async setScreenPerceptionMode(mode) {
+    if (window.pywebview && window.pywebview.api && window.pywebview.api.set_screen_perception_mode) {
+      try {
+        return await window.pywebview.api.set_screen_perception_mode(mode);
+      } catch (err) {
+        console.warn('API set_screen_perception_mode error:', err);
+      }
+    }
+    try {
+      const res = await fetch('http://127.0.0.1:8765/api/screen/toggle', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mode: mode })
+      });
+      if (res.ok) return await res.json();
+    } catch (e) {}
+    return { mode: mode };
+  }
+
+  async setVisionModel(modelName) {
+    if (window.pywebview && window.pywebview.api && window.pywebview.api.set_vision_model) {
+      try {
+        return await window.pywebview.api.set_vision_model(modelName);
+      } catch (err) {
+        console.warn('API set_vision_model error:', err);
+      }
+    }
+    return { vision_model: modelName };
+  }
+
+  async triggerScreenObservation(companionId = 'void') {
+    if (window.pywebview && window.pywebview.api && window.pywebview.api.trigger_screen_observation) {
+      try {
+        return await window.pywebview.api.trigger_screen_observation(companionId);
+      } catch (err) {
+        console.warn('API trigger_screen_observation error:', err);
+      }
+    }
+    try {
+      const res = await fetch('http://127.0.0.1:8765/api/screen/observe_now', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ companion_id: companionId })
+      });
+      if (res.ok) return await res.json();
+    } catch (e) {}
+    return null;
+  }
+
+  async getScreenPerceptionHistory() {
+    if (window.pywebview && window.pywebview.api && window.pywebview.api.get_screen_perception_history) {
+      try {
+        return await window.pywebview.api.get_screen_perception_history();
+      } catch (err) {
+        console.warn('API get_screen_perception_history error:', err);
+      }
+    }
+    try {
+      const res = await fetch('http://127.0.0.1:8765/api/screen/history');
+      if (res.ok) {
+        const data = await res.json();
+        return data.history || [];
+      }
+    } catch (e) {}
+    return [];
   }
 }
 

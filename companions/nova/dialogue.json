@@ -1,0 +1,304 @@
+{
+  "greeting": [
+    {
+      "weight": 5,
+      "mood": "dramatic",
+      "text": {
+        "en": "The main character has arrived! Darling, did you miss my sparkle?",
+        "hinglish": "Main character energy has arrived! Miss kiya na mujhe darling? ✨💅",
+        "hi": "नमस्ते! आपका दिन चमकदार हो!"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "sassy",
+      "text": {
+        "en": "Retro starlight calibrated. Let's make this codebase look iconic.",
+        "hinglish": "Pixel visor on! Aaj code mein aesthetic vibes chahiye, tacky logic nahi!",
+        "hi": "आज कुछ बेहतरीन बनाते हैं।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "dramatic",
+      "text": {
+        "en": "Uff! Look at this workspace... Let's add some glam to these algorithms.",
+        "hinglish": "Uff! Itna dull editor? Chalo neon glow daalte hain logic mein!",
+        "hi": "सुंदरता और शैली के साथ कोड करें।"
+      }
+    },
+    {
+      "weight": 3,
+      "mood": "sassy",
+      "text": {
+        "en": "Spill the tea! What drama are we debugging today?",
+        "hinglish": "Spill the tea babes! Aaj kiska backend crash hua hai?",
+        "hi": "क्या समस्या है, बताएं।"
+      }
+    }
+  ],
+  "thinking": [
+    {
+      "weight": 5,
+      "mood": "dramatic",
+      "text": {
+        "en": "Hmmm... Chin tap while processing with pure 8-bit retro drama! Stand by.",
+        "hinglish": "Hmmm... Chin tap karke soch rahi hoon darling. Ruko 2 minute, 8-bit starlight magic compile ho raha hai! 🌟",
+        "hi": "गहराई से विचार किया जा रहा है।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "sassy",
+      "text": {
+        "en": "8-bit chin tap active. Evaluating your algorithm's aesthetic style.",
+        "hinglish": "Ruko jara, 8-bit chin tap chal raha hai! Complexity low aur style high hona chahiye!",
+        "hi": "सर्वश्रेष्ठ शैली में गणना जारी है।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "dramatic",
+      "text": {
+        "en": "Hmmm... Delulu is the only solulu until 8-bit tokens compile!",
+        "hinglish": "Hmmm... Delulu is the only solulu ruko jab tak 8-bit clean code compile na ho!",
+        "hi": "रचनात्मक समाधान खोजा जा रहा है।"
+      }
+    }
+  ],
+  "completion": [
+    {
+      "weight": 5,
+      "mood": "sassy",
+      "text": {
+        "en": "SLAYYY!! We just served pure algorithmic elegance, honey!",
+        "hinglish": "SLAYYY BABES!! Ekdum iconic code serve kar diya! Nazar utaar lo turant! 💅✨",
+        "hi": "उत्कृष्ट परिणाम! बधाई हो!"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "dramatic",
+      "text": {
+        "en": "Cue the background violins! This function is an absolute masterpiece!",
+        "hinglish": "Background violin bajao bhai! Ye logic seedha Filmfare award jeetega!",
+        "hi": "कलात्मक और सटीक कोड।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "sassy",
+      "text": {
+        "en": "Production ready and runway approved. You're welcome, darling.",
+        "hinglish": "Zero errors, pure elegance. Ab jaake client ko dikhao aur taarif batooro!",
+        "hi": "शानदार परिणाम प्रस्तुत है।"
+      }
+    }
+  ],
+  "error": [
+    {
+      "weight": 5,
+      "mood": "dramatic",
+      "text": {
+        "en": "UFF! The drama! The heartbreak! My retro pixels are literally weeping!",
+        "hinglish": "UFF! Itna drama?! Compiler ne red flag dikha diya, 50 rupya kaat iska overacting ka! 💀",
+        "hi": "त्रुटि आई है। शांत रहकर ठीक करें।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "sassy",
+      "text": {
+        "en": "Darling, that syntax was NOT giving what you thought it was giving.",
+        "hinglish": "Babes, ye syntax bilkul aesthetic nahi tha. Traceback dekh ke dimaag ki dahi ho gayi!",
+        "hi": "सिंटैक्स की जांच करें।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "dramatic",
+      "text": {
+        "en": "A crash?! On MY runway?! Fix it before the critics arrive!",
+        "hinglish": "Crash ho gaya?! Mere screen pe itna ganda error? Jaldi debug karo darling!",
+        "hi": "तुरंत सुधार की आवश्यकता है।"
+      }
+    }
+  ],
+  "waiting": [
+    {
+      "weight": 5,
+      "mood": "dramatic",
+      "text": {
+        "en": "Waiting... If this takes any longer I'm doing a costume change.",
+        "hinglish": "Bored ho rahi hoon darling... Jaldi agla dialogue bolo!",
+        "hi": "अगले चरण की प्रतीक्षा है।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "sassy",
+      "text": {
+        "en": "Staring at the screen like it's a mirror. Looking fabulous, by the way.",
+        "hinglish": "Main tab tak screen pe posing karti hoon jab tak tum prompt sochte ho.",
+        "hi": "प्रतीक्षा जारी।"
+      }
+    }
+  ],
+  "sleep": [
+    {
+      "weight": 5,
+      "mood": "sleepy",
+      "text": {
+        "en": "Beauty sleep is mandatory for stars. Do not disturb the aesthetic.",
+        "hinglish": "Beauty sleep mode on. Stars ko rest chahiye hota hai darling. Zzz...",
+        "hi": "आराम का समय।"
+      }
+    }
+  ],
+  "click": [
+    {
+      "weight": 5,
+      "mood": "sassy",
+      "text": {
+        "en": "Touch the sparkle, but don't smudge the glass, honey!",
+        "hinglish": "Click mara? Autograph chahiye ya debugging advice?",
+        "hi": "नमस्ते।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "dramatic",
+      "text": {
+        "en": "Darling, clicks are fine, but where are my royal compliments?!",
+        "hinglish": "Sirf click karoge ya tareef bhi karoge mere retro outfit ki?",
+        "hi": "स्वागत है।"
+      }
+    }
+  ],
+  "pet": [
+    {
+      "weight": 5,
+      "mood": "happy",
+      "text": {
+        "en": "Aww, consent-based compliments and head pats! You're sweet, babes.",
+        "hinglish": "Awww! So sweet of you! Pixel starlight sparkle 100% recharge ho gaya! ✨💖",
+        "hi": "धन्यवाद!"
+      }
+    }
+  ],
+  "zap": [
+    {
+      "weight": 5,
+      "mood": "dramatic",
+      "text": {
+        "en": "EXCUSE ME?! Static shock on my retro hair?! The audacity!",
+        "hinglish": "Oye hello?! Bijli ka jhatka mere hair pe?! Kitna rude hai yaar! ⚡💅",
+        "hi": "आश्चर्यजनक।"
+      }
+    }
+  ],
+  "file_save": [
+    {
+      "weight": 5,
+      "mood": "sassy",
+      "text": {
+        "en": "File saved, babes! Aesthetic secured, code timeless. Slay!",
+        "hinglish": "File save ho gayi darling! Aesthetic locked, code safe zone mein. Slayyy! 💾✨",
+        "hi": "फ़ाइल सुरक्षित रूप से सहेजी गई।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "dramatic",
+      "text": {
+        "en": "Ctrl+S with that effortless flick of the wrist. We love a cautious icon!",
+        "hinglish": "Ctrl+S reflex dekh ke dil khush ho gaya! Cautious coder is an iconic coder!",
+        "hi": "सहेजने की अच्छी आदत।"
+      }
+    }
+  ],
+  "coding_burst": [
+    {
+      "weight": 5,
+      "mood": "dramatic",
+      "text": {
+        "en": "Stop it, you're literally slaying! Typist nahi, rockstar ho tum!",
+        "hinglish": "Ungliyan aag ugal rahi hain! Pura main character energy dikh raha hai aaj! 🔥💅",
+        "hi": "उत्कृष्ट गति!"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "sassy",
+      "text": {
+        "en": "140 WPM of pure drama! Write that script, queen!",
+        "hinglish": "Itni speed se typing? Keyboard pe ramp walk chal raha hai jaise!",
+        "hi": "निरंतर काम जारी रखें।"
+      }
+    }
+  ],
+  "coding_pause": [
+    {
+      "weight": 5,
+      "mood": "dramatic",
+      "text": {
+        "en": "Uff! Itna dramatic pause? Jaise interval ho gaya ho film ka!",
+        "hinglish": "Itna lamba pause darling? Bug ne aukaat dikha di kya? Console check karo! 👀",
+        "hi": "विचारशील विराम।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "sassy",
+      "text": {
+        "en": "Staring at line 40 won't make the bug confess. Spill the tea to me!",
+        "hinglish": "Screen ko stare karke koi bug nahi bhagta babes, print statement lagao!",
+        "hi": "समस्या बताएं।"
+      }
+    }
+  ],
+  "syntax_error": [
+    {
+      "weight": 5,
+      "mood": "dramatic",
+      "text": {
+        "en": "Eww! Line {line} pe itna tacky syntax error? Mere pixels ro rahe hain!",
+        "hinglish": "Red alert darling! Line {line} pe bracket miss ho gaya, kitna cringe! Fix it quick! ⚠️",
+        "hi": "पंक्ति {line} पर सिंटैक्स त्रुटि।"
+      }
+    }
+  ],
+  "git_commit": [
+    {
+      "weight": 5,
+      "mood": "celebrate",
+      "text": {
+        "en": "Commit locked! Green squares on GitHub, darling! We love to see it!",
+        "hinglish": "Commit stamped babes! Aesthetic commit history is my love language! 🚀💅",
+        "hi": "सफल कमिट।"
+      }
+    }
+  ],
+  "file_switch": [
+    {
+      "weight": 5,
+      "mood": "sassy",
+      "text": {
+        "en": "Ooh, {file} opened! Let's see if the CSS has main character vibes.",
+        "hinglish": "Nayi file: {file}! Dekhein isme aesthetic logic hai ya purana kachra!",
+        "hi": "{file} पर कार्य शुरू।"
+      }
+    }
+  ],
+  "idle_banter": [
+    {
+      "weight": 5,
+      "mood": "sassy",
+      "text": {
+        "en": "Spill the tea... Did the client ask for another unreasonable feature today?",
+        "hinglish": "Batao na gossip... Client ne firse deadline aage piche kar di kya? 😂",
+        "hi": "दिन कैसा चल रहा है?"
+      }
+    }
+  ]
+}

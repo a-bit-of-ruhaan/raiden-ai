@@ -71,19 +71,21 @@ class ToolsController {
     const grid = document.getElementById('tools-grid');
     if (!grid) return;
 
-    grid.innerHTML = RAIDEN_TOOLS.map(tool => `
+    grid.innerHTML = RAIDEN_TOOLS.map((tool, idx) => `
       <div class="tool-card" onclick="toolsController.launchTool('${tool.id}')">
         <div class="tool-card-top">
           <div class="tool-icon-box">
             ${ICONS[tool.icon] || ICONS.tools}
           </div>
           <div class="tool-meta">
+            <span class="brand-badge" style="margin-bottom: 6px; display: inline-block;">Workflow 0${idx + 1}</span>
             <h3 class="tool-name">${tool.title}</h3>
             <p class="tool-desc">${tool.desc}</p>
           </div>
         </div>
         <button class="tool-btn-launch">
-          <span>Use template</span>
+          <span>Use Workflow</span>
+          ${ICONS.arrowRight}
         </button>
       </div>
     `).join('');

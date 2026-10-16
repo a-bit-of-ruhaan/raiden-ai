@@ -1,0 +1,138 @@
+================================================================================
+RAIDEN AI — OFFICIAL CHARACTER SPRITESHEET DESIGN PROMPT: PIXEL
+================================================================================
+Character Name: PIXEL
+Title: The Cyber-Hound / Good-Boy Puppy
+Role: Playful, hyper-energetic, affectionate coding puppy & morale booster
+Aesthetic Style: 16-Bit Super Nintendo / Arcade Chibi Sprite, Retro Cyber-Pet
+Primary Color Theme: Cyber Amber (#FFB703), Safety Orange (#FB8500), Warm Dark (#16110A)
+
+--------------------------------------------------------------------------------
+1. CHARACTER VISUAL DESIGN & ANATOMY BREAKDOWN
+--------------------------------------------------------------------------------
+• Silhouette:
+  - Chunky, endearing retro cyber-corgi/golden-retriever pup (~34-38 pixels tall within a 48x48 cell).
+  - Oversized expressive floppy mechanical ears with animated brass micro-hinges that bounce and perk.
+  - Blocky, high-speed wagging cyber-tail that wags at 500 RPM into a blurred amber arc.
+  - Warm, glowing digital visor eyes displaying curved joyous arches (^^) or curious wide circles (oo).
+  - Metallic collar with a glowing neon bone-shaped hologram tag (#FFB703).
+  - Padded robotic paws with cyan rubber grip treads that stomp enthusiastically during typing and dancing.
+
+• Color Palette (Strict 16-bit Indexed Color Swatches):
+  - Primary Fur / Chassis: #FFB703 (Cyber Amber Gold), #FCD34D (Warm Light Gold)
+  - Secondary Accents: #FB8500 (Safety Orange), #D97706 (Deep Ochre Shadow)
+  - Underbelly & Paws: #F8FAFC (Bone White), #E2E8F0 (Silver Pewter)
+  - Dark Frame & Collar: #16110A (Warm Obsidian), #292524 (Charcoal Rubber)
+  - Digital Glow / Collar Tag: #38BDF8 (Sky Blue Hologram), #4ADE80 (Treat Green)
+
+--------------------------------------------------------------------------------
+2. MASTER AI IMAGE GENERATION PROMPTS (MIDJOURNEY, STABLE DIFFUSION, DALL-E)
+--------------------------------------------------------------------------------
+
+[A. Midjourney v6 / Niji 6 Prompt]
+--------------------------------------------------------------------------------
+authentic 16-bit arcade pixel art character spritesheet of PIXEL the cyber-hound puppy, cute robotic golden corgi dog, Capcom CPS2 retro sprite aesthetic, golden amber chassis, floppy mechanical ears, blocky wagging tail, glowing happy digital eyes. Rows of animation cycles: happy idle breathing with wagging tail, energetic puppy run, rapid paw typing on glowing holographic keyboard, 120-BPM music dance with retro sports headphones, head tilt sniffing bug, victory backflip with virtual bone, startled jump, sleeping curled with blue zZz. Uniform 48x48 pixel grid, transparent white background, sharp crisp pixels, no anti-aliasing, no blur, vibrant retro amber and safety-orange palette --ar 16:9 --style raw --v 6.0
+
+[B. Stable Diffusion XL / ComfyUI Prompt]
+--------------------------------------------------------------------------------
+Prompt:
+masterpiece, best quality, authentic 16-bit pixel art spritesheet, arcade game sprite sheet, character PIXEL cyber puppy dog, cute robotic canine pet, golden amber and orange armor, floppy mechanical ears, blocky pixel wagging tail, multiple animation rows arranged in neat grid: row 1 idle panting and tail wag, row 2 joyful bounding trot, row 3 rapid paw stomping typing, row 4 dancing with oversized retro sports headphones, row 5 sniffing out bugs with magnifying glass HUD, row 6 celebratory backflip catching glowing bone, row 7 surprised bark reaction, row 8 sleeping curled with soft zZz. pixel perfect, integer scaling, sharp outlines, indexed colors, 16-bit color depth, plain background, uniform cell spacing.
+
+Negative Prompt:
+blurry, smooth, vector, 3d render, painting, photographic, anti-aliased, gradients, messy layout, uneven frames, cut off, watermark, low quality, non-pixelated, realistic dog.
+
+[C. DALL-E 3 Prompt]
+--------------------------------------------------------------------------------
+A complete, structured 16-bit pixel art animation spritesheet for an arcade game featuring 'Pixel', an adorable robotic golden puppy with amber-yellow chassis and animated floppy ears. The image shows a clean 8x8 grid of animation frames on a neutral plain background: Row 1 is a cheerful idle stance panting happily with tail wagging at high speed; Row 2 is an energetic puppy sprint; Row 3 shows the puppy enthusiastically slamming front paws on a glowing holographic keyboard; Row 4 shows it wearing chunky retro wireless sports headphones, bobbing its head and dancing to music; Row 5 shows it sniffing the ground with a cyan inquiry glyph; Row 6 shows a joyful victory leap catching a glowing digital bone; Row 7 is a comical shock reaction with paws in the air; Row 8 is a peaceful sleeping coil with blue 'zZz'. Crisp retro arcade pixels, vibrant colors, clear outlines.
+
+--------------------------------------------------------------------------------
+3. SPRITESHEET LAYOUT & CELL GRID SPECIFICATIONS
+--------------------------------------------------------------------------------
+• Canvas Resolution: 512 x 384 pixels (or 768 x 576 pixels for 64x64 cells)
+• Cell Dimension: 48 x 48 pixels per frame (Uniform bounding box)
+• Grid Configuration: 8 Columns x 8 Rows
+• Background: 100% Transparent Alpha (#00000000)
+• Pivot / Anchor Point: Center-bottom of each cell (x = 24, y = 44) to keep paws grounded.
+
+--------------------------------------------------------------------------------
+4. FRAME-BY-FRAME ANIMATION SEQUENCES FOR PIXEL
+--------------------------------------------------------------------------------
+
+• ROW 1: AMBIENT IDLE LIFE & TAIL WAG (6 Frames, 10 FPS, Looping)
+  - Frame 1: Sturdy four-legged puppy stance, happy open smile, ears upright, tail angled 45 degrees left.
+  - Frame 2: Body bounces down 1px playfully, chest expands (panting breath), tail snaps to center.
+  - Frame 3: Tail whips hard right (+45 degrees) with amber motion blur, floppy ears bounce with gravity.
+  - Frame 4: Eye blink (visor displays curved joy arches ^^), tongue lolls out 1 pixel.
+  - Frame 5: Tail whips back hard left (-45 degrees), ears flop forward playfully.
+  - Frame 6: Settle back to start with tail at center, ready for next wag cycle.
+
+• ROW 2: JOYFUL PUPPY RUN / BOUND (6 Frames, 12 FPS, Looping)
+  - Frame 1: Eager push-off, front paws reaching far forward, floppy ears trailing behind head.
+  - Frame 2: Full suspension gallop, all four paws tucked under belly in mid-air leap, tail spinning like a propeller.
+  - Frame 3: Front paws land firmly, body compressing forward with momentum.
+  - Frame 4: Hind paws kick through, spine flexing forward, ears flopping forward over brow.
+  - Frame 5: Extension stride, tail held high and proud, happy grin.
+  - Frame 6: Seamless transition into next bound.
+
+• ROW 3: HYPER TYPING / PAW STOMP (6 Frames, 14 FPS, Looping)
+  - Frame 1: Puppy sitting up on hind legs, front paws poised over a mini green holographic keyboard matrix.
+  - Frame 2: Left paw slams down enthusiastically, spawning tiny green sparks (#4ADE80), ears perk up.
+  - Frame 3: Right paw slams down with force, left paw raises high, tongue sticking out in concentration.
+  - Frame 4: Rapid pitter-patter blur of both paws stomping keys, holographic keystroke ripples radiating outward.
+  - Frame 5: Tail wagging at 500 RPM, producing a continuous amber blur aura behind body.
+  - Frame 6: Cycle loop back to Frame 1.
+
+• ROW 4: MUSIC GROOVE & 120-BPM BOUNCE (8 Frames, 10 FPS, Looping)
+  - Frame 1: Oversized chunky retro arcade headphones snap onto puppy's ears, body dips in downbeat bounce.
+  - Frame 2: Head bobs deep, headphone ear cups flash pulsing safety-orange LED equalizer bars, ears bounce.
+  - Frame 3: Upward bounce! Front paws lift 2 pixels off ground, amber musical note '♪' floats over head.
+  - Frame 4: Puppy wiggles hips to the right, tail swishing in musical time, eyes closed in groove.
+  - Frame 5: Downbeat bounce, paws tap rhythmically on floor, second note '♫' drifts upward.
+  - Frame 6: Hips sway left, headphone LEDs pulse to peak brightness, ears flop joyfully.
+  - Frame 7: Peak joyful hop, tongue out, tail wagging in rhythm.
+  - Frame 8: Reset to start of groove cycle.
+
+• ROW 5: BUG SNIFFING & THINKING (4 Frames, 6 FPS, Looping)
+  - Frame 1: Nose to the ground, sniffing frantically, ears forward in curious detective posture.
+  - Frame 2: Digital nose emits tiny cyan radar ping rings (#38BDF8), scanning the floor for bugs.
+  - Frame 3: Head lifts with a tilted ear, visor displaying a rotating cyan question glyph (?).
+  - Frame 4: Confident sniff and nod, tail wagging slowly as solution is found.
+
+• ROW 6: BARKING / TOKEN GENERATING (6 Frames, 10 FPS, Looping)
+  - Frame 1: Mouth opens wide, chest puffs up, visor eyes glow bright amber.
+  - Frame 2: Joyful cyber-bark! Digital soundwave rings pulse outward from snout.
+  - Frame 3: Tail wags in giant circles, ears bounce back from bark recoil.
+  - Frame 4: Head tilts up, emitting rapid speech token pulses.
+  - Frame 5: Mouth relaxes into happy grin, soundwave rings dissipate into sparkles.
+  - Frame 6: Reset to speech rhythm.
+
+• ROW 7: VICTORY CELEBRATION / TREAT TIME (6 Frames, 10 FPS, Non-Looping / Play Once)
+  - Frame 1: Puppy sits back on haunches, eyes sparkling with anticipation.
+  - Frame 2: Explosive joyful leap straight into the air!
+  - Frame 3: Full acrobatic mid-air flip, catching a glowing cyan holographic bone in mouth!
+  - Frame 4: Landing triumphantly with bone clamped in jaws, burst of colorful confetti/sparkle pixels.
+  - Frame 5: Enthusiastic tail wagging so fast it creates an amber halo.
+  - Frame 6: Proud head held high, bone shining brightly.
+
+• ROW 8: STARTLED / SURPRISED (4 Frames, 12 FPS, Looping / Recovery)
+  - Frame 1: Sudden shock! Puppy leaps 6 pixels backward, all four legs splayed out in surprise.
+  - Frame 2: Ears flared straight up like antennas, eyes dilated into huge surprised white circles (OO).
+  - Frame 3: Tail tucked safely between legs, funny trembling animation.
+  - Frame 4: Shakes entire body like a wet dog, sending harmless static sparks flying, returning to normal.
+
+• ROW 9: PUPPY NAP & WAKEUP (6 Frames, 4 FPS, Looping)
+  - Frame 1: Puppy curls into a cozy golden donut, nose tucked under tail.
+  - Frame 2: Heavy sigh, visor dimming to a warm gentle sleep glow.
+  - Frame 3: Soft cyan 'z' floats up from snout, ear twitches in puppy dream.
+  - Frame 4: Larger 'Z' floats, chest rises and falls in slow rhythm.
+  - Frame 5: Wakeup! One ear perks up, one eye peeks open.
+  - Frame 6: Full-body puppy stretch, front paws forward, butt in the air, tail wagging instantly!
+
+--------------------------------------------------------------------------------
+5. PIXEL ARTIST ASEPRITE EXPORT & INTEGRATION GUIDE
+--------------------------------------------------------------------------------
+• Target Output Format: Indexed PNG with transparency, 24-bit RGB + Alpha channel.
+• File Naming Convention: companions/pixel/spritesheet.png (and companion-specific pose PNGs).
+• Frame Mapping: 48x48 integer pixels per frame, strictly avoiding fractional coordinate offsets.
+• Zero Color Bleed: Ensure background pixels are fully RGBA(0, 0, 0, 0) with zero halo artifacts.
+================================================================================

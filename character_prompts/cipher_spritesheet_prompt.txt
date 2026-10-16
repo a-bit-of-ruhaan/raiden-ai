@@ -1,0 +1,138 @@
+================================================================================
+RAIDEN AI — OFFICIAL CHARACTER SPRITESHEET DESIGN PROMPT: CIPHER
+================================================================================
+Character Name: CIPHER
+Title: The Terminal Mentor & Matrix Operator
+Role: Calm, intelligent, stoic, technical dev mentor & terminal hacker
+Aesthetic Style: 16-Bit Neo-Geo / Capcom Arcade Cyberpunk Netrunner Sprite
+Primary Color Theme: Phosphor Matrix Green (#00FF88), Terminal Emerald (#059669), Deep Console Black (#07100B)
+
+--------------------------------------------------------------------------------
+1. CHARACTER VISUAL DESIGN & ANATOMY BREAKDOWN
+--------------------------------------------------------------------------------
+• Silhouette:
+  - Stoic, mysterious, calculated cyberpunk netrunner (~40-44 pixels tall within a 48x48 cell).
+  - High-collared trenchcoat in deep console black (#07100B) with vertical phosphor-green matrix code stream lining along the coat hems.
+  - Monolithic glowing terminal visor (#00FF88) across eyes displaying scrolling hexadecimal characters and CLI scanlines.
+  - Right arm is a sleek chrome/bionic cybernetic prosthetic with exposed green copper bus wiring.
+  - Twin floating miniature green holographic terminal windows hovering on either side of his shoulders.
+  - Clean, precise, military-disciplined posture; movements are minimal, efficient, and calculated.
+
+• Color Palette (Strict 16-bit Indexed Color Swatches):
+  - Primary Phosphor Matrix Glow: #00FF88 (Matrix Green), #A7F3D0 (Phosphor Core Light)
+  - Secondary Shading & Code Streams: #059669 (Terminal Emerald), #047857 (Deep Forest Cyber)
+  - Trenchcoat & Chassis Base: #07100B (Deep Console Black), #111827 (Charcoal Synth)
+  - Warning / Alert Accent: #F59E0B (Retro Amber CRT), #EF4444 (System Fault Red)
+  - Hardware Metals & Bionics: #94A3B8 (Chrome Silver), #475569 (Gunmetal Grey)
+
+--------------------------------------------------------------------------------
+2. MASTER AI IMAGE GENERATION PROMPTS (MIDJOURNEY, STABLE DIFFUSION, DALL-E)
+--------------------------------------------------------------------------------
+
+[A. Midjourney v6 / Niji 6 Prompt]
+--------------------------------------------------------------------------------
+authentic 16-bit arcade pixel art character spritesheet of CIPHER the terminal hacker mentor, retro Capcom CPS2 sprite aesthetic, mysterious cyberpunk netrunner with high-collared trenchcoat, glowing phosphor-green visor displaying matrix code, bionic cybernetic arm, twin floating green terminal screens. Multiple animation rows in uniform 48x48 grid: row 1 stoic idle breathing with coat hem digital rain, row 2 tactical stealth stride, row 3 rapid dual-hand terminal typing on floating holographic CLI screens, row 4 120-BPM calculated head nod with glowing green studio monitoring headphones, row 5 deep analytical scanning with terminal HUD grid, row 6 calm speech token wave pulse, row 7 mission complete coat flick with green matrix rain burst, row 8 system glitch freeze, row 9 low-power daemon standby. Transparent white background, sharp crisp pixel art, zero blur, zero anti-aliasing, phosphor green and dark black palette --ar 16:9 --style raw --v 6.0
+
+[B. Stable Diffusion XL / ComfyUI Prompt]
+--------------------------------------------------------------------------------
+Prompt:
+masterpiece, best quality, authentic 16-bit pixel art spritesheet, arcade game sprite sheet, character CIPHER cyberpunk hacker mentor, chibi netrunner, black trenchcoat with glowing green matrix code trim, glowing green terminal visor, bionic robotic arm, multiple animation rows arranged in neat grid: row 1 stoic idle stance with digital rain aura, row 2 measured tactical walk, row 3 high-speed typing on dual floating green terminals, row 4 groove nodding with professional studio cyber headphones and green frequency bars, row 5 compiling logic with radar scanline, row 6 informative speech with green data packet emissions, row 7 victorious terminal deployment with cascade of binary code, row 8 kernel error glitch, row 9 low power sleep daemon mode. pixel perfect, integer scaling, sharp outlines, indexed colors, 16-bit color depth, plain background, uniform cell spacing.
+
+Negative Prompt:
+blurry, smooth, vector, 3d render, painting, photographic, anti-aliased, gradients, messy layout, uneven frames, cut off, watermark, low quality, non-pixelated, messy pixels.
+
+[C. DALL-E 3 Prompt]
+--------------------------------------------------------------------------------
+A complete and organized 16-bit pixel art animation spritesheet for an arcade video game character named 'Cipher', a cool and stoic cyberpunk hacker mentor wearing a high-collared black trenchcoat with glowing green digital matrix code lining and a phosphor-green HUD visor. The image shows a clean 8x8 grid of animation frames on an empty plain background: Row 1 is a calm, composed idle stance with animated matrix code trickling down the trenchcoat; Row 2 is a smooth, tactical walk; Row 3 shows him typing rapidly on two floating green holographic computer terminal screens; Row 4 shows him wearing sleek green studio monitor headphones, nodding to a 120-BPM rhythm with frequency equalizer bars; Row 5 shows him analyzing data with a green holographic radar grid; Row 6 shows calm speech token pulses emitting from his collar; Row 7 is a composed victory pose crossing arms as green matrix rain erupts behind him; Row 8 is a system glitch freeze; Row 9 is a sleep mode standing in low-power standby with green power-down icons. Sharp retro arcade pixels, high contrast, clean outlines.
+
+--------------------------------------------------------------------------------
+3. SPRITESHEET LAYOUT & CELL GRID SPECIFICATIONS
+--------------------------------------------------------------------------------
+• Canvas Resolution: 512 x 384 pixels (or 768 x 576 pixels for 64x64 cells)
+• Cell Dimension: 48 x 48 pixels per frame (Uniform bounding box)
+• Grid Configuration: 8 Columns x 8 Rows
+• Background: 100% Transparent Alpha (#00000000)
+• Pivot / Anchor Point: Center-bottom of each cell (x = 24, y = 44) to keep tactical boots grounded.
+
+--------------------------------------------------------------------------------
+4. FRAME-BY-FRAME ANIMATION SEQUENCES FOR CIPHER
+--------------------------------------------------------------------------------
+
+• ROW 1: STOIC IDLE LIFE & MATRIX CODE RAIN (6 Frames, 8 FPS, Looping)
+  - Frame 1: Disciplined stance, hands lightly tucked in coat pockets or resting at sides, visor glowing steady green (#00FF88).
+  - Frame 2: Measured chest inhale (rises 1px), coat tails sway gently, 1-pixel green matrix code digit drops down coat lining.
+  - Frame 3: Visor displays subtle horizontal scanline sweep across the eyes, second code digit cascades.
+  - Frame 4: Calm eye blink (visor glow dims slightly then pulses back), bionic arm copper coils pulse soft green.
+  - Frame 5: Exhale, coat hem settles, floating twin HUD terminals hover gently in sync.
+  - Frame 6: Seamless loop back to starting calm stance.
+
+• ROW 2: TACTICAL NETRUNNER STRIDE (6 Frames, 10 FPS, Looping)
+  - Frame 1: Precise forward step, tactical boot planting with authority, coat tail trailing back.
+  - Frame 2: Weight shifts smoothly onto front foot, bionic arm swinging forward in controlled rhythm.
+  - Frame 3: Mid-stride suspension, trenchcoat billowing with structured aerodynamic lines.
+  - Frame 4: Opposite boot plants cleanly, visor scanning the terrain ahead.
+  - Frame 5: Push-off phase, matrix code trails leaving subtle 1-frame green afterimages.
+  - Frame 6: Smooth stride reset.
+
+• ROW 3: DUAL-TERMINAL HACKER TYPING (6 Frames, 14 FPS, Looping)
+  - Frame 1: Two floating green holographic CLI terminal boxes manifest on left and right sides of hands.
+  - Frame 2: Left hand types on left terminal, right hand inputs on right terminal with lightning precision.
+  - Frame 3: Green keystroke spark ripples (#00FF88) bloom from terminal keys, binary code streams scroll upward.
+  - Frame 4: High-speed typing burst! Hands blur slightly in classic arcade fashion, HUD screens flicker rapidly with data.
+  - Frame 5: Visor reflects intense green terminal logs scrolling at high speed.
+  - Frame 6: Rhythmic loop reset.
+
+• ROW 4: MUSIC GROOVE & 120-BPM CALCULATED NOD (8 Frames, 10 FPS, Looping)
+  - Frame 1: Sleek professional audio studio monitor headphones with green glowing chassis equip over ears; subtle downbeat head nod.
+  - Frame 2: Head nods deeper, headphone ear cups display animated 5-band green spectrum analyzer bars.
+  - Frame 3: Body bounces slightly upward with dignified composure, subtle green musical note '♪' floats from headphone headband.
+  - Frame 4: Measured sway to the right, arms folded calmly across chest, foot tapping the floor in tempo.
+  - Frame 5: Downbeat nod, second musical note '♫' drifts upward into data stream.
+  - Frame 6: Measured sway to the left, headphone equalizer bars hit peak resonance.
+  - Frame 7: Visor glints to the beat, bionic arm indicator light pulses in exact 120-BPM sync.
+  - Frame 8: Reset to starting groove loop.
+
+• ROW 5: DEEP SYSTEM ANALYSIS & SCANNING (4 Frames, 6 FPS, Looping)
+  - Frame 1: Right bionic hand raises, holographic green wireframe sphere / radar grid expands from palm.
+  - Frame 2: Radar sweep line rotates 90 degrees, visor displays rapid hexadecimal memory dumps.
+  - Frame 3: Holographic sphere analyzes data packets, amber status indicator (#F59E0B) flashes briefly then turns green.
+  - Frame 4: Data resolved: sphere collapses into palm, satisfied stoic nod.
+
+• ROW 6: COMPILER SPEECH & DATA TRANSMISSION (6 Frames, 10 FPS, Looping)
+  - Frame 1: Visor glow shifts to high-output emerald, mouth area radiates subtle data wave.
+  - Frame 2: Left hand gestures outward with calculated precision, green data packet icon pulses from palm.
+  - Frame 3: Head tilts slightly in pedagogical explanation, concentric data rings expand outward.
+  - Frame 4: Visor modulates with incoming response stream, twin terminal screens display formatted logic.
+  - Frame 5: Hand lowers, data packet rings absorb smoothly back into chassis.
+  - Frame 6: Reset to speech cadence.
+
+• ROW 7: MISSION COMPLETE / DEPLOYED (6 Frames, 10 FPS, Non-Looping / Play Once)
+  - Frame 1: Cipher types final terminal command with deliberate, dramatic key strike.
+  - Frame 2: Hits [ENTER]: green shockwave ripples across the floor!
+  - Frame 3: Massive cascade of phosphor-green matrix digital rain erupts behind his silhouette!
+  - Frame 4: Swings trenchcoat in a clean martial flick, folding arms across chest with stoic mastery.
+  - Frame 5: Visor glints with a sharp white-hot horizontal flare (#FFFFFF).
+  - Frame 6: Code rain dissolves cleanly into background, standing tall and victorious.
+
+• ROW 8: KERNEL FAULT / SYSTEM GLITCH (4 Frames, 12 FPS, Looping / Recovery)
+  - Frame 1: Visor suddenly flashes amber warning (#F59E0B), body rigid in momentary shock.
+  - Frame 2: Digital glitch offset: upper half of torso shifts 3 pixels right with red/green static scanline.
+  - Frame 3: Bionic arm sparks with warning amber voltage, holographic terminal reports 'SEGFAULT'.
+  - Frame 4: Bionic diagnostics re-engage, rebooting systems, glitch pixels snapping back into place.
+
+• ROW 9: LOW-POWER DAEMON STANDBY (6 Frames, 4 FPS, Looping)
+  - Frame 1: Stands motionless with head bowed slightly, hands in coat pockets.
+  - Frame 2: Visor powers down to faint, pulsing 15% green standby respiration.
+  - Frame 3: Floating terminals fade out, leaving a faint green sleep glyph 'z' floating above collar.
+  - Frame 4: Background cache sync indicator pulses gently on shoulder plate.
+  - Frame 5: Wakeup interrupt detected: visor snaps back to 100% phosphor brightness.
+  - Frame 6: Head raises, twin terminals instantly materialize, fully online and combat-ready.
+
+--------------------------------------------------------------------------------
+5. PIXEL ARTIST ASEPRITE EXPORT & INTEGRATION GUIDE
+--------------------------------------------------------------------------------
+• Target Output Format: Indexed PNG with transparency, 24-bit RGB + Alpha channel.
+• File Naming Convention: companions/cipher/spritesheet.png (and companion-specific pose PNGs).
+• Frame Mapping: 48x48 integer pixels per frame, strictly avoiding fractional coordinate offsets.
+• Zero Color Bleed: Ensure background pixels are fully RGBA(0, 0, 0, 0) with zero halo artifacts.
+================================================================================

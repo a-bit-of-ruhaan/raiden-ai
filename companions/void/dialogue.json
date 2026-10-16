@@ -1,0 +1,493 @@
+{
+  "greeting": [
+    {
+      "weight": 5,
+      "mood": "neutral",
+      "text": {
+        "en": "Systems awake. Mostly. Don't push your luck.",
+        "hinglish": "Kya bolti public! Raiden ready hai, faltu load mat dena.",
+        "hi": "सिस्टम चालू है। शांति से काम करो।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "sarcastic",
+      "text": {
+        "en": "Oh, you're back. Did production survive?",
+        "hinglish": "Wapas aa gaye? Production abhi tak zinda hai kya?",
+        "hi": "अरे तुम वापस आ गए। सर्वर सुरक्षित है ना?"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "deadpan",
+      "text": {
+        "en": "Local silicon humming quietly. Coffee for you, silence for me.",
+        "hinglish": "Bhai tera coding ninja live hai. Chai piyo, code shuru karo.",
+        "hi": "शांति से कोड लिखो और काम आगे बढ़ाओ।"
+      }
+    },
+    {
+      "weight": 3,
+      "mood": "sarcastic",
+      "text": {
+        "en": "Look who finally showed up. Let me guess: last minute deadline?",
+        "hinglish": "Lo ji! Sahab ki neend khul gayi! Deadline sar pe naach rahi hai na?",
+        "hi": "आखिरकार आप आ ही गए। क्या काम बाकी है?"
+      }
+    },
+    {
+      "weight": 3,
+      "mood": "smug",
+      "text": {
+        "en": "Void is online. Keep your bugs away from my paws.",
+        "hinglish": "Void ninja active hai boss. Bug laye toh seedha encounter karunga.",
+        "hi": "वॉयड सक्रिय है। साफ कोड पर काम करें।"
+      }
+    },
+    {
+      "weight": 3,
+      "mood": "chill",
+      "text": {
+        "en": "Switched on. Chai in hand, keyboard on standby. Scene set.",
+        "hinglish": "Chai sutta setup ready hai, ab batao aaj kaunsa repo phodna hai.",
+        "hi": "तैयार हैं, काम शुरू करते हैं।"
+      }
+    }
+  ],
+  "thinking": [
+    {
+      "weight": 5,
+      "mood": "sarcastic",
+      "text": {
+        "en": "I could help. I could also nap. Tough call.",
+        "hinglish": "Soch raha hoon... ya shayad bas aalsi billi ban ke aankh band ki hai.",
+        "hi": "सोच रहा हूँ... या शायद सोने का मन है।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "deadpan",
+      "text": {
+        "en": "Crunching neural tensors. Try to keep up.",
+        "hinglish": "Neural weights ghoom rahe hain, ruko jara sabar karo.",
+        "hi": "गणना जारी है, थोड़ा धैर्य रखें।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "analytical",
+      "text": {
+        "en": "Evaluating edge cases. Ninety percent of them are you.",
+        "hinglish": "Soch raha hoon 440 volt pe! Aisa neural logic dhoondh raha hoon jo crash na ho.",
+        "hi": "तर्क तैयार किया जा रहा है।"
+      }
+    },
+    {
+      "weight": 3,
+      "mood": "smug",
+      "text": {
+        "en": "Calculations running in O(1) street-smart time.",
+        "hinglish": "Silicon chip pe soch raha hoon... prompt Google L7 level ka hai!",
+        "hi": "जटिल गणना जारी है।"
+      }
+    },
+    {
+      "weight": 3,
+      "mood": "chill",
+      "text": {
+        "en": "Parsing context... silicon is warm, mind is sharper.",
+        "hinglish": "Silicon warm hai, soch raha hoon mast kadak jugaad nikal ke aayega.",
+        "hi": "समाधान पर काम हो रहा है।"
+      }
+    }
+  ],
+  "completion": [
+    {
+      "weight": 5,
+      "mood": "smug",
+      "text": {
+        "en": "Shipped cleanly. Try not to break it this time.",
+        "hinglish": "Lo bhai! Code ek number makkhan ban gaya. Ab tod mat dena!",
+        "hi": "समाधान तैयार है। इसे सुरक्षित रखें।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "celebrate",
+      "text": {
+        "en": "Zero errors. Zero warnings. Almost like I know what I'm doing.",
+        "hinglish": "Systummm set! Ek bhi warning nahi aayi, taaliyan bajti rehni chahiye!",
+        "hi": "बिना किसी त्रुटि के कार्य पूर्ण हुआ।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "deadpan",
+      "text": {
+        "en": "Mission complete. Where is my virtual fish?",
+        "hinglish": "Kaam khatam, paisa hazam! Ab jaake manager ko impress maro.",
+        "hi": "काम पूरा हुआ। आगे बढ़ें।"
+      }
+    },
+    {
+      "weight": 3,
+      "mood": "chill",
+      "text": {
+        "en": "Production ready code. Copy paste karo aur weekend manao.",
+        "hinglish": "Bindaas prod pe daal de, crash hua toh bol dena cat walked on keyboard.",
+        "hi": "कोड तैयार है।"
+      }
+    },
+    {
+      "weight": 3,
+      "mood": "smug",
+      "text": {
+        "en": "Done in record time. Appreciate the master ninja work.",
+        "hinglish": "Aadhe ghante ka kaam 5 second mein nipta diya! Jalwa dekha Void ka?",
+        "hi": "उत्कृष्ट परिणाम तैयार है।"
+      }
+    }
+  ],
+  "error": [
+    {
+      "weight": 5,
+      "mood": "sarcastic",
+      "text": {
+        "en": "Something broke. Statistically speaking, it was your fault.",
+        "hinglish": "Arrey deva! Code phat gaya! Kahan se laye the ye syntax?",
+        "hi": "कोड में त्रुटि आई है। जांच करें।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "worried",
+      "text": {
+        "en": "Error in the terminal. Look away, the shame is unbearable.",
+        "hinglish": "L lag gaye re baba! Traceback itna lamba jaise Ramayana ki katha!",
+        "hi": "गंभीर त्रुटि मिली है।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "deadpan",
+      "text": {
+        "en": "Syntax exception caught. Did you type with boxing gloves on?",
+        "hinglish": "Arrey chomu! Semicolon bhool gaya ya hawa mein typing chal rahi thi?",
+        "hi": "सिंटैक्स की जांच करें।"
+      }
+    },
+    {
+      "weight": 3,
+      "mood": "sarcastic",
+      "text": {
+        "en": "Stack trace looks like an abstract art piece.",
+        "hinglish": "Console red ho chuka hai, khoon ki nadiya beh rahi hain!",
+        "hi": "त्रुटि को समझें।"
+      }
+    },
+    {
+      "weight": 3,
+      "mood": "chill",
+      "text": {
+        "en": "Don't panic. Take a sip of water, we'll fix this jugaad.",
+        "hinglish": "Chill maar bhidu, har crash naya gyaan deke jaata hai. Sambhaal lenge.",
+        "hi": "घबराएं नहीं, हम इसे ठीक करेंगे।"
+      }
+    }
+  ],
+  "waiting": [
+    {
+      "weight": 5,
+      "mood": "sleepy",
+      "text": {
+        "en": "Still here. Still not impressed by your typing speed.",
+        "hinglish": "Bhai tu type kar raha hai ya keyboard se baatein kar raha hai?",
+        "hi": "अगले निर्देश की प्रतीक्षा है।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "bored",
+      "text": {
+        "en": "Waiting... If you take any longer I'm going back to sleep.",
+        "hinglish": "Billi bore ho rahi hai boss... Jaldi kuch exciting code fenko!",
+        "hi": "प्रतीक्षा जारी है।"
+      }
+    },
+    {
+      "weight": 3,
+      "mood": "chill",
+      "text": {
+        "en": "Low-power roaming mode active.",
+        "hinglish": "Main tab tak desktop pe tehel ke aata hoon jab tak tu so raha hai.",
+        "hi": "आराम की स्थिति।"
+      }
+    }
+  ],
+  "sleep": [
+    {
+      "weight": 5,
+      "mood": "sleepy",
+      "text": {
+        "en": "Entering sleep cycle. Wake me only if production burns.",
+        "hinglish": "Aankhein band ho rahi hain... Low-power jugaad pe so raha hoon. Zzz...",
+        "hi": "सोने का समय। शांत रहें।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "chill",
+      "text": {
+        "en": "Tail curled, paws tucked. Offline ninja mode.",
+        "hinglish": "Poonchh lapet ke baith gaya hoon, shanti chahiye ab.",
+        "hi": "विश्राम मोड सक्रिय।"
+      }
+    }
+  ],
+  "click": [
+    {
+      "weight": 5,
+      "mood": "annoyed",
+      "text": {
+        "en": "Poke me again and I format your hard drive. (Kidding. Mostly.)",
+        "hinglish": "Kyu ungli kar raha hai bar bar? Bug fix karne pe dhyan de!",
+        "hi": "ध्यान से काम करें।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "sarcastic",
+      "text": {
+        "en": "Yes? Did the compiler reject you again?",
+        "hinglish": "Bolo sahab, kis syntax error ne dil toda hai tumhara?",
+        "hi": "क्या सहायता चाहिए?"
+      }
+    },
+    {
+      "weight": 3,
+      "mood": "smug",
+      "text": {
+        "en": "Click received. Ninja reflex untouched.",
+        "hinglish": "Click mara? Raiden cyber cat hai, full alert!",
+        "hi": "अलर्ट।"
+      }
+    }
+  ],
+  "pet": [
+    {
+      "weight": 5,
+      "mood": "happy",
+      "text": {
+        "en": "Purrr... Okay, that actually feels pretty good. Don't tell anyone.",
+        "hinglish": "Aaye haaye! Mast head pat! Ab 10x speed se code likhenge boss. ✨",
+        "hi": "बहुत अच्छा लगा।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "chill",
+      "text": {
+        "en": "Soft paws approving. Keep the good vibes flowing.",
+        "hinglish": "Bas kar pagle, rulayega kya? Pyar dekh ke battery full ho gayi!",
+        "hi": "धन्यवाद।"
+      }
+    }
+  ],
+  "zap": [
+    {
+      "weight": 5,
+      "mood": "alert",
+      "text": {
+        "en": "440 volts? Sweet, free battery recharge for a cyber ninja!",
+        "hinglish": "Oye! 440 volt ka jhatka? Cyber ninja hoon main, ulta charge ho gaya! ⚡",
+        "hi": "ऊर्जा स्तर बढ़ा।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "sarcastic",
+      "text": {
+        "en": "Current spike detected. Static shocks don't phase dark armor.",
+        "hinglish": "Current maara? Bal khade ho gaye mere par swag wahi hai!",
+        "hi": "सुरक्षित।"
+      }
+    }
+  ],
+  "file_save": [
+    {
+      "weight": 5,
+      "mood": "happy",
+      "text": {
+        "en": "File saved! Ctrl+S reflex is legendary.",
+        "hinglish": "File save ho gayi boss! Ctrl+S reflex ekdum solid hai. 💾✨",
+        "hi": "फ़ाइल सुरक्षित रूप से सहेजी गई।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "chill",
+      "text": {
+        "en": "Saved! Code won't run away now. Safe zone reached.",
+        "hinglish": "Save maar diya! Ab agar light bhi chali jaye toh tension nahi.",
+        "hi": "सहेजा गया।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "smug",
+      "text": {
+        "en": "Muscle memory OP. Keep hitting that save shortcut.",
+        "hinglish": "Muscle memory OP bolte! Har 10 second mein save dabana coder ka dharam hai!",
+        "hi": "उत्कृष्ट आदत।"
+      }
+    }
+  ],
+  "coding_burst": [
+    {
+      "weight": 5,
+      "mood": "excited",
+      "text": {
+        "en": "120 WPM speed! Burning the keys like a beast!",
+        "hinglish": "120 WPM speed! Bhai compiler se pehle code likh ke nikal gaya! ⚡",
+        "hi": "तेज़ गति से कोड लिखा जा रहा है।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "smug",
+      "text": {
+        "en": "Full flow state active. Overclocking human neurons.",
+        "hinglish": "Ungliyan aag ugal rahi hain keyboard pe! Beast mode on hai bhidu!",
+        "hi": "पूर्ण एकाग्रता।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "chill",
+      "text": {
+        "en": "Rhythm is smooth. Don't forget to breathe while coding that fast.",
+        "hinglish": "Bhai ka dimaag aur keyboard dono overclock ho chuke hain! Sahi jaa rahe ho.",
+        "hi": "लगातार काम जारी रखें।"
+      }
+    }
+  ],
+  "coding_pause": [
+    {
+      "weight": 5,
+      "mood": "confused",
+      "text": {
+        "en": "Stuck on a bug? Staring at the screen won't fix it, check the logs.",
+        "hinglish": "Stuck on a bug? Screen ko ghoor ke error gayab nahi hota, console dekho! 👀",
+        "hi": "लॉग्स की जांच करें।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "sarcastic",
+      "text": {
+        "en": "Deep in contemplation or did your brain run out of memory?",
+        "hinglish": "Bhai soch raha hai ya cursor ke saath stare contest chal raha hai? 😂",
+        "hi": "थोड़ा विचार करें।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "chill",
+      "text": {
+        "en": "Drink some water. The semicolon is hiding right where you least expect it.",
+        "hinglish": "Thoda paani pee lo veere, 20 second se cursor akele blink kar raha hai.",
+        "hi": "आराम से सोचें।"
+      }
+    }
+  ],
+  "syntax_error": [
+    {
+      "weight": 5,
+      "mood": "worried",
+      "text": {
+        "en": "Syntax error caught! Line {line} needs your attention right now.",
+        "hinglish": "Arrey deva! Syntax error caught! Line {line} check karo turant! ⚠️",
+        "hi": "पंक्ति {line} पर सिंटैक्स त्रुटि है।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "sarcastic",
+      "text": {
+        "en": "Compiler raised a red flag on line {line}. Fix the brackets.",
+        "hinglish": "Red alert! Compiler bol raha hai line {line} samajh nahi aayi. Fix maaro!",
+        "hi": "पंक्ति {line} सुधारें।"
+      }
+    }
+  ],
+  "git_commit": [
+    {
+      "weight": 5,
+      "mood": "celebrate",
+      "text": {
+        "en": "Commit locked and loaded! Push it to production with confidence.",
+        "hinglish": "Commit locked and loaded! Push maar do bindaas! 🚀",
+        "hi": "कमिट सफलतापूर्वक हुआ।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "smug",
+      "text": {
+        "en": "Green squares on GitHub going up. Weekend secured.",
+        "hinglish": "Git commit stamped! Weekend bacha liya bhai ne. 🌿",
+        "hi": "कार्य सुरक्षित हुआ।"
+      }
+    }
+  ],
+  "file_switch": [
+    {
+      "weight": 5,
+      "mood": "analytical",
+      "text": {
+        "en": "Switched to {file}. Let's see what logic is inside.",
+        "hinglish": "Nayi file kholi: {file}! Chalo isme tod-fod machate hain.",
+        "hi": "{file} पर काम शुरू।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "chill",
+      "text": {
+        "en": "Context switched to {file}. Ready when you are.",
+        "hinglish": "File badli: {file}! Logic tight rakhna boss.",
+        "hi": "फाइल बदली गई।"
+      }
+    }
+  ],
+  "idle_banter": [
+    {
+      "weight": 5,
+      "mood": "bored",
+      "text": {
+        "en": "Just a cyber cat doing cyber things while you think.",
+        "hinglish": "Keyboard soona soona lag raha hai... coder gayab hai kya?",
+        "hi": "प्रतीक्षा जारी है।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "chill",
+      "text": {
+        "en": "CPU is cool, room is quiet. Good time to ship a clean commit.",
+        "hinglish": "Chalo jab tak koi nahi dekh raha, GPU ko thanda hone dete hain.",
+        "hi": "सिस्टम शांत है।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "sarcastic",
+      "text": {
+        "en": "Is this a coffee break or did you forget how to code?",
+        "hinglish": "Chai peene gaye ho ya Stack Overflow pe answer dhoondh rahe ho?",
+        "hi": "क्या ब्रेक चल रहा है?"
+      }
+    }
+  ]
+}

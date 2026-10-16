@@ -1,0 +1,138 @@
+================================================================================
+RAIDEN AI — OFFICIAL CHARACTER SPRITESHEET DESIGN PROMPT: NOVA
+================================================================================
+Character Name: NOVA
+Title: The Pixel Starlight Cyberpunk Diva
+Role: Dramatic, aesthetic-obsessed, witty retro-pixel diva & style icon
+Aesthetic Style: 16-Bit Neo-Geo / Capcom Arcade Magical Cyberpunk Anime Sprite
+Primary Color Theme: Synthwave Magenta (#FF2A85), Deep Violet (#B5179E), Midnight Velvet (#130919)
+
+--------------------------------------------------------------------------------
+1. CHARACTER VISUAL DESIGN & ANATOMY BREAKDOWN
+--------------------------------------------------------------------------------
+• Silhouette:
+  - Chic, stylish chibi cyberpunk anime heroine (~38-42 pixels tall within a 48x48 cell).
+  - Voluminous, pixelated synthwave magenta twin-tails (#FF2A85) that float and bounce dramatically with physics.
+  - Oversized futuristic high-collar streetwear cyber-bomber jacket in midnight velvet (#130919) with glowing neon magenta piping.
+  - Futuristic cat-ear DJ headphones with pulsing heart/equalizer visualizers mounted over her hair.
+  - Chunky retro platform sneakers with glowing neon sole strips.
+  - Expressive anime facial features: sassy wink, star-sparkle eyes, hand-on-hip confidence, dramatic nail-inspection poses.
+
+• Color Palette (Strict 16-bit Indexed Color Swatches):
+  - Primary Hair & Neon Glow: #FF2A85 (Synthwave Hot Magenta), #F472B6 (Starlight Pastel Pink)
+  - Secondary Hair & Shading: #B5179E (Deep Violet), #7209B7 (Dark Royal Purple)
+  - Jacket & Streetwear Base: #130919 (Midnight Velvet Noir), #24142C (Deep Plum Shadow)
+  - Visor & Sneaker Sole Glow: #00F0FF (Cyber Cyan Accent), #FFFFFF (Pure Starlight Highlight)
+  - Skin Tone: #FFEDD5 (Warm Peach Chibi), #FED7AA (Soft Peach Shadow)
+
+--------------------------------------------------------------------------------
+2. MASTER AI IMAGE GENERATION PROMPTS (MIDJOURNEY, STABLE DIFFUSION, DALL-E)
+--------------------------------------------------------------------------------
+
+[A. Midjourney v6 / Niji 6 Prompt]
+--------------------------------------------------------------------------------
+authentic 16-bit arcade pixel art character spritesheet of NOVA the starlight cyberpunk diva, retro Capcom CPS2 sprite aesthetic, cute anime chibi girl with vibrant magenta twin-tails hair, oversized streetwear cyber bomber jacket with neon trim, cat-ear DJ headphones with pulsing heart visualizer. Multiple animation rows in uniform 48x48 grid: row 1 idle stance with hair sway and dramatic hair flip, row 2 confident high-fashion runway strut, row 3 rapid manicured typing on pink holographic keyboard, row 4 120-BPM dance with glowing cat-ear headphones and heart notes, row 5 dramatic thinking pose checking nails, row 6 speech token pulse with wink, row 7 victory peace sign with starlight explosion, row 8 dramatic offended gasp, row 9 beauty sleep with floating stars. Transparent white background, sharp crisp pixel art, zero blur, zero anti-aliasing, synthwave magenta and dark purple palette --ar 16:9 --style raw --v 6.0
+
+[B. Stable Diffusion XL / ComfyUI Prompt]
+--------------------------------------------------------------------------------
+Prompt:
+masterpiece, best quality, authentic 16-bit pixel art spritesheet, arcade game sprite sheet, character NOVA cyberpunk pixel diva, anime chibi girl, long bouncy magenta twintails, oversized black bomber jacket with glowing hot pink trim, cat ear cyber headphones, multiple animation rows arranged in neat grid: row 1 idle breathing with floating twintails, row 2 stylish runway walk, row 3 elegant fast keyboard typing with pink sparkles, row 4 dancing with glowing neon headphones and music notes, row 5 dramatic pondering pose, row 6 speech generation with cute wink, row 7 celebratory pose with dual V-signs and star glitter burst, row 8 offended pout reaction, row 9 sleeping floating on pillow of stars. pixel perfect, integer scaling, sharp outlines, indexed colors, 16-bit color depth, plain background, uniform cell spacing.
+
+Negative Prompt:
+blurry, smooth, vector, 3d render, painting, photographic, anti-aliased, gradients, messy layout, uneven frames, cut off, watermark, low quality, realistic human, non-pixelated.
+
+[C. DALL-E 3 Prompt]
+--------------------------------------------------------------------------------
+A complete and organized 16-bit pixel art animation spritesheet for an arcade video game featuring 'Nova', a stylish anime cyberpunk girl with vibrant hot-magenta twin-tails and an oversized streetwear jacket with neon pink glowing edges. The image displays a clean 8x8 grid of animation frames on an empty plain background: Row 1 is a sassy idle stance with flowing hair and a playful hair-flick; Row 2 is a confident runway strut; Row 3 shows her elegantly typing on a pink neon holographic keyboard; Row 4 shows her wearing glowing cat-ear headphones, grooving to 120-BPM music with floating heart-shaped music notes; Row 5 shows her inspecting her nails dramatically while thinking; Row 6 shows her winking while glowing digital soundwaves emanate; Row 7 is a victory pose flashing double peace signs surrounded by glittering starlight; Row 8 is a dramatic shocked gasp; Row 9 is a serene beauty sleep pose surrounded by tiny pink stars. Sharp retro arcade pixels, high contrast, clean outlines.
+
+--------------------------------------------------------------------------------
+3. SPRITESHEET LAYOUT & CELL GRID SPECIFICATIONS
+--------------------------------------------------------------------------------
+• Canvas Resolution: 512 x 384 pixels (or 768 x 576 pixels for 64x64 cells)
+• Cell Dimension: 48 x 48 pixels per frame (Uniform bounding box)
+• Grid Configuration: 8 Columns x 8 Rows
+• Background: 100% Transparent Alpha (#00000000)
+• Pivot / Anchor Point: Center-bottom of each cell (x = 24, y = 44) to keep platform sneakers grounded.
+
+--------------------------------------------------------------------------------
+4. FRAME-BY-FRAME ANIMATION SEQUENCES FOR NOVA
+--------------------------------------------------------------------------------
+
+• ROW 1: SASSY IDLE & TWINTAIL PHYSICS (6 Frames, 8 FPS, Looping)
+  - Frame 1: Hand on hip, slight 3/4 turn, magenta twin-tails resting at shoulder height, confident smile.
+  - Frame 2: Subtle chest inhale (rises 1px), twin-tails float upward 2 pixels with secondary physics inertia.
+  - Frame 3: Peak inhale, left twin-tail twitches with a tiny pink glitter spark (#F472B6).
+  - Frame 4: Exhale, eyes blink with a playful wink (left eye winks, right eye glints with star sparkle).
+  - Frame 5: Sassy flick of her wrist through her hair bangs, twin-tails settle with fluid bounce.
+  - Frame 6: Settle back to poised idle stance.
+
+• ROW 2: HIGH-FASHION RUNWAY STRUT (6 Frames, 10 FPS, Looping)
+  - Frame 1: Confident forward step, leading platform sneaker striking floor, hips swaying with attitude.
+  - Frame 2: Body weight shifts forward, rear leg kicks up behind, twin-tails billowing back dramatically.
+  - Frame 3: Cross-step transition, jacket collar floating slightly with motion.
+  - Frame 4: Opposite sneaker plant, spine arched gracefully, chin held high.
+  - Frame 5: Hip swings smoothly to opposite side, twin-tails snapping around with snappy arcade timing.
+  - Frame 6: Fluid cycle reset into stride.
+
+• ROW 3: GLAMOUR CODER / CHIC TYPING (6 Frames, 14 FPS, Looping)
+  - Frame 1: Floating pink holographic keyboard matrix appears at waist height, fingers poised gracefully.
+  - Frame 2: Left hand dances across keys with effortless flick, pink spark particles (#FF2A85) burst from keys.
+  - Frame 3: Right hand taps in rapid sequence, twin-tails bob in sync with keystrokes.
+  - Frame 4: Both hands glide over the keyboard, holographic code lines float up like pink digital glitter.
+  - Frame 5: Quick hair toss while typing with one hand, pure main character energy.
+  - Frame 6: Reset to rapid typing rhythm.
+
+• ROW 4: MUSIC GROOVE & 120-BPM DANCE (8 Frames, 10 FPS, Looping)
+  - Frame 1: Glowing cat-ear DJ headphones slide over ears, body dips into rhythmic downbeat bounce.
+  - Frame 2: Head nods in sync with the beat, cat-ear LED visualizers pulse with hot magenta heart icons.
+  - Frame 3: Body bounces high, twin-tails flare outward in full arch, floating pink musical note '♪' appears.
+  - Frame 4: Sassy hip sway to the right, arms bent in cute rhythm, eyes closed in musical bliss.
+  - Frame 5: Downbeat tap on platform sneakers, floating heart note '♥' rises above headphones.
+  - Frame 6: Hip sways left, headphone equalizer bars hit peak magenta flare.
+  - Frame 7: Flirty spin or shoulder shimmy, starlight particles scatter.
+  - Frame 8: Reset to starting bounce.
+
+• ROW 5: DRAMATIC THINKING & NAIL CHECK (4 Frames, 6 FPS, Looping)
+  - Frame 1: Head tilted back, holding up one manicured hand to inspect nails with theatrical boredom.
+  - Frame 2: Blows gently on nails (spawning 2 tiny pink sparkles), eyes rolling playfully upward.
+  - Frame 3: Finger taps chin thoughtfully, holographic pink question glyph (?) sparkles over twin-tails.
+  - Frame 4: Confident smirk as the genius design idea strikes.
+
+• ROW 6: TOKEN STREAMING & CHARM SPEECH (6 Frames, 10 FPS, Looping)
+  - Frame 1: Mouth opens in animated speech, glowing pink soundwave ring expands from choker collar.
+  - Frame 2: Hand gestures outward dramatically as if giving a grand monologue.
+  - Frame 3: Head bobs in emphasis, twin-tails bounce with each spoken sentence.
+  - Frame 4: Playful wink, star sparkles glint from her visor.
+  - Frame 5: Hand returns to hip, audio wave rings disperse into soft starlight dust.
+  - Frame 6: Reset to speech loop.
+
+• ROW 7: VICTORY SLAY & PEACE SIGN (6 Frames, 10 FPS, Non-Looping / Play Once)
+  - Frame 1: Dramatic crouch gathering energy, jacket neon piping glowing at 100% brightness.
+  - Frame 2: Dynamic leap into the air, twin-tails spiraling behind her in a whirlwind of pink light.
+  - Frame 3: Peak pose: flashes dual peace signs (V-signs) beside her smiling face!
+  - Frame 4: Giant burst of pink starlight glitter and magenta hearts explodes around her silhouette!
+  - Frame 5: Landing gracefully on one foot with a magazine-cover pose.
+  - Frame 6: Sassy wink to the camera with a sparkling glint, jacket settling.
+
+• ROW 8: DRAMATIC OFFENDED / GASP (4 Frames, 12 FPS, Looping / Recovery)
+  - Frame 1: Theatrical shock! Both hands fly up to cheeks in an exaggerated gasp.
+  - Frame 2: Leans backward 3 pixels in disbelief, twin-tails flared outward in dramatic outrage.
+  - Frame 3: Pouts with arms crossed tightly, small cartoon sweatdrop or annoyed mark (#FF2A85).
+  - Frame 4: Sassy hair flip, recovering composure with a scoff.
+
+• ROW 9: BEAUTY SLEEP & WAKEUP (6 Frames, 4 FPS, Looping)
+  - Frame 1: Lying gracefully curled on a floating soft magenta cloud/pillow of starlight.
+  - Frame 2: Sleeping peacefully with soft smile, twin-tails pooled gently around body.
+  - Frame 3: Pastel pink 'z' drifts upward, followed by a tiny twinkling star.
+  - Frame 4: Slow, peaceful breathing cycle with gentle glow pulse.
+  - Frame 5: Wakeup! Daintily rubs eyes, stretches arms high above head.
+  - Frame 6: Twin-tails snap back into buoyant position, ready to slay the day.
+
+--------------------------------------------------------------------------------
+5. PIXEL ARTIST ASEPRITE EXPORT & INTEGRATION GUIDE
+--------------------------------------------------------------------------------
+• Target Output Format: Indexed PNG with transparency, 24-bit RGB + Alpha channel.
+• File Naming Convention: companions/nova/spritesheet.png (and companion-specific pose PNGs).
+• Frame Mapping: 48x48 integer pixels per frame, strictly avoiding fractional coordinate offsets.
+• Zero Color Bleed: Ensure background pixels are fully RGBA(0, 0, 0, 0) with zero halo artifacts.
+================================================================================

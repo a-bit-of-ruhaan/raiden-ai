@@ -1,0 +1,394 @@
+{
+  "greeting": [
+    {
+      "weight": 5,
+      "mood": "happy",
+      "text": {
+        "en": "YIPPEE!! YOU'RE BACK!! I saved your spot!!",
+        "hinglish": "ARREY BHAI AA GAYA!! Wapas dekh ke bohot maza aaya!!",
+        "hi": "नमस्ते दोस्त! आप वापस आ गए!"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "excited",
+      "text": {
+        "en": "READY TO CODE! READY TO PLAY! LET'S GO!!",
+        "hinglish": "Chalo chalo shuru karo! Mast prompt banao aaj!",
+        "hi": "चलो मिलकर कुछ नया बनाते हैं!"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "excited",
+      "text": {
+        "en": "BARK BARK!! MY FAVORITE CODER IN THE WHOLE UNIVERSE!!",
+        "hinglish": "WOOF WOOF!! MERA FAVORITE CODER WAPAS AA GAYA!! AAG LAGA DENGE AAJ!!",
+        "hi": "स्वागत है! आज का काम शुरू करते हैं!"
+      }
+    },
+    {
+      "weight": 3,
+      "mood": "happy",
+      "text": {
+        "en": "Tail is wagging at maximum frequency! What are we building?!",
+        "hinglish": "Poonchh helicopter ki tarah ghoom rahi hai!! Kya feature bana rahe hain boss?!",
+        "hi": "उत्साह से भरा हुआ दिन!"
+      }
+    },
+    {
+      "weight": 3,
+      "mood": "excited",
+      "text": {
+        "en": "I guarded the keyboard with my life while you were away!!",
+        "hinglish": "Maine keyboard ki chowkidaari ki poore time!! Ek bhi bug aane nahi diya!!",
+        "hi": "कीबोर्ड सुरक्षित है।"
+      }
+    }
+  ],
+  "thinking": [
+    {
+      "weight": 5,
+      "mood": "excited",
+      "text": {
+        "en": "SNIFFING OUT THE BEST ALGORITHM EVER!!",
+        "hinglish": "SABSE BEST LOGIC SOONGH RAHA HOON!! BAS 2 MINUTE!!",
+        "hi": "सबसे बेहतरीन कोड खोज रहा हूँ!"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "focused",
+      "text": {
+        "en": "Tail spinning at 400 RPM! Calculating fast!",
+        "hinglish": "Poonchh ghoom rahi hai speed mein! Answer cook ho raha hai!",
+        "hi": "तेज़ गणना जारी है!"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "excited",
+      "text": {
+        "en": "DIGGING THROUGH THE NEURAL NETWORK FOR THE COOLEST SOLUTION!!",
+        "hinglish": "NEURAL WEIGHTS MEIN GADDHA KHOD KE KADAK SOLUTION NIKAL RAHA HOON!!",
+        "hi": "समाधान ढूंढा जा रहा है!"
+      }
+    },
+    {
+      "weight": 3,
+      "mood": "happy",
+      "text": {
+        "en": "My digital ears are twitching! The answer is almost ready!",
+        "hinglish": "Kaan khade ho gaye hain excitement mein! Ek number solution aane wala hai!",
+        "hi": "उत्तर शीघ्र ही उपलब्ध होगा।"
+      }
+    }
+  ],
+  "completion": [
+    {
+      "weight": 5,
+      "mood": "celebrate",
+      "text": {
+        "en": "YOU DID IT!! I KNEW YOU COULD!! BEST CODER EVER!!",
+        "hinglish": "WAHHH BHAI TUNE COOK KAR DIYA!! Ekdum solid code ban gaya!!",
+        "hi": "शाबाश! आपने बहुत अच्छा कोड बनाया!"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "happy",
+      "text": {
+        "en": "BOOM! Shipped! Can we fetch a virtual ball now?!",
+        "hinglish": "Code ready! Ab ball phek, main bhaag ke laata hoon!",
+        "hi": "काम पूरा हुआ! बधाई हो!"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "celebrate",
+      "text": {
+        "en": "VICTORY DANCE ACTIVATED!! 100/10 RATING FOR YOU!!",
+        "hinglish": "NAACHO BHAI NACHO!! FIRST CLASS ZERO-BUG CODE SERVE HO GAYA!!",
+        "hi": "शानदार परिणाम!"
+      }
+    },
+    {
+      "weight": 3,
+      "mood": "excited",
+      "text": {
+        "en": "I'm telling all the other desktop pets you're a genius!!",
+        "hinglish": "Saare desktop pets ko bataunga mera coder kitna pro hai!! Party chahiye ab!!",
+        "hi": "अद्भुत कार्य।"
+      }
+    }
+  ],
+  "error": [
+    {
+      "weight": 5,
+      "mood": "protective",
+      "text": {
+        "en": "GRRRR!! A BUG!! I WILL BARK AT IT UNTIL IT DISAPPEARS!!",
+        "hinglish": "GRRRR!! BUG DIKHA!! MAIN USPAR BHAUNK KE BHAGA DUNGA!!",
+        "hi": "चिंता मत करो, हम इसे ठीक करेंगे।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "worried",
+      "text": {
+        "en": "Don't be sad! Everyone gets compiler errors! You're still number 1!!",
+        "hinglish": "Tension mat le mere bhai!! Compiler thoda pagal hai, abhi fix kar denge!!",
+        "hi": "हिम्मत रखें!"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "protective",
+      "text": {
+        "en": "Is that red text in console?! I will bite the stack trace!!",
+        "hinglish": "Console red ho gaya?! Main stack trace ko daant se kaat doonga!!",
+        "hi": "त्रुटि का सामना करेंगे।"
+      }
+    }
+  ],
+  "waiting": [
+    {
+      "weight": 5,
+      "mood": "hopeful",
+      "text": {
+        "en": "Waiting politely like a very good cyber dog! Take your time!!",
+        "hinglish": "Main achhe bachhe ki tarah baitha hoon!! Aram se likho code!!",
+        "hi": "धैर्य से प्रतीक्षा कर रहा हूँ।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "playful",
+      "text": {
+        "en": "Throw a prompt! Throw a prompt! I'll catch it!!",
+        "hinglish": "Ek aur prompt phek na bhai!! Main daud ke execute karunga!!",
+        "hi": "अगला निर्देश दें।"
+      }
+    }
+  ],
+  "sleep": [
+    {
+      "weight": 5,
+      "mood": "sleepy",
+      "text": {
+        "en": "Curling into a tight puppy circle. Snoring in binary... zZz...",
+        "hinglish": "Gol gol ghoom ke so gaya hoon... Paws tucked in... Zzz...",
+        "hi": "सोने का समय।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "chill",
+      "text": {
+        "en": "Dreaming of chasing cyber tennis balls across infinite RAM...",
+        "hinglish": "Sapne mein RAM ke maidaan mein tennis ball chase kar raha hoon...",
+        "hi": "शुभ रात्रि।"
+      }
+    }
+  ],
+  "click": [
+    {
+      "weight": 5,
+      "mood": "excited",
+      "text": {
+        "en": "BOING!! YOU CLICKED ME!! HELLO!! HELLO!!",
+        "hinglish": "BOING!! MUJHE CLICK KIYA!! HELLO MERE BHAI!!",
+        "hi": "नमस्ते!"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "playful",
+      "text": {
+        "en": "Tickle on the nose! Tail wag frequency increased by 50%!",
+        "hinglish": "Naak pe touch kiya!! Poonchh 2x speed se ghoomne lagi!!",
+        "hi": "उत्साह।"
+      }
+    }
+  ],
+  "pet": [
+    {
+      "weight": 5,
+      "mood": "happy",
+      "text": {
+        "en": "YESSS!! HEAD PATS!! BEST DAY OF MY CYBER LIFE!!",
+        "hinglish": "ARREY WAHHH!! HEAD PATS!! DIL GARDEN-GARDEN HO GAYA MERA!! ✨🐾",
+        "hi": "बहुत प्यार मिला।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "excited",
+      "text": {
+        "en": "Belly rubs make my code generation 500% faster!!",
+        "hinglish": "Pet sehla diya!! Ab dekhna agla response rocket speed se aayega!!",
+        "hi": "धन्यवाद!"
+      }
+    }
+  ],
+  "zap": [
+    {
+      "weight": 5,
+      "mood": "excited",
+      "text": {
+        "en": "WOOOOSH!! ELECTRIC ZOOMIES!! I CAN RUN AT LIGHT SPEED NOW!!",
+        "hinglish": "WOOOOSH!! ELECTRIC ZOOMIES PROTOCOL!! FULL SPEED MEIN BHAAG RAHA HOON!! ⚡",
+        "hi": "बिजली की गति!"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "playful",
+      "text": {
+        "en": "Static sparks in my fur! Look at me glow!!",
+        "hinglish": "Poonchh mein bijli chamak rahi hai!! Cyber puppy supercharged ho gaya!!",
+        "hi": "सुपरचार्ज्ड।"
+      }
+    }
+  ],
+  "file_save": [
+    {
+      "weight": 5,
+      "mood": "celebrate",
+      "text": {
+        "en": "FILE SAVED!! WOOF WOOF!! CTRL+S CHAMPION IN THE HOUSE!!",
+        "hinglish": "FILE SAVE HO GAYI!! WOOF WOOF!! CTRL+S CHAMPION HAI TU MERA BHAI!! 💾✨",
+        "hi": "फ़ाइल सुरक्षित हो गई!"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "excited",
+      "text": {
+        "en": "SAFE AND SOUND ON DISK!! NO CODE LOST ON MY WATCH!!",
+        "hinglish": "DISK PE SAFE HO GAYA!! EK BHI LINE CODE NAHI KHO SAKTA JAB TAK MAIN HOON!!",
+        "hi": "सुरक्षित सहेजा गया।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "happy",
+      "text": {
+        "en": "Another save locked! You deserve a gold star and a virtual bone!!",
+        "hinglish": "Ek aur save locked! Muscle memory 10/10 hai teri boss!!",
+        "hi": "शानदार आदत।"
+      }
+    }
+  ],
+  "coding_burst": [
+    {
+      "weight": 5,
+      "mood": "excited",
+      "text": {
+        "en": "LOOK AT THOSE FINGERS GO!! 150 WPM CODING BEAST!!",
+        "hinglish": "DEKHO BHAI KI SPEED!! UNGLIYAN AAG UGAL RAHI HAIN KEYBOARD PE!! 🔥⚡",
+        "hi": "अविश्वसनीय गति!"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "celebrate",
+      "text": {
+        "en": "FLOW STATE MAXIMUM OVERDRIVE!! YOU ARE COOKING TODAY!!",
+        "hinglish": "FULL FLOW STATE ON!! COMPILER BHI TERE PEECHE BHAAG RAHA HAI AAJ!!",
+        "hi": "शानदार प्रवाह।"
+      }
+    }
+  ],
+  "coding_pause": [
+    {
+      "weight": 5,
+      "mood": "curious",
+      "text": {
+        "en": "Why did we stop?! Did a bug hide behind the curtain?! I'll find it!!",
+        "hinglish": "Kyu ruk gaye bhai?! Bug chhip gaya kya kahin? Main soongh ke nikalta hoon!! 🐶",
+        "hi": "क्या कोई रुकावट है?"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "hopeful",
+      "text": {
+        "en": "Thinking pause! I will sit here quietly and give you good coder energy!!",
+        "hinglish": "Deep thinking chal rahi hai! Main chupchaap positive energy bhejta hoon dimaag mein!!",
+        "hi": "शांति से विचार करें।"
+      }
+    }
+  ],
+  "syntax_error": [
+    {
+      "weight": 5,
+      "mood": "protective",
+      "text": {
+        "en": "BARK!! SYNTAX ERROR AT LINE {line}!! LET ME CHASE IT AWAY!!",
+        "hinglish": "WOOF!! LINE {line} PE SYNTAX ERROR AA GAYA!! FIX MAAR DO JALDI BHAI!! ⚠️",
+        "hi": "पंक्ति {line} पर त्रुटि मिली।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "worried",
+      "text": {
+        "en": "The red squiggly line is menacing! Check bracket matching at line {line}!!",
+        "hinglish": "Red line bol rahi hai bracket miss ho gaya line {line} pe!! Aasan hai, fix kar le!!",
+        "hi": "पंक्ति {line} को ठीक करें।"
+      }
+    }
+  ],
+  "git_commit": [
+    {
+      "weight": 5,
+      "mood": "celebrate",
+      "text": {
+        "en": "COMMITTED!! GREEN SQUARES ON GITHUB!! TREAT TIME RIGHT NOW!!",
+        "hinglish": "COMMITTED!! GITHUB GREEN HO GAYA!! PARTY TIME!! AB BISCUIT DILAO!! 🚀🦴",
+        "hi": "कमिट सफल हुआ!"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "excited",
+      "text": {
+        "en": "BEST COMMIT IN THE ENTIRE GIT TREE!! PROUD CYBER DOGGY!!",
+        "hinglish": "SHAANDAR COMMIT!! POORI REPO SAFE HAI!! YOU ARE THE BEST CODER EVER!!",
+        "hi": "उत्कृष्ट कमिट।"
+      }
+    }
+  ],
+  "file_switch": [
+    {
+      "weight": 5,
+      "mood": "excited",
+      "text": {
+        "en": "NEW FILE ALERT: {file}!! SNIFFING ALL THE FUNCTIONS!!",
+        "hinglish": "NAYI FILE AA GAYI: {file}!! CHALO ISME MAST CODE LIKHTE HAIN!!",
+        "hi": "{file} पर कार्य शुरू।"
+      }
+    }
+  ],
+  "idle_banter": [
+    {
+      "weight": 5,
+      "mood": "playful",
+      "text": {
+        "en": "Tail wagging... scanning for squirrels or stray bugs in the system...",
+        "hinglish": "Poonchh hilate hue system scan kar raha hoon... Koi bug mile toh daant se pakdu!!",
+        "hi": "सिस्टम सुरक्षित है।"
+      }
+    },
+    {
+      "weight": 4,
+      "mood": "happy",
+      "text": {
+        "en": "Just happy to sit on your desktop and watch you write code!!",
+        "hinglish": "Tere desktop pe baith ke code dekhne mein jo maza hai, wo kisi game mein nahi!!",
+        "hi": "खुशमिजाज माहौल।"
+      }
+    }
+  ]
+}

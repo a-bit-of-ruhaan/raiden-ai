@@ -1,0 +1,138 @@
+================================================================================
+RAIDEN AI — OFFICIAL CHARACTER SPRITESHEET DESIGN PROMPT: VOID
+================================================================================
+Character Name: VOID
+Title: The Cyber-Ronin Ninja Cat
+Role: Sarcastic, razor-sharp cyber-assassin desktop companion & code guardian
+Aesthetic Style: 16-Bit Neo Geo / Capcom Arcade Pixel Art, Low-Res Cyberpunk
+Primary Color Theme: Electric Cyan (#00F0FF), Neon Purple (#7928CA), Obsidian Slate (#0A0D14)
+
+--------------------------------------------------------------------------------
+1. CHARACTER VISUAL DESIGN & ANATOMY BREAKDOWN
+--------------------------------------------------------------------------------
+• Silhouette:
+  - Compact, agile bipedal/quadrupedal hybrid cybernetic ninja cat (height ~36-40 pixels tall within a 48x48 cell).
+  - Sharp, triangular feline cyber-ears with glowing electric-cyan status lights on the ear tips.
+  - Sleek, aerodynamic dark carbon-fiber ninja cowl and matte obsidian armor plates.
+  - Dynamic glowing electric-cyan plasma tail that curves in a smooth sinusoidal wave and crackles with light.
+  - Single compact holographic micro-katana sheathed diagonally across the back with yellow lightning sparks (#FDE047).
+  - Glowing electric-cyan visor eyes (slitted, sharp, and expressive) capable of narrowing into annoyed glares or crescent happy eyes.
+
+• Color Palette (Strict 16-bit Indexed Color Swatches):
+  - Primary Glow / Visor / Plasma: #00F0FF (Electric Cyan), #E0F2FE (Plasma Core White)
+  - Secondary Aura / Shadow Accents: #7928CA (Neon Cyber Purple), #3B82F6 (Electric Blue)
+  - Body Armor & Cowl: #0A0D14 (Obsidian Carbon), #1E293B (Deep Slate), #334155 (Mid Armor)
+  - Lightning Sparks / Katana Hilt: #FDE047 (Electric Lightning Yellow), #EAB308 (Gold Spark)
+  - Glitch / Annoyed Accent: #EF4444 (Crimson Warning Red)
+
+--------------------------------------------------------------------------------
+2. MASTER AI IMAGE GENERATION PROMPTS (MIDJOURNEY, STABLE DIFFUSION, DALL-E)
+--------------------------------------------------------------------------------
+
+[A. Midjourney v6 / Niji 6 Prompt]
+--------------------------------------------------------------------------------
+arcade 16-bit pixel art character spritesheet of VOID the cyber-ronin ninja cat, Capcom CPS2 retro game aesthetic, clean crisp pixel art grid, dark carbon ninja armor, glowing electric-cyan eyes, neon plasma tail, glowing cyan DJ headphones with animated LED equalizer bars for music dance row, holographic mini keyboard for typing row. 8 rows of smooth animation cycles: idle breathing, ninja dash, rapid typing on glowing keyboard, 120-BPM music dance, thinking with holographic HUD, token speaking pulse, victory flip with sparkles, error chromatic glitch. Clean transparent white background, perfect uniform grid, sharp nearest-neighbor pixels, zero blur, zero anti-aliasing, vibrant neon cyber-cyan and obsidian palette --ar 16:9 --style raw --v 6.0
+
+[B. Stable Diffusion XL / ComfyUI Prompt]
+--------------------------------------------------------------------------------
+Prompt:
+masterpiece, best quality, authentic 16-bit pixel art spritesheet, arcade game sprite sheet, character VOID cyber ronin ninja cat, chibi cyberpunk feline assassin, obsidian carbon armor, glowing cyan visor eyes, neon electric plasma tail, multiple animation rows arranged in neat grid: row 1 idle breathing, row 2 stealth run, row 3 rapid keyboard typing, row 4 dancing with glowing cyber headphones and equalizer lights, row 5 thinking with holographic scanlines, row 6 victory celebration flip, row 7 error glitch, row 8 sleeping curled up with cyan zZz. pixel perfect, integer scaling, sharp edges, indexed colors, 16-bit color depth, pure white background, uniform cell spacing.
+
+Negative Prompt:
+blurry, smooth, vector, 3d render, painting, photographic, anti-aliased, gradients, messy layout, uneven frames, cut off, watermark, low quality, non-pixelated, soft lighting.
+
+[C. DALL-E 3 Prompt]
+--------------------------------------------------------------------------------
+A complete and organized 16-bit pixel art animation spritesheet for a video game character named 'Void', a tiny cyber-ninja cat wearing dark carbon armor and an electric-cyan glowing visor. The image shows a neat 8x8 grid of animation frames on an empty plain background: Row 1 is an idle breathing cycle with tail wagging; Row 2 is a rapid ninja sprint; Row 3 shows the cat typing furiously on a glowing green holographic keyboard; Row 4 shows the cat wearing glowing neon-cyan DJ headphones with animated LED equalizer bars, dancing rhythmically; Row 5 shows it thinking with a cyan terminal HUD floating beside its head; Row 6 shows an acrobatic celebratory ninja backflip; Row 7 is a red/cyan glitch reaction; Row 8 is a curled-up sleeping pose with floating cyan 'Zzz'. Crisp retro arcade pixels, high contrast, clean outlines.
+
+--------------------------------------------------------------------------------
+3. SPRITESHEET LAYOUT & CELL GRID SPECIFICATIONS
+--------------------------------------------------------------------------------
+• Canvas Resolution: 512 x 384 pixels (or 768 x 576 pixels for 64x64 cells)
+• Cell Dimension: 48 x 48 pixels per frame (Uniform bounding box)
+• Grid Configuration: 8 Columns x 8 Rows
+• Background: 100% Transparent Alpha (#00000000)
+• Pivot / Anchor Point: Center-bottom of each cell (x = 24, y = 44) to keep feet grounded.
+
+--------------------------------------------------------------------------------
+4. FRAME-BY-FRAME ANIMATION SEQUENCES FOR VOID
+--------------------------------------------------------------------------------
+
+• ROW 1: AMBIENT IDLE LIFE (6 Frames, 8 FPS, Looping)
+  - Frame 1: Base ninja stance, paws resting on katana hilt, tail at baseline curve, eyes wide open.
+  - Frame 2: Chest rises 1 pixel (subtle inhale), ears perk forward 1 pixel, tail starts upward sinusoidal curl.
+  - Frame 3: Chest peak inhale, plasma tail tip flares with electric spark, eyes narrow into calm slit.
+  - Frame 4: Natural eye blink (visor pixels compress to 1-pixel horizontal line), chest lowers (exhale).
+  - Frame 5: Eyes reopen, left cyber-ear twitches forward (-15 degrees), tail whips gently left.
+  - Frame 6: Right ear twitches back to neutral, tail settles back to start pose.
+
+• ROW 2: SHADOW SPRINT / RUN (6 Frames, 12 FPS, Looping)
+  - Frame 1: Low-slung forward ninja dash, body leaned forward at 40 degrees, front paws forward.
+  - Frame 2: Push-off stride, back legs extended, plasma tail streaming straight back like an exhaust jet.
+  - Frame 3: Mid-air suspension, body compact, cyan motion blur trailing behind paws.
+  - Frame 4: Leading paws contact ground, head tucked low, katana tight against back.
+  - Frame 5: Compression step, tail whips upward for balance, visor glints.
+  - Frame 6: Extension into the next stride cycle.
+
+• ROW 3: CODER FLOW / TYPING REACTION (6 Frames, 14 FPS, Looping)
+  - Frame 1: Mascot hunched over a floating holographic cyan keyboard grid, left paw striking a key.
+  - Frame 2: Key strikes emit tiny 2x2 green spark, right paw raises 2 pixels, visor reflects code stream.
+  - Frame 3: Right paw strikes keyboard, left paw lifts, tail twitches in rhythmic cadence.
+  - Frame 4: Rapid double-tap, both paws blurred in motion, floating holographic matrix lines scroll up.
+  - Frame 5: Left ear perks as if listening to keystroke clicks, eyes darting left and right.
+  - Frame 6: Fluid transition back to Frame 1.
+
+• ROW 4: MUSIC GROOVE & 120-BPM DANCE (8 Frames, 10 FPS, Looping)
+  - Frame 1: Mascot equips oversized glowing neon-cyan DJ headphones resting over cyber-ears; body bounces down 2 pixels.
+  - Frame 2: Head nods forward, headphone ear cup LED bars display [low, mid, high] equalizer lights, tail sways left.
+  - Frame 3: Body bounces upward, plasma tail flicks high, floating cyan musical note '♪' spawns above head.
+  - Frame 4: Mascot sways shoulders right, headphone LED bars pulse magenta, eyes closed in bliss.
+  - Frame 5: Downward bounce, foot taps on the floor, second musical note '♫' floats upward.
+  - Frame 6: Head sways left, headphone LEDs hit peak flare, tail ripples in harmonic wave.
+  - Frame 7: High bounce extension, paw points to the rhythm, visor sparkles.
+  - Frame 8: Reset to starting bounce.
+
+• ROW 5: NEURAL THINKING (4 Frames, 6 FPS, Looping)
+  - Frame 1: Head tilted 15 degrees right, left paw tapping chin thoughtfully, tail curling into a question glyph.
+  - Frame 2: Holographic cyan rectangular HUD panel manifests in front of eye, green scanline scrolls down.
+  - Frame 3: Visor displays subtle vector code numbers '01', ear twitches in concentration.
+  - Frame 4: HUD flickers, tail pulses with cyan energy, holding thoughtful stare.
+
+• ROW 6: TOKEN STREAMING / SPEAKING (6 Frames, 10 FPS, Looping)
+  - Frame 1: Visor glow brightens from 50% to 100%, mouth slit opens 1 pixel with glowing audio aura.
+  - Frame 2: Hand gestures forward expressively, dynamic concentric audio wave ring expands from collar.
+  - Frame 3: Head bobs in emphasis, mouth slit modulates, wave expands outward.
+  - Frame 4: Visor pulses rapidly, secondary cyan audio ring blossoms.
+  - Frame 5: Paw pulls back, audio rings dissipate into tiny cyan sparkles.
+  - Frame 6: Reset to speech cadence loop.
+
+• ROW 7: VICTORY CELEBRATION (6 Frames, 10 FPS, Non-Looping / Play Once)
+  - Frame 1: Deep crouch compression, paws gripping ground, katana glowing with yellow lightning (#FDE047).
+  - Frame 2: Explosive upward leap, body launching 8 pixels into the air, tail trailing lightning arc.
+  - Frame 3: Full acrobatic mid-air backflip, katana drawn and spinning in a circle of sparks.
+  - Frame 4: Peak of flip, mascot strikes a victorious ronin pose, cyan sparkle burst blooms around silhouette.
+  - Frame 5: Graceful landing on all four paws, dust clouds puff out sideways.
+  - Frame 6: Katana sheathed with a crisp yellow spark flash, arrogant smirk on visor.
+
+• ROW 8: ERROR & CHROMATIC GLITCH (4 Frames, 12 FPS, Looping / Recovery)
+  - Frame 1: Mascot startled backward, ears flared outward in shock, eyes dilated wide.
+  - Frame 2: Chromatic aberration glitch: sprite splits with red offset left 2px and cyan offset right 2px.
+  - Frame 3: Horizontal scanline tear across chest, static sparks spit from tail.
+  - Frame 4: Mascot shakes head rapidly, clearing glitch pixels, recovering balance.
+
+• ROW 9: LOW-POWER SLEEP & WAKEUP (6 Frames, 4 FPS, Looping)
+  - Frame 1: Cat curls into a neat spherical circle, paws tucked beneath chest, tail wrapped snugly around body.
+  - Frame 2: Visor powers down to faint 10% breathing glow, chest gently expands.
+  - Frame 3: Tiny cyan 'z' floats up from head, drifting 3 pixels upward.
+  - Frame 4: Larger cyan 'Z' floats up, tail tip has gentle soft breathing pulse.
+  - Frame 5: Wakeup signal: eyes snap open to full cyan, ears prick straight up.
+  - Frame 6: Front legs extend in a full cat stretch, back arching high, returning to idle.
+
+--------------------------------------------------------------------------------
+5. PIXEL ARTIST ASEPRITE EXPORT & INTEGRATION GUIDE
+--------------------------------------------------------------------------------
+• Target Output Format: Indexed PNG with transparency, 24-bit RGB + Alpha channel.
+• File Naming Convention: companions/void/spritesheet.png (and companion-specific pose PNGs).
+• Frame Mapping: 48x48 integer pixels per frame, strictly avoiding fractional coordinate offsets.
+• Zero Color Bleed: Ensure background pixels are fully RGBA(0, 0, 0, 0) with zero halo artifacts.
+================================================================================

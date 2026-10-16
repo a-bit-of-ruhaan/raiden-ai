@@ -1,0 +1,100 @@
+{
+  "id": "pixel",
+  "name": "PIXEL",
+  "species": "Cyber-Hound",
+  "tagline": "Playful, hyper-energetic, affectionate coding puppy.",
+  "palette": {
+    "accent": "#ffb703",
+    "secondary": "#fb8500",
+    "dark": "#16110a",
+    "glow": "rgba(255, 183, 3, 0.30)",
+    "bgGlass": "rgba(16, 13, 9, 0.88)"
+  },
+  "spriteSheet": {
+    "frameWidth": 48,
+    "frameHeight": 48,
+    "fps": 12,
+    "loop": true
+  },
+  "states": {
+    "idle": {
+      "frames": 4,
+      "hold": 6
+    },
+    "listening": {
+      "frames": 4,
+      "hold": 4
+    },
+    "thinking": {
+      "frames": 4,
+      "hold": 5
+    },
+    "generating": {
+      "frames": 6,
+      "hold": 3
+    },
+    "celebrating": {
+      "frames": 6,
+      "hold": 3
+    },
+    "error": {
+      "frames": 3,
+      "hold": 8
+    },
+    "waiting": {
+      "frames": 4,
+      "hold": 7
+    },
+    "sleeping": {
+      "frames": 2,
+      "hold": 16
+    }
+  },
+  "personality": {
+    "idleFrequency": 0.8,
+    "chattiness": 0.9,
+    "mischief": 0.4,
+    "reactionIntensity": 0.95
+  },
+  "costumes": [
+    {
+      "id": "default",
+      "name": "Golden Cyber Collar",
+      "accent": "#ffb703"
+    },
+    {
+      "id": "space",
+      "name": "Astro Pup Helmet",
+      "accent": "#38bdf8"
+    },
+    {
+      "id": "bandana",
+      "name": "Red Plaid Bandana",
+      "accent": "#ef4444"
+    }
+  ],
+  "clickInteractions": [
+    {
+      "trigger": "click",
+      "action": "happy_bark",
+      "cooldown": 1500
+    },
+    {
+      "trigger": "triple_click",
+      "action": "zoomies",
+      "cooldown": 5000
+    }
+  ],
+  "easterEggs": [
+    {
+      "id": "triple_click_burst",
+      "name": "Zoomie Overdrive",
+      "hint": "Tap Pixel 3 times quickly"
+    },
+    {
+      "id": "morning_bark",
+      "name": "Early Bird",
+      "hint": "Code before 9 AM"
+    }
+  ]
+}

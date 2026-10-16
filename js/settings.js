@@ -36,6 +36,36 @@ class SettingsController {
           memoryToggle.checked = !!cfg.memory_enabled;
           appState.memoryEnabled = memoryToggle.checked;
         }
+
+        // Screen Perception Subsystem
+        try {
+          const screenStatus = await raidenAPI.getScreenPerceptionStatus();
+          if (screenStatus) {
+            const screenToggle = document.getElementById('setting-screen-perception-toggle');
+            if (screenToggle) screenToggle.checked = !!screenStatus.enabled;
+
+            const visionSelect = document.getElementById('setting-vision-model-select');
+            if (visionSelect && screenStatus.vision_model) visionSelect.value = screenStatus.vision_model;
+
+            const modeSelect = document.getElementById('setting-screen-mode-select');
+            if (modeSelect && screenStatus.social_mode) modeSelect.value = screenStatus.social_mode;
+
+            const sourceSelect = document.getElementById('setting-screen-source-select');
+            if (sourceSelect && screenStatus.capture_source) sourceSelect.value = screenStatus.capture_source;
+
+            const telemetryDesc = document.getElementById('setting-screen-telemetry-desc');
+            if (telemetryDesc) {
+              if (screenStatus.latest_observation) {
+                const obs = screenStatus.latest_observation;
+                telemetryDesc.textContent = `Active Model: ${screenStatus.vision_model} · Last Seen: ${obs.app_context || 'Desktop'} · Latency: ${obs.latency_ms || 0}ms`;
+              } else {
+                telemetryDesc.textContent = `Status: ${screenStatus.enabled ? 'Observing Active' : 'Idle / Disabled'} · Model: ${screenStatus.vision_model || 'llava-phi3'}`;
+              }
+            }
+          }
+        } catch (se) {
+          console.debug('Screen perception sync error:', se);
+        }
       }
     } catch (e) {
       console.warn('Could not sync toggles from backend:', e);
@@ -126,6 +156,70 @@ class SettingsController {
     if (btnManageMem) {
       btnManageMem.addEventListener('click', () => {
         this.openMemoriesModal();
+      });
+    }
+
+    // Screen Perception Controls
+    const screenToggle = document.getElementById('setting-screen-perception-toggle');
+    if (screenToggle) {
+      screenToggle.addEventListener('change', async (e) => {
+        const enabled = e.target.checked;
+        const res = await raidenAPI.setScreenPerceptionEnabled(enabled);
+        showToast(enabled ? 'Real-time Screen Perception activated 👀' : 'Screen Perception disabled', 'info');
+        if (window.mascotController) {
+          window.mascotController.triggerDialogue(
+            enabled ? 'Screen observation active! Raiden visual senses online. 👀✨' : 'Screen perception paused.'
+          );
+        }
+      });
+    }
+
+    const visionModelSelect = document.getElementById('setting-vision-model-select');
+    if (visionModelSelect) {
+      visionModelSelect.addEventListener('change', async (e) => {
+        await raidenAPI.setVisionModel(e.target.value);
+        showToast(`Vision model set to: ${e.target.value}`, 'info');
+      });
+    }
+
+    const screenModeSelect = document.getElementById('setting-screen-mode-select');
+    if (screenModeSelect) {
+      screenModeSelect.addEventListener('change', async (e) => {
+        await raidenAPI.setScreenPerceptionMode(e.target.value);
+        showToast(`Commentary mode set to: ${e.target.value}`, 'info');
+      });
+    }
+
+    const btnObserveNow = document.getElementById('btn-screen-observe-now');
+    if (btnObserveNow) {
+      btnObserveNow.addEventListener('click', async () => {
+        btnObserveNow.disabled = true;
+        btnObserveNow.textContent = 'Analyzing Desktop...';
+        try {
+          const res = await raidenAPI.triggerScreenObservation(
+            window.mascotController ? (window.mascotController.activeCompanionId || 'void') : 'void'
+          );
+          if (res && res.observation) {
+            const obs = res.observation;
+            const comm = res.commentary;
+            const telemetryDesc = document.getElementById('setting-screen-telemetry-desc');
+            if (telemetryDesc) {
+              telemetryDesc.textContent = `Saw: ${obs.app_context || 'Desktop'} · ${obs.activity_summary.slice(0, 70)} (${obs.latency_ms}ms)`;
+            }
+            if (comm && comm.text && window.mascotController) {
+              window.mascotController.setState(comm.mood || 'ALERT', 4000);
+              window.mascotController.triggerDialogue(comm.text);
+            }
+            showToast(`Screen analyzed: ${obs.app_context || 'Visual scene'}`, 'success');
+          } else {
+            showToast('Screen inspection completed (no notable changes)', 'info');
+          }
+        } catch (err) {
+          showToast(`Screen observation failed: ${err.message}`, 'error');
+        } finally {
+          btnObserveNow.disabled = false;
+          btnObserveNow.textContent = '👁️ Inspect Screen Now';
+        }
       });
     }
 
@@ -425,37 +519,47 @@ class SettingsController {
     if (headerBtn) {
       headerBtn.classList.toggle('active', isEnabled);
       headerBtn.title = isEnabled 
-        ? 'Ripper Combat Theme Active (Click to switch to Normal Mode)'
-        : 'Toggle Ripper Combat Theme (Visual Only)';
+        ? 'Negative Void Theme Active (Click to switch to Stark Zine)'
+        : 'Invert Canvas / Monochromatic Void Mode';
+    }
+
+    const themeZineBtn = document.getElementById('btn-theme-zine');
+    const themeVoidBtn = document.getElementById('btn-theme-void');
+    if (themeZineBtn && themeVoidBtn) {
+      themeZineBtn.classList.toggle('active', !isEnabled);
+      themeVoidBtn.classList.toggle('active', isEnabled);
     }
 
     if (notify) {
-      showToast(isEnabled ? 'Ripper Combat Mode engaged' : 'Normal Cyber Ronin Mode engaged', 'info');
+      showToast(isEnabled ? 'Negative Void Theme Active' : 'Stark Zine Theme Active', 'info');
     }
   }
 
   setAccent(accentName) {
-    appState.settings.accent = accentName;
+    appState.settings.accent = 'black';
     appState.saveToStorage();
     this.applySettingsToDOM();
-    showToast(`Accent theme updated to ${accentName.toUpperCase()}`, 'info');
   }
 
   applySettingsToDOM() {
     const root = document.documentElement;
-    root.setAttribute('data-accent', appState.settings.accent || 'black');
     root.setAttribute('data-density', appState.settings.density || 'comfortable');
 
-    // Apply Ripper Mode state from localStorage
+    // Apply Inverted / Void Mode state from localStorage
     const savedRipper = localStorage.getItem('raiden_ripper_mode') === 'true';
     this.setRipperMode(savedRipper, false);
 
-    // Update enter-hint in composer
+    // Update enter-hint in composer with typewriter notation
     const composerHint = document.getElementById('composer-shortcut-hint');
     if (composerHint) {
       composerHint.textContent = appState.settings.enterToSend 
-        ? 'Enter to send • Shift+Enter for newline'
-        : 'Ctrl+Enter to send • Enter for newline';
+        ? 'ENTER --> send | SHIFT+ENTER --> newline'
+        : 'CTRL+ENTER --> send | ENTER --> newline';
+    }
+
+    // Sync mascot companion preferences to settings controls
+    if (window.mascotController && window.mascotController.applySettingsUI) {
+      window.mascotController.applySettingsUI();
     }
   }
 }

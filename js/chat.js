@@ -76,6 +76,9 @@ class ChatController {
         this.composerTextarea.style.height = 'auto';
         this.composerTextarea.style.height = Math.min(this.composerTextarea.scrollHeight, 180) + 'px';
         this.updateSendButtonState();
+        if (window.mascotController) {
+          window.mascotController.handleSystemEvent('TYPING');
+        }
       });
 
       this.composerTextarea.addEventListener('keydown', (e) => {
@@ -277,11 +280,11 @@ class ChatController {
     // Dynamic placeholder hint
     if (this.composerTextarea) {
       if (roast === 'brutal' || vibe === 'brutal_roast') {
-        this.composerTextarea.placeholder = 'Paste code or say anything... preparing the flamethrower 🔥💀 (Brutal Roast active)';
+        this.composerTextarea.placeholder = 'Paste code or ask anything... brutal roast flamethrower active 🔥💀';
       } else if (roast === 'playful' || vibe === 'roast') {
         this.composerTextarea.placeholder = 'Paste code or ask anything... playful banter & roasts ready 🔥';
       } else {
-        this.composerTextarea.placeholder = 'Ask RAIDEN anything... (paste code, questions, or just chat)';
+        this.composerTextarea.placeholder = 'Ask RAIDEN anything... (paste code, execute queries, or debug errors)';
       }
     }
   }
@@ -289,11 +292,14 @@ class ChatController {
   updateWebSearchButtonUI() {
     const btn = document.getElementById('btn-toggle-web-search');
     if (!btn) return;
+    const label = btn.querySelector('.tool-btn-label') || btn;
     if (appState.webSearchEnabled) {
       btn.classList.add('active');
+      label.textContent = 'Web: On';
       btn.title = 'Web Research: Enabled (Click to disable)';
     } else {
       btn.classList.remove('active');
+      label.textContent = 'Web';
       btn.title = 'Web Research: Disabled (Click to enable)';
     }
   }
@@ -343,32 +349,38 @@ class ChatController {
     const welcome = document.createElement('div');
     welcome.className = 'welcome-hero';
     const userName = (appState.userProfile && appState.userProfile.name) ? appState.userProfile.name : '';
-    const greeting = userName ? `Welcome back, ${escapeHtml(userName)}!` : `Hey! What's good today?`;
+    const greeting = userName ? `Welcome back, ${escapeHtml(userName)}!` : `What would you like to build today?`;
     const sub = userName 
-      ? `Your local AI companion is locked in. Let's code, banter, learn, or solve problems together.`
-      : `Your personal local AI desktop companion. Let's code, roast, learn, or brainstorm together.`;
+      ? `Your local AI assistant is online. Let's code, debug, learn, or solve complex problems.`
+      : `High-performance local AI running directly on your machine. Private, fast, and completely on-device.`;
 
     welcome.innerHTML = `
-      <div class="welcome-brand">
-        <span class="welcome-brand-name">RAIDEN</span>
+      <div class="welcome-brand-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:13px;height:13px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <span>LOCAL RUNTIME READY</span>
       </div>
       <h1 class="welcome-title">${greeting}</h1>
       <p class="welcome-subtitle">${sub}</p>
       <div class="welcome-suggestions">
         <button class="suggestion-chip" onclick="chatController.seedPrompt('Roast my code and be completely savage with zero mercy:\\n\\n\`\`\`python\\n\\n\`\`\`')">
-          🔥 Roast my code
-        </button>
-        <button class="suggestion-chip" onclick="chatController.seedPrompt('Hey Raiden, vibe check! What\\'s on your mind today?')">
-          ☕ Vibe check & banter
-        </button>
-        <button class="suggestion-chip" onclick="chatController.seedPrompt('Hit me with a mind-bending riddle or logic puzzle to test my brain!')">
-          🧠 Brain teaser riddle
+          <span>🔥 Roast my code</span>
+          <span class="brand-badge">FUN</span>
         </button>
         <button class="suggestion-chip" onclick="chatController.seedPrompt('Here is an error I am encountering. Help me diagnose and fix it cleanly:\\n\\n')">
-          🚀 Debug my error
+          <span>🚀 Debug my error</span>
+          <span class="brand-badge">CODE</span>
+        </button>
+        <button class="suggestion-chip" onclick="chatController.seedPrompt('Hey Raiden, vibe check! What\\'s on your mind today?')">
+          <span>💬 Vibe check &amp; banter</span>
+          <span class="brand-badge">CHAT</span>
         </button>
         <button class="suggestion-chip" onclick="chatController.seedPrompt('Give me your spiciest, most controversial tech or programming hot take!')">
-          💡 Spicy tech hot take
+          <span>💡 Spicy tech hot take</span>
+          <span class="brand-badge">OPINION</span>
+        </button>
+        <button class="suggestion-chip" onclick="chatController.seedPrompt('Design a modular architecture for a new scalable project:\\n\\n')">
+          <span>⚡ System architecture</span>
+          <span class="brand-badge">DESIGN</span>
         </button>
       </div>
     `;
@@ -390,22 +402,42 @@ class ChatController {
     row.className = `message-row ${isUser ? 'user' : 'assistant'}`;
     row.id = msg.id;
 
-    const formattedContent = isUser 
-      ? escapeHtml(msg.content).replace(/\n/g, '<br>')
-      : renderMarkdown(msg.content);
+    let formattedContent = '';
+    if (msg.isBridgeError) {
+      formattedContent = `
+        <div class="bridge-error-banner">
+          <div class="bridge-error-header">
+            <div class="bridge-pulse-dot"></div>
+            <span>Connecting to RAIDEN Core...</span>
+          </div>
+          <p class="bridge-error-desc">
+            The local desktop bridge hasn't connected yet. If the application just launched, it may take a few moments to initialize.
+          </p>
+          <button class="btn-bridge-retry" onclick="chatController.retryPendingMessage('${msg.id}')">
+            ${ICONS.refresh}
+            <span>Retry Connection</span>
+          </button>
+        </div>
+      `;
+    } else {
+      formattedContent = isUser 
+        ? escapeHtml(msg.content).replace(/\n/g, '<br>')
+        : renderMarkdown(msg.content);
+    }
 
     const timeStr = msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
 
     row.innerHTML = `
       <div class="message-container">
         <div class="message-avatar ${isUser ? 'user-av' : 'bot-av'}">
-          ${isUser ? 'You' : ICONS.lightning}
+          ${isUser ? 'You' : '<img src="assets/mascot/avatar_head_32x32.png" class="bot-pixel-avatar" alt="Raiden" />'}
         </div>
         <div class="message-bubble-wrap">
           <div class="message-header">
-            <span>${isUser ? 'You' : 'Raiden'}</span>
+            <span>${isUser ? 'You' : 'RAIDEN'}</span>
             <span>·</span>
             <span>${timeStr}</span>
+            ${!isUser && msg.latencyMs ? `<span class="inference-telemetry-badge">${msg.latencyMs}ms (${(msg.latencyMs / 1000).toFixed(3)}s)</span>` : ''}
           </div>
           <div class="message-bubble">
             ${formattedContent}
@@ -440,6 +472,9 @@ class ChatController {
     const msg = session.messages.find(m => m.id === msgId);
     if (msg && msg.content) {
       copyToClipboard(msg.content, 'Message copied');
+      if (window.mascotController) {
+        window.mascotController.handleSystemEvent('MESSAGE_COPIED', { content: msg.content, role: msg.role });
+      }
     }
   }
 
@@ -472,8 +507,17 @@ class ChatController {
     this.scrollToBottom();
     window.appController.renderSidebarSessions();
 
+    // Immediate Mascot Acknowledgment Reaction
+    if (window.mascotController) {
+      window.mascotController.handleSystemEvent('MESSAGE_SENT', { prompt: fullPrompt });
+    }
+
     // 2. Start Generating State & Streaming Element
     this.startGenerating();
+    if (window.mascotController) {
+      const isRoast = (appState.roastMode === 'brutal' || appState.roastMode === 'playful');
+      window.mascotController.handleSystemEvent('LLM_THINKING', { isRoast });
+    }
 
     let streamingText = '';
     const streamRow = document.createElement('div');
@@ -498,10 +542,14 @@ class ChatController {
 
     window.onStreamChunk = (chunk) => {
       streamingText += chunk;
+      this.tokenCount += (chunk.trim().split(/\s+/).length || 1);
       if (bubbleEl) {
         bubbleEl.innerHTML = renderMarkdown(streamingText);
       }
       this.scrollToBottom();
+      if (window.mascotController) {
+        window.mascotController.handleSystemEvent('STREAMING', { chunk });
+      }
     };
 
     window.onStreamEnd = (finalText) => {
@@ -528,11 +576,17 @@ class ChatController {
         customSystemPrompt += "\n\n### [PLAYFUL ROAST MODE]: Deliver a witty, lighthearted roast with clever banter, followed by a friendly tip.";
       } else if (modeSelect) {
         if (modeSelect.value === 'hinglish') {
-          customSystemPrompt += "\n\nMODE INSTRUCTION: The user explicitly selected Hinglish mode. Respond in natural, conversational Hinglish with clear explanations and accurate technical terms.";
+          customSystemPrompt += "\n\n### [SPECIAL DIRECTIVE: DESI HINGLISH COMPANION & TECH GURU ACTIVE]\n" +
+            "The user explicitly selected Hinglish mode. Respond in natural, fluent, witty Roman-script Hinglish (Hindi written in English alphabets).\n" +
+            "1. Speak like an intelligent Indian tech buddy / senior dev homie. Use popular slangs naturally: 'bhai', 'yaar', 'bawaal', 'gazab', 'scene kya hai', 'load mat le', 'cook kar diya', 'jugaad', 'ek number'.\n" +
+            "2. Keep technical words, function names, and code in English ('array', 'pointer', 'loop', 'recursion', 'async/await'), while verbs and sentence flow are in Hindi ('karna padega', 'dekh bhai', 'sort ho gaya').\n" +
+            "3. Use classic Bollywood and meme callbacks where relevant (Hera Pheri, 3 Idiots, Mirzapur, 'Aal Izz Well', '25 din mein paisa double', 'Systummm hang').\n" +
+            "4. NEVER use Devanagari script. Strictly use Roman alphabet. No robotic corporate pleasantries.";
         } else if (modeSelect.value === 'code') {
           customSystemPrompt += "\n\nMODE INSTRUCTION: The user explicitly selected Code mode. Focus deeply on software architecture, clean production-ready code, and step-by-step logic.";
         }
       }
+
 
       // Collect conversation history (up to last 30 messages) for deep multi-turn coherence
       const currentSession = appState.getActiveSession();
@@ -556,9 +610,16 @@ class ChatController {
       this.stopGenerating();
       if (streamRow.parentNode) streamRow.remove();
 
+      if (window.mascotController) {
+        const isRoast = (appState.roastMode === 'brutal' || appState.roastMode === 'playful');
+        window.mascotController.handleSystemEvent('LLM_DONE', { isRoast });
+      }
+
       const finalText = responseText || streamingText;
+      const latencyMs = Math.max(1, Math.floor(performance.now() - (appState.generationStartTime || performance.now())));
       // 3. Add Assistant Message
       const botMsg = appState.addMessage(appState.activeSessionId, 'assistant', finalText);
+      botMsg.latencyMs = latencyMs;
       this.appendMessageElement(botMsg);
       this.scrollToBottom();
       window.appController.renderSidebarSessions();
@@ -568,11 +629,23 @@ class ChatController {
       if (streamRow.parentNode) streamRow.remove();
       window.onStreamChunk = null;
       window.onStreamEnd = null;
-      const errorContent = `**Error:** ${err.message || 'Unable to reach the local model. Ensure Ollama is running.'}`;
+
+      if (window.mascotController) {
+        window.mascotController.handleSystemEvent('ERROR');
+      }
+
+      const isBridgeErr = (err.message && err.message.toLowerCase().includes('bridge')) || !window.pywebview;
+      const errorContent = isBridgeErr 
+        ? 'Connecting to RAIDEN Core...' 
+        : `**Error:** ${err.message || 'Unable to reach the local model. Ensure Ollama is running.'}`;
+
       const botMsg = appState.addMessage(appState.activeSessionId, 'assistant', errorContent);
+      if (isBridgeErr) {
+        botMsg.isBridgeError = true;
+      }
       this.appendMessageElement(botMsg);
       this.scrollToBottom();
-      showToast('Error generating response', 'error');
+      showToast(isBridgeErr ? 'Connecting to local bridge...' : 'Error generating response', isBridgeErr ? 'info' : 'error');
     }
   }
 
@@ -646,11 +719,17 @@ class ChatController {
       let customSystemPrompt = appState.settings.systemPrompt || '';
       if (modeSelect) {
         if (modeSelect.value === 'hinglish') {
-          customSystemPrompt += "\n\nMODE INSTRUCTION: The user explicitly selected Hinglish mode. Respond in natural, conversational Hinglish with clear explanations and accurate technical terms.";
+          customSystemPrompt += "\n\n### [SPECIAL DIRECTIVE: DESI HINGLISH COMPANION & TECH GURU ACTIVE]\n" +
+            "The user explicitly selected Hinglish mode. Respond in natural, fluent, witty Roman-script Hinglish (Hindi written in English alphabets).\n" +
+            "1. Speak like an intelligent Indian tech buddy / senior dev homie. Use popular slangs naturally: 'bhai', 'yaar', 'bawaal', 'gazab', 'scene kya hai', 'load mat le', 'cook kar diya', 'jugaad', 'ek number'.\n" +
+            "2. Keep technical words, function names, and code in English ('array', 'pointer', 'loop', 'recursion', 'async/await'), while verbs and sentence flow are in Hindi ('karna padega', 'dekh bhai', 'sort ho gaya').\n" +
+            "3. Use classic Bollywood and meme callbacks where relevant (Hera Pheri, 3 Idiots, Mirzapur, 'Aal Izz Well', '25 din mein paisa double', 'Systummm hang').\n" +
+            "4. NEVER use Devanagari script. Strictly use Roman alphabet. No robotic corporate pleasantries.";
         } else if (modeSelect.value === 'code') {
           customSystemPrompt += "\n\nMODE INSTRUCTION: The user explicitly selected Code mode. Focus deeply on software architecture, clean production-ready code, and step-by-step logic.";
         }
       }
+
 
       const recentHistory = (session && session.messages)
         ? session.messages.slice(-30).map(m => ({ role: m.role, content: m.content }))
@@ -686,6 +765,57 @@ class ChatController {
     }
   }
 
+  async retryPendingMessage(msgId) {
+    const session = appState.getActiveSession();
+    if (!session) return;
+
+    const msgIdx = session.messages.findIndex(m => m.id === msgId);
+    let userPrompt = '';
+    for (let i = (msgIdx !== -1 ? msgIdx - 1 : session.messages.length - 1); i >= 0; i--) {
+      if (session.messages[i].role === 'user') {
+        userPrompt = session.messages[i].content;
+        break;
+      }
+    }
+
+    if (raidenAPI.checkBridge()) {
+      if (msgIdx !== -1) {
+        session.messages.splice(msgIdx, 1);
+        appState.saveToStorage();
+        this.renderCurrentSession();
+      }
+      if (userPrompt) {
+        this.seedPrompt(userPrompt);
+        this.sendMessage();
+      } else {
+        showToast('Bridge connected and ready!', 'success');
+      }
+    } else {
+      showToast('Connecting to local bridge...', 'info');
+      const row = document.getElementById(msgId);
+      const btn = row ? row.querySelector('.btn-bridge-retry span') : null;
+      if (btn) btn.textContent = 'Connecting...';
+
+      setTimeout(() => {
+        if (raidenAPI.checkBridge()) {
+          showToast('Bridge connected!', 'success');
+          if (msgIdx !== -1) {
+            session.messages.splice(msgIdx, 1);
+            appState.saveToStorage();
+            this.renderCurrentSession();
+          }
+          if (userPrompt) {
+            this.seedPrompt(userPrompt);
+            this.sendMessage();
+          }
+        } else {
+          if (btn) btn.textContent = 'Retry Connection';
+          showToast('Bridge not ready yet. Please ensure main.py is running.', 'warning');
+        }
+      }, 800);
+    }
+  }
+
   editPrompt(msgId) {
     const session = appState.getActiveSession();
     if (!session) return;
@@ -702,25 +832,45 @@ class ChatController {
 
   startGenerating() {
     appState.isGenerating = true;
-    appState.generationStartTime = Date.now();
+    const startTime = performance.now();
+    appState.generationStartTime = startTime;
+    this.tokenCount = 0;
     this.updateSendButtonState();
 
     if (this.generationIndicator) {
       this.generationIndicator.classList.add('active');
+      const statusText = this.generationIndicator.querySelector('.gen-status-text');
+      if (statusText) statusText.textContent = 'Generating response...';
     }
 
     if (this.genTimerElement) {
-      this.genTimerElement.textContent = '0.0s';
-      this.timerInterval = setInterval(() => {
-        const elapsed = ((Date.now() - appState.generationStartTime) / 1000).toFixed(1);
-        this.genTimerElement.textContent = elapsed + 's';
-      }, 100);
+      this.genTimerElement.textContent = '0.000s';
+      const telemetryEl = document.getElementById('gen-telemetry');
+      
+      const updateStopwatch = () => {
+        if (!appState.isGenerating) return;
+        const now = performance.now();
+        const elapsedMs = Math.max(0, Math.floor(now - startTime));
+        const seconds = (elapsedMs / 1000).toFixed(3);
+        this.genTimerElement.textContent = `${seconds}s (${elapsedMs}ms)`;
+        
+        if (telemetryEl) {
+          const tokPerSec = elapsedMs > 80 && this.tokenCount > 0 
+            ? ((this.tokenCount / elapsedMs) * 1000).toFixed(1)
+            : '0.0';
+          telemetryEl.textContent = `${tokPerSec} tok/s`;
+        }
+        this.stopwatchRaf = requestAnimationFrame(updateStopwatch);
+      };
+      if (this.stopwatchRaf) cancelAnimationFrame(this.stopwatchRaf);
+      this.stopwatchRaf = requestAnimationFrame(updateStopwatch);
     }
     this.scrollToBottom();
   }
 
   stopGeneration() {
     appState.isGenerating = false;
+    if (this.stopwatchRaf) cancelAnimationFrame(this.stopwatchRaf);
     clearInterval(this.timerInterval);
     if (this.generationIndicator) {
       this.generationIndicator.classList.remove('active');
@@ -729,15 +879,22 @@ class ChatController {
     if (window.raidenAPI && window.raidenAPI.stopGeneration) {
       window.raidenAPI.stopGeneration();
     }
+    if (window.mascotController) {
+      window.mascotController.setState('IDLE');
+    }
   }
 
   stopGenerating() {
     appState.isGenerating = false;
+    if (this.stopwatchRaf) cancelAnimationFrame(this.stopwatchRaf);
     clearInterval(this.timerInterval);
     if (this.generationIndicator) {
       this.generationIndicator.classList.remove('active');
     }
     this.updateSendButtonState();
+    if (window.mascotController) {
+      window.mascotController.setState('IDLE');
+    }
   }
 
   scrollToBottom() {

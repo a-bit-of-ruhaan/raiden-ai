@@ -1,0 +1,40 @@
+{
+  "id": "test_pack",
+  "name": "TEST BOT",
+  "species": "Modular Test Pack",
+  "tagline": "Verification pack proving zero-code 5th companion drop-in.",
+  "palette": {
+    "accent": "#a855f7",
+    "secondary": "#7c3aed",
+    "dark": "#130826",
+    "glow": "rgba(168, 85, 247, 0.28)",
+    "bgGlass": "rgba(16, 10, 28, 0.88)"
+  },
+  "spriteSheet": {
+    "frameWidth": 48,
+    "frameHeight": 48,
+    "fps": 8,
+    "loop": true
+  },
+  "states": {
+    "idle": {
+      "frames": 2,
+      "hold": 10
+    }
+  },
+  "personality": {
+    "idleFrequency": 0.5,
+    "chattiness": 0.5,
+    "mischief": 0.1,
+    "reactionIntensity": 0.5
+  },
+  "costumes": [
+    {
+      "id": "default",
+      "name": "Test Drone Chassis",
+      "accent": "#a855f7"
+    }
+  ],
+  "clickInteractions": [],
+  "easterEggs": []
+}

@@ -1,0 +1,100 @@
+{
+  "id": "void",
+  "name": "VOID",
+  "species": "Cyber-Ronin Cat",
+  "tagline": "Lazy, sarcastic, unpredictable cyber-assassin companion.",
+  "palette": {
+    "accent": "#00f0ff",
+    "secondary": "#7928ca",
+    "dark": "#0a0d14",
+    "glow": "rgba(0, 240, 255, 0.28)",
+    "bgGlass": "rgba(10, 13, 20, 0.88)"
+  },
+  "spriteSheet": {
+    "frameWidth": 48,
+    "frameHeight": 48,
+    "fps": 8,
+    "loop": true
+  },
+  "states": {
+    "idle": {
+      "frames": 4,
+      "hold": 12
+    },
+    "listening": {
+      "frames": 3,
+      "hold": 6
+    },
+    "thinking": {
+      "frames": 4,
+      "hold": 8
+    },
+    "generating": {
+      "frames": 6,
+      "hold": 4
+    },
+    "celebrating": {
+      "frames": 5,
+      "hold": 6
+    },
+    "error": {
+      "frames": 4,
+      "hold": 10
+    },
+    "waiting": {
+      "frames": 4,
+      "hold": 14
+    },
+    "sleeping": {
+      "frames": 2,
+      "hold": 20
+    }
+  },
+  "personality": {
+    "idleFrequency": 0.4,
+    "chattiness": 0.5,
+    "mischief": 0.8,
+    "reactionIntensity": 0.4
+  },
+  "costumes": [
+    {
+      "id": "default",
+      "name": "Dark Ronin Plate",
+      "accent": "#00f0ff"
+    },
+    {
+      "id": "stealth",
+      "name": "Matte Obsidian",
+      "accent": "#94a3b8"
+    },
+    {
+      "id": "overclock",
+      "name": "Overclock Crimson",
+      "accent": "#ef4444"
+    }
+  ],
+  "clickInteractions": [
+    {
+      "trigger": "click",
+      "action": "annoyed_twitch",
+      "cooldown": 2000
+    },
+    {
+      "trigger": "triple_click",
+      "action": "katana_spin",
+      "cooldown": 6000
+    }
+  ],
+  "easterEggs": [
+    {
+      "id": "triple_click_burst",
+      "name": "Ronin Lightning",
+      "hint": "Click 3 times rapidly"
+    },
+    {
+      "id": "midnight_yawn",
+      "name": "Night Owl",
+      "hint": "Code past midnight"
+    }
+  ]
+}

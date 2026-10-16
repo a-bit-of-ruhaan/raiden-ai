@@ -39,9 +39,28 @@ class AppController {
       });
     }
 
+    // Synchronize chats, history, and user profile from persistent disk storage
+    if (appState.syncFromDiskStorage) {
+      appState.syncFromDiskStorage();
+    }
+    if (appState.syncUserProfile) {
+      appState.syncUserProfile();
+    }
+
     this.bindGlobalEvents();
     this.renderSidebarSessions();
     this.navigateTo(appState.activePage || 'chat');
+
+    // Initialize Cyber-Ronin Desktop Mascot Companion (130px x 130px)
+    if (window.MascotController && document.getElementById('raidenCanvas') && !window.mascotController) {
+      window.mascotController = new window.MascotController({
+        canvasId: 'raidenCanvas',
+        bubbleId: 'raiden-dialogue-bubble',
+        containerId: 'raiden-mascot-container',
+        width: 130,
+        height: 130
+      });
+    }
 
     // Periodic telemetry refresh
     setInterval(() => {
@@ -68,6 +87,9 @@ class AppController {
         this.renderSidebarSessions();
         this.navigateTo('chat');
         chatController.renderCurrentSession();
+        if (window.mascotController) {
+          window.mascotController.handleSystemEvent('CHAT_CLEARED');
+        }
         showToast('Created new conversation', 'info');
       });
     });
@@ -87,6 +109,9 @@ class AppController {
         appState.clearSession(appState.activeSessionId);
         chatController.renderCurrentSession();
         raidenAPI.clearChat(appState.activeSessionId);
+        if (window.mascotController) {
+          window.mascotController.handleSystemEvent('CHAT_CLEARED');
+        }
         showToast('Cleared conversation history', 'info');
       });
     }
@@ -124,11 +149,13 @@ class AppController {
   }
 
   navigateTo(pageId) {
+    if (pageId === 'chat-hub') pageId = 'chat';
     appState.activePage = pageId;
 
     // Update nav links
     document.querySelectorAll('.nav-item').forEach(item => {
-      if (item.getAttribute('data-page') === pageId) {
+      const p = item.getAttribute('data-page');
+      if (p === pageId || (pageId === 'chat' && p === 'chat-hub')) {
         item.classList.add('active');
       } else {
         item.classList.remove('active');
@@ -175,6 +202,8 @@ class AppController {
 
   getPageTitle(pageId) {
     const titles = {
+      'chat': 'Chat Hub',
+      'chat-hub': 'Chat Hub',
       'tools': 'Explore Tools',
       'library': 'Context Library',
       'history': 'Conversation History',
@@ -182,7 +211,7 @@ class AppController {
       'diagnostics': 'System Diagnostics & Telemetry',
       'settings': 'Settings & Preferences'
     };
-    return titles[pageId] || 'Raiden AI';
+    return titles[pageId] || 'RAIDEN AI';
   }
 
   toggleSidebar() {
@@ -207,10 +236,10 @@ class AppController {
         <div class="session-item ${isActive ? 'active' : ''}" onclick="appController.selectSession('${session.id}')">
           <span class="session-title-text">${escapeHtml(session.title)}</span>
           <div class="session-actions" onclick="event.stopPropagation()">
-            <button class="session-btn-icon" onclick="appController.renameSessionPrompt('${session.id}')" title="Rename">
+            <button class="session-btn-icon" onclick="appController.renameSessionPrompt('${session.id}')" title="Rename Conversation">
               ${ICONS.edit}
             </button>
-            <button class="session-btn-icon delete" onclick="appController.deleteSessionPrompt('${session.id}')" title="Delete">
+            <button class="session-btn-icon delete" onclick="appController.deleteSessionPrompt('${session.id}')" title="Delete Conversation">
               ${ICONS.trash}
             </button>
           </div>
@@ -250,7 +279,11 @@ class AppController {
 
 window.appController = new AppController();
 
-// Boot application when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
+// Boot application when DOM is ready or immediately if already loaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    window.appController.init();
+  });
+} else {
   window.appController.init();
-});
+}
