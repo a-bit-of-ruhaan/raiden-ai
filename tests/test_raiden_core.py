@@ -307,5 +307,44 @@ class TestReasoningEngine(unittest.TestCase):
         profile_code = engine.classify_task("Fix this python bug in my sort function", roast_mode="off")
         self.assertEqual(profile_code.task_type, TaskType.TECHNICAL)
 
+    def test_hinglish_classification_and_integration(self):
+        engine = ReasoningEngine()
+
+        # 1. Automatic Hinglish detection on Desi query
+        profile_hinglish = engine.classify_task("Bhai recursion samjha de kal exam hai")
+        self.assertIn("DESI HINGLISH COMPANION", profile_hinglish.system_tone_hint)
+        self.assertIn("Inception movie", profile_hinglish.system_tone_hint)
+
+        # 2. Pop culture meme callback on Hera Pheri query
+        profile_scheme = engine.classify_task("Bhai koi 25 din mein paisa double scheme batao")
+        self.assertIn("DESI HINGLISH COMPANION", profile_scheme.system_tone_hint)
+        self.assertIn("Hera Pheri", profile_scheme.system_tone_hint)
+
+        # 3. Explicit Hinglish mode override
+        profile_explicit = engine.classify_task("Explain binary search", roast_mode="hinglish")
+        self.assertIn("DESI HINGLISH COMPANION", profile_explicit.system_tone_hint)
+
+
+class TestHinglishEngine(unittest.TestCase):
+    def setUp(self):
+        from raiden_core.hinglish import get_hinglish_engine
+        self.engine = get_hinglish_engine()
+
+    def test_hinglish_detection(self):
+        self.assertTrue(self.engine.is_hinglish("kya haal hai bhai"))
+        self.assertTrue(self.engine.is_hinglish("bhai code phat gaya"))
+        self.assertTrue(self.engine.is_hinglish("delulu is the solulu bro"))
+        self.assertFalse(self.engine.is_hinglish("Compute the eigenvalues of matrix A."))
+
+    def test_callbacks_and_analogies(self):
+        callbacks = self.engine.find_callbacks("paisa double karna hai")
+        self.assertTrue(len(callbacks) > 0)
+        self.assertIn("Hera Pheri", callbacks[0])
+
+        analogies = self.engine.find_analogies("stack data structure explain karo")
+        self.assertTrue(len(analogies) > 0)
+        self.assertIn("Shaadi ki buffet", analogies[0])
+
 if __name__ == "__main__":
     unittest.main()
+
