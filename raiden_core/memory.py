@@ -34,9 +34,12 @@ class MemoryDB:
 
     @contextlib.contextmanager
     def _get_connection(self):
-        conn = sqlite3.connect(self.db_path, check_same_thread=False)
+        conn = sqlite3.connect(self.db_path, check_same_thread=False, timeout=30.0)
         conn.row_factory = sqlite3.Row
         try:
+            conn.execute("PRAGMA journal_mode = WAL")
+            conn.execute("PRAGMA synchronous = NORMAL")
+            conn.execute("PRAGMA busy_timeout = 10000")
             yield conn
         finally:
             conn.close()
@@ -203,15 +206,40 @@ class MemoryDB:
 
     def find_relevant_memories(self, query: str, limit: int = 5, max_chars: int = 800) -> List[Dict[str, Any]]:
         """
-        Retrieves memories relevant to the query using token overlap and keyword matching.
+        Retrieves memories relevant to the query using token overlap, keyword matching,
+        and general memory inquiry detection.
         """
         all_mems = self.get_memories(only_enabled=True)
         if not all_mems or not query.strip():
             return []
 
+        lower_query = query.lower()
+        # Check if the query is an explicit inquiry about the user, profile, or memory
+        memory_inquiry_patterns = [
+            r"\b(what do you remember|what do you know about me|who am i|what's my name|what is my name)\b",
+            r"\b(my preferences?|what are my preferences?|what do i like|tell me about myself)\b",
+            r"\b(do you remember me|remember who i am|what is my stack|what'?s my stack|my background)\b"
+        ]
+        is_memory_inquiry = any(re.search(pat, lower_query) for pat in memory_inquiry_patterns)
+
+        if is_memory_inquiry:
+            # Return top memories prioritized by preference and profile
+            prioritized = sorted(
+                all_mems,
+                key=lambda m: (0 if m.get("category") in ("preference", "profile") else 1, -m.get("id", 0))
+            )
+            selected = []
+            total_len = 0
+            for mem in prioritized[:limit]:
+                if total_len + len(mem["content"]) > max_chars:
+                    break
+                selected.append(mem)
+                total_len += len(mem["content"])
+            return selected
+
         # Tokenize query into keywords (length >= 3, excluding common stop words)
-        stop_words = {"the", "and", "for", "with", "that", "this", "from", "have", "what", "how", "why", "are", "you", "can"}
-        tokens = set(re.findall(r"\b[a-zA-Z0-9_\-]{3,}\b", query.lower())) - stop_words
+        stop_words = {"the", "and", "for", "with", "that", "this", "from", "have", "what", "how", "why", "are", "you", "can", "tell"}
+        tokens = set(re.findall(r"\b[a-zA-Z0-9_\-]{3,}\b", lower_query)) - stop_words
 
         scored = []
         for mem in all_mems:
@@ -220,8 +248,8 @@ class MemoryDB:
             for t in tokens:
                 if t in content_lower:
                     score += 1
-            # User preferences get a slight priority boost
-            if mem["category"] == "preference":
+            # User preferences and profile get a slight priority boost
+            if mem.get("category") in ("preference", "profile"):
                 score += 0.5
             if score > 0:
                 scored.append((score, mem))
@@ -247,7 +275,7 @@ class MemoryDB:
         if not relevant:
             return ""
 
-        lines = ["### RELEVANT LONG-TERM MEMORY"]
+        lines = ["### RELEVANT LONG-TERM MEMORY (Facts & Preferences previously learned)"]
         for m in relevant:
             lines.append(f"- [{m['category'].upper()}] {m['content']}")
         lines.append("")
@@ -357,8 +385,8 @@ class MemoryDB:
 
     def extract_and_update_profile(self, text: str) -> List[str]:
         """
-        Auto-extracts personal facts, user name, role, or preferences from natural conversation
-        and updates the persistent profile and memory store.
+        Auto-extracts personal facts, user name, role, preferences, or explicit 'remember' directives
+        from natural conversation and updates the persistent profile and memory store.
         """
         clean = (text or "").strip()
         if not clean or self.is_secret(clean):
@@ -367,7 +395,22 @@ class MemoryDB:
         extracted = []
         lower = clean.lower()
 
-        # 1. Name / Nickname patterns
+        # 1. Explicit Memory Commands: "Remember that...", "Don't forget...", "Keep in mind that..."
+        remember_match = re.search(
+            r"\b(?:remember\s+that|remember|don't\s+forget\s+that|don't\s+forget|do\s+not\s+forget|keep\s+in\s+mind\s+that|keep\s+in\s+mind|please\s+note\s+that|save\s+to\s+memory:?)\s+([^\.\n]+(?:\.[^\.\n]+)?)",
+            clean,
+            re.IGNORECASE
+        )
+        if remember_match:
+            mem_content = remember_match.group(1).strip().rstrip('.!?')
+            # Avoid matching common filler phrases or questions
+            if len(mem_content) > 3 and not mem_content.lower().startswith(("how", "why", "what", "when", "where", "who")):
+                cat = "preference" if any(w in mem_content.lower() for w in ["prefer", "like", "favorite", "love", "hate", "always", "never"]) else "fact"
+                mem_id = self.add_memory(mem_content, category=cat)
+                if mem_id:
+                    extracted.append(f"memory: {mem_content}")
+
+        # 2. Name / Nickname patterns
         name_match = re.search(r"\b(?:call me|my name is|i am called|my nickname is)\s+([A-Za-z0-9_-]{2,20})\b", clean, re.IGNORECASE)
         if name_match:
             name = name_match.group(1).capitalize()
@@ -375,17 +418,17 @@ class MemoryDB:
             self.add_memory(f"User's name is {name}", category="profile")
             extracted.append(f"name: {name}")
 
-        # 2. Role / Profession / Study patterns
+        # 3. Role / Profession / Study patterns
         role_match = re.search(r"\b(?:i work as a?n?|i am a?n?|i'm a?n?|i study)\s+([a-zA-Z0-9_\-\s]{3,35})(?:\.|\,|$|\sand\b)", clean, re.IGNORECASE)
         if role_match:
             role = role_match.group(1).strip()
             # Avoid matching common filler phrases
-            if not any(stop in role.lower() for stop in ["sure", "ready", "happy", "sorry", "tired", "busy", "fine"]):
+            if not any(stop in role.lower() for stop in ["sure", "ready", "happy", "sorry", "tired", "busy", "fine", "human", "user"]):
                 self.set_user_profile_field("role", role)
                 self.add_memory(f"User is a {role}", category="profile")
                 extracted.append(f"role: {role}")
 
-        # 3. Programming language or stack preferences
+        # 4. Programming language or stack preferences
         stack_match = re.search(r"\b(?:my main stack is|i primarily code in|i mostly use|my favorite language is)\s+([a-zA-Z0-9_\-\s\,]{2,40})(?:\.|\,|$)", clean, re.IGNORECASE)
         if stack_match:
             stack = stack_match.group(1).strip()
@@ -393,7 +436,14 @@ class MemoryDB:
             self.add_memory(f"User's tech stack / interests: {stack}", category="preference")
             extracted.append(f"interests: {stack}")
 
-        # 4. Roast level preferences
+        # 5. User Preferences: "I prefer...", "My favorite ... is ..."
+        pref_match = re.search(r"\b(?:i prefer|my favorite\s+([a-zA-Z0-9_-]+)\s+is)\s+([a-zA-Z0-9_\-\s\,\.]{3,60})(?:\.|\,|$)", clean, re.IGNORECASE)
+        if pref_match:
+            pref_text = clean[pref_match.start():pref_match.end()].strip().rstrip('.!?')
+            self.add_memory(pref_text, category="preference")
+            extracted.append(f"preference: {pref_text}")
+
+        # 6. Roast level preferences
         if re.search(r"\b(roast me|be savage|no mercy|go all out|destroy me)\b", lower):
             self.set_user_profile_field("roast_level", "Savage")
             extracted.append("roast_level: Savage")
@@ -472,54 +522,101 @@ class MemoryDB:
         return export
 
     def sync_sessions(self, sessions: List[Dict[str, Any]]) -> int:
-        """Syncs frontend sessions and messages into SQLite database."""
+        """Syncs frontend sessions and messages into SQLite database in a batch transaction."""
         if not isinstance(sessions, list):
             return 0
         synced_count = 0
-        for s in sessions:
-            if not isinstance(s, dict):
-                continue
-            conv_id = str(s.get("id", ""))
-            title = str(s.get("title", "Conversation"))
-            if not conv_id:
-                continue
-            self.record_conversation(conv_id, title)
-            messages = s.get("messages", [])
-            if isinstance(messages, list):
-                for m in messages:
-                    if isinstance(m, dict):
-                        role = m.get("role", "user")
-                        content = m.get("content", "")
-                        if content:
-                            self.record_message(conv_id, role, content)
-                            synced_count += 1
+        now = datetime.datetime.now(datetime.timezone.utc).isoformat()
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            for s in sessions:
+                if not isinstance(s, dict):
+                    continue
+                conv_id = str(s.get("id", ""))
+                title = str(s.get("title", "Conversation"))
+                if not conv_id:
+                    continue
+                cursor.execute(
+                    "INSERT INTO conversations (id, title, created_at, updated_at) VALUES (?, ?, ?, ?) "
+                    "ON CONFLICT(id) DO UPDATE SET title = excluded.title, updated_at = excluded.updated_at",
+                    (conv_id, title, now, now)
+                )
+                messages = s.get("messages", [])
+                if isinstance(messages, list):
+                    # Clear existing messages for this conversation to prevent duplicate inflation
+                    cursor.execute("DELETE FROM messages WHERE conversation_id = ?", (conv_id,))
+                    for m in messages:
+                        if isinstance(m, dict):
+                            role = m.get("role", "user")
+                            content = m.get("content", "")
+                            m_time = m.get("timestamp", now)
+                            if content:
+                                cursor.execute(
+                                    "INSERT INTO messages (conversation_id, role, content, timestamp) VALUES (?, ?, ?, ?)",
+                                    (conv_id, str(role), str(content), m_time)
+                                )
+                                synced_count += 1
+            conn.commit()
         return synced_count
 
     def import_data(self, data: Dict[str, Any]) -> bool:
-        """Safely imports and merges external backup data into the SQLite database."""
+        """Safely imports and merges external backup data into the SQLite database in a single transaction."""
         if not isinstance(data, dict):
             return False
 
         try:
-            # 1. Restore Profile
-            if "profile" in data and isinstance(data["profile"], dict):
-                self.update_user_profile(data["profile"])
+            now = datetime.datetime.now(datetime.timezone.utc).isoformat()
+            with self._get_connection() as conn:
+                cursor = conn.cursor()
 
-            # 2. Restore Memories
-            if "memories" in data and isinstance(data["memories"], list):
-                for mem in data["memories"]:
-                    if isinstance(mem, dict) and "content" in mem:
-                        self.add_memory(mem["content"], category=mem.get("category", "fact"))
+                # 1. Restore Profile
+                if "profile" in data and isinstance(data["profile"], dict):
+                    for k, v in data["profile"].items():
+                        clean_key = str(k).strip().lower()
+                        clean_val = str(v).strip() if v is not None else ""
+                        if clean_key and clean_val and not self.is_secret(clean_val):
+                            cursor.execute(
+                                "INSERT INTO user_profile (key, value, updated_at) VALUES (?, ?, ?) "
+                                "ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at",
+                                (clean_key, clean_val, now)
+                            )
 
-            # 3. Restore Conversations and Messages
-            if "conversations" in data and isinstance(data["conversations"], list):
-                for conv in data["conversations"]:
-                    if isinstance(conv, dict) and "id" in conv:
-                        self.record_conversation(conv["id"], conv.get("title", "Imported Conversation"))
-                        for msg in conv.get("messages", []):
-                            if isinstance(msg, dict) and "role" in msg and "content" in msg:
-                                self.record_message(conv["id"], msg["role"], msg["content"])
+                # 2. Restore Memories
+                if "memories" in data and isinstance(data["memories"], list):
+                    for mem in data["memories"]:
+                        if isinstance(mem, dict) and "content" in mem:
+                            c = str(mem["content"]).strip()
+                            cat = str(mem.get("category", "fact")).strip()
+                            if c and not self.is_secret(c):
+                                cursor.execute("SELECT id FROM memories WHERE content = ? AND category = ?", (c, cat))
+                                if not cursor.fetchone():
+                                    cursor.execute(
+                                        "INSERT INTO memories (category, content, source, enabled, created_at, updated_at) VALUES (?, ?, ?, 1, ?, ?)",
+                                        (cat, c, mem.get("source", "user"), now, now)
+                                    )
 
+                # 3. Restore Conversations and Messages
+                if "conversations" in data and isinstance(data["conversations"], list):
+                    for conv in data["conversations"]:
+                        if isinstance(conv, dict) and "id" in conv:
+                            cid = str(conv["id"])
+                            ctitle = str(conv.get("title", "Imported Conversation"))
+                            cursor.execute(
+                                "INSERT INTO conversations (id, title, created_at, updated_at) VALUES (?, ?, ?, ?) "
+                                "ON CONFLICT(id) DO UPDATE SET title = excluded.title, updated_at = excluded.updated_at",
+                                (cid, ctitle, now, now)
+                            )
+                            # Clear existing messages for this conversation to prevent duplicate inflation
+                            cursor.execute("DELETE FROM messages WHERE conversation_id = ?", (cid,))
+                            for msg in conv.get("messages", []):
+                                if isinstance(msg, dict) and "role" in msg and "content" in msg:
+                                    m_time = msg.get("timestamp", now)
+                                    cursor.execute(
+                                        "INSERT INTO messages (conversation_id, role, content, timestamp) VALUES (?, ?, ?, ?)",
+                                        (cid, str(msg["role"]), str(msg["content"]), m_time)
+                                    )
+
+                conn.commit()
             return True
         except Exception as e:
             logger.error(f"Failed to import backup data: {e}")

@@ -31,7 +31,21 @@ DEFAULT_CONFIG: Dict[str, Any] = {
     "database_path": "raiden_memory.db",
     "allowed_workspaces": ["."],
     "tool_confirm_sensitive": True,
-    "log_level": "INFO"
+    "log_level": "INFO",
+    # Screen Perception & Visual Intelligence settings
+    "screen_perception_enabled": False,
+    "vision_model": "llava-phi3",
+    "screen_observation_interval_seconds": 5.0,
+    "screen_inference_cooldown_seconds": 12.0,
+    "screen_commentary_cooldown_seconds": 30.0,
+    "screen_change_threshold": 0.035,
+    "screen_social_mode": "companion",  # "companion" | "gaming" | "quiet"
+    "screen_confidence_threshold": 0.60,
+    "screen_excluded_apps": [
+        "keepass", "1password", "bitwarden", "lastpass", "authenticator", "credential"
+    ],
+    "screen_capture_source": "primary_monitor",  # "primary_monitor" | "active_window" | "all_monitors"
+    "screen_save_history": False
 }
 
 class ConfigManager:
@@ -131,3 +145,13 @@ class ConfigManager:
 
     def is_memory_enabled(self) -> bool:
         return bool(self._config.get("memory_enabled", True))
+
+    def is_screen_perception_enabled(self) -> bool:
+        return bool(self._config.get("screen_perception_enabled", False))
+
+    def get_vision_model(self) -> str:
+        return str(self._config.get("vision_model", "llava-phi3"))
+
+    def get_screen_social_mode(self) -> str:
+        return str(self._config.get("screen_social_mode", "companion"))
+

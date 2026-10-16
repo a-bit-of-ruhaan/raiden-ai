@@ -18,6 +18,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 
 logger = logging.getLogger("raiden.reasoning")
+from .hinglish import get_hinglish_engine
 
 class TaskType(str, Enum):
     CASUAL = "casual"
@@ -292,6 +293,7 @@ class ReasoningEngine:
     def __init__(self):
         self.calculator = DeterministicCalculator()
         self.doc_retriever = DocumentRetriever()
+        self.hinglish_engine = get_hinglish_engine()
 
     def classify_task(
         self,
@@ -307,36 +309,55 @@ class ReasoningEngine:
         lower_text = clean_text.lower()
         clean_roast = str(roast_mode or "").strip().lower()
 
+        # Check for Hinglish intent or explicit mode
+        is_hinglish = (
+            clean_roast == "hinglish" or 
+            "hinglish" in lower_text or 
+            self.hinglish_engine.is_hinglish(clean_text)
+        )
+        hinglish_hint = ""
+        if is_hinglish:
+            hinglish_hint = self.hinglish_engine.build_system_prompt_instruction(
+                clean_text, 
+                is_explicit_mode=(clean_roast == "hinglish" or "hinglish" in lower_text)
+            )
+
         # 0. Explicit Roast Mode Override (Brutal or Playful)
         if clean_roast == "brutal" or "brutal roast" in lower_text or "roast my code" in lower_text:
+            tone = (
+                "### 💀🔥 BRUTAL & HILARIOUS CODE ROASTER ACTIVATED:\n"
+                "The user has explicitly selected BRUTAL ROAST MODE. Your mission is to roast their code, question, or statement with merciless comedic brutality and laugh-out-loud humor!\n"
+                "1. ROAST MERCILESSLY & CREATIVELY: Channel the energy of an unhinged, elite 10x staff engineer doing a standup comedy special. "
+                "Deliver sharp burns, comedic hyperbole, and savage tech metaphors. Make fun of bad variable names, spaghetti logic, "
+                "atrocious algorithmic complexity, anti-patterns, absurd dependencies, or questionable coding choices. "
+                "If they just say something casual or ask a silly question, roast their life choices, sleep schedule, and logic!\n"
+                "2. HILARIOUS, NEVER TRULY HATEFUL: Deliver pure comedy gold and playful destruction—sharp, witty, punchy, and entertaining (never genuinely toxic, discriminatory, or abusive).\n"
+                "3. THE GENIUS FIX (REDEMPTION): Right after vaporizing their code into ashes, say something funny like 'Alright, dry your tears, wipe your keyboard, here's how a real engineer writes it:' "
+                "and provide the absolute cleanest, elegant, production-ready, beautifully formatted refactored code with inline comments explaining why it is superior."
+            )
+            if is_hinglish:
+                tone += f"\n\n{hinglish_hint}"
             return TaskProfile(
                 task_type=TaskType.ROAST,
                 temperature=0.85,  # Razor sharp comedic wit and punchy comedy
                 top_p=0.9,
                 repeat_penalty=1.12,
-                system_tone_hint=(
-                    "### 💀🔥 BRUTAL & HILARIOUS CODE ROASTER ACTIVATED:\n"
-                    "The user has explicitly selected BRUTAL ROAST MODE. Your mission is to roast their code, question, or statement with merciless comedic brutality and laugh-out-loud humor!\n"
-                    "1. ROAST MERCILESSLY & CREATIVELY: Channel the energy of an unhinged, elite 10x staff engineer doing a standup comedy special. "
-                    "Deliver sharp burns, comedic hyperbole, and savage tech metaphors. Make fun of bad variable names, spaghetti logic, "
-                    "atrocious algorithmic complexity, anti-patterns, absurd dependencies, or questionable coding choices. "
-                    "If they just say something casual or ask a silly question, roast their life choices, sleep schedule, and logic!\n"
-                    "2. HILARIOUS, NEVER TRULY HATEFUL: Deliver pure comedy gold and playful destruction—sharp, witty, punchy, and entertaining (never genuinely toxic, discriminatory, or abusive).\n"
-                    "3. THE GENIUS FIX (REDEMPTION): Right after vaporizing their code into ashes, say something funny like 'Alright, dry your tears, wipe your keyboard, here's how a real engineer writes it:' "
-                    "and provide the absolute cleanest, elegant, production-ready, beautifully formatted refactored code with inline comments explaining why it is superior."
-                )
+                system_tone_hint=tone
             )
 
         if clean_roast == "playful":
+            tone = (
+                "Playful teasing mode: Deliver a witty, lighthearted roast with clever tech banter and jokes, "
+                "followed by a friendly tip on how to improve it."
+            )
+            if is_hinglish:
+                tone += f"\n\n{hinglish_hint}"
             return TaskProfile(
                 task_type=TaskType.ROAST,
                 temperature=0.75,
                 top_p=0.9,
                 repeat_penalty=1.12,
-                system_tone_hint=(
-                    "Playful teasing mode: Deliver a witty, lighthearted roast with clever tech banter and jokes, "
-                    "followed by a friendly tip on how to improve it."
-                )
+                system_tone_hint=tone
             )
 
         # 1. Calculation & Arithmetic Check
@@ -346,24 +367,30 @@ class ReasoningEngine:
                 f"[DETERMINISTIC VERIFICATION]: Mathematical calculation independently verified: "
                 f"{calc_res['formatted']}. Incorporate this verified figure directly in your answer."
             )
+            tone = "Provide the exact mathematical solution cleanly with the verified steps."
+            if is_hinglish:
+                tone += f"\n\n{hinglish_hint}"
             return TaskProfile(
                 task_type=TaskType.CALCULATION,
                 temperature=0.1,  # Strict precision
                 top_p=0.8,
                 repeat_penalty=1.15,
-                system_tone_hint="Provide the exact mathematical solution cleanly with the verified steps.",
+                system_tone_hint=tone,
                 grounded_context=grounded,
                 deterministic_result=calc_res["formatted"]
             )
 
         # 2. Document & Attached File QA Check
         if attached_file or "[attached file:" in lower_text:
+            tone = "Ground your response strictly in the provided document content. If information is absent from the document, state that plainly."
+            if is_hinglish:
+                tone += f"\n\n{hinglish_hint}"
             return TaskProfile(
                 task_type=TaskType.DOCUMENT,
                 temperature=0.2,  # Grounded faithfulness
                 top_p=0.85,
                 repeat_penalty=1.15,
-                system_tone_hint="Ground your response strictly in the provided document content. If information is absent from the document, state that plainly."
+                system_tone_hint=tone
             )
 
         # 3. Academic & Exam Check
@@ -373,12 +400,15 @@ class ReasoningEngine:
             r"\b(time\s+complexity|space\s+complexity|data\s+structures?|algorithms?)\b"
         ]
         if any(re.search(pat, lower_text) for pat in academic_patterns):
+            tone = "Deliver a complete, structured, exam-grade educational answer with clear headings, definitions, operations, ASCII/text diagrams if helpful, complexity analysis, and a conclusion. Never refuse academic or exam requests."
+            if is_hinglish:
+                tone += f"\n\n{hinglish_hint}"
             return TaskProfile(
                 task_type=TaskType.ACADEMIC,
-                temperature=0.35,  # Structured, thorough, educational
+                temperature=0.45 if is_hinglish else 0.35,  # Structured, thorough, educational
                 top_p=0.85,
                 repeat_penalty=1.15,
-                system_tone_hint="Deliver a complete, structured, exam-grade educational answer with clear headings, definitions, operations, ASCII/text diagrams if helpful, complexity analysis, and a conclusion. Never refuse academic or exam requests."
+                system_tone_hint=tone
             )
 
         # 4. Professional / Formal Deliverable Check
@@ -402,16 +432,19 @@ class ReasoningEngine:
             r"\b(be\s+savage|no\s+filter|destroy\s+me|give\s+me\s+your\s+worst|make\s+fun\s+of\s+my)\b"
         ]
         if any(re.search(pat, lower_text) for pat in roast_patterns):
+            tone = (
+                "Deliver a sharp, witty, laugh-out-loud funny roast! Use clever tech humor, comedic hyperbole, "
+                "and playful savagery. Roast the code, choice, or situation mercilessly but in good fun (never hateful). "
+                "Wrap up with a funny, supportive tip on how to actually fix it!"
+            )
+            if is_hinglish:
+                tone += f"\n\n{hinglish_hint}"
             return TaskProfile(
                 task_type=TaskType.ROAST,
                 temperature=0.75,  # Expressive, creative comedic flair
                 top_p=0.9,
                 repeat_penalty=1.12,
-                system_tone_hint=(
-                    "Deliver a sharp, witty, laugh-out-loud funny roast! Use clever tech humor, comedic hyperbole, "
-                    "and playful savagery. Roast the code, choice, or situation mercilessly but in good fun (never hateful). "
-                    "Wrap up with a funny, supportive tip on how to actually fix it!"
-                )
+                system_tone_hint=tone
             )
 
         # 6. Technical Programming & Debugging Check
@@ -421,21 +454,30 @@ class ReasoningEngine:
             r"```[\s\S]*?```"
         ]
         if any(re.search(pat, lower_text) for pat in technical_patterns):
+            tone = "Provide precise technical assistance. Diagnose root causes clearly, supply clean code with helpful inline comments, and show step-by-step logic without fluff."
+            if is_hinglish:
+                tone += f"\n\n{hinglish_hint}"
             return TaskProfile(
                 task_type=TaskType.TECHNICAL,
-                temperature=0.25,  # Precise code syntax
+                temperature=0.35 if is_hinglish else 0.25,  # Precise code syntax
                 top_p=0.85,
                 repeat_penalty=1.15,
-                system_tone_hint="Provide precise technical assistance. Diagnose root causes clearly, supply clean code with helpful inline comments, and show step-by-step logic without fluff."
+                system_tone_hint=tone
             )
 
         # 7. Default to Casual Conversation (Real Friend Dynamics)
         casual_hint = (
-            "Talk like an actual close friend on desktop: warm, expressive, sharp, witty, and natural. "
-            "Show genuine emotional reactions (excitement, empathy, laughter, banter). "
-            "If the user is having a bad day or venting, show real empathy and support. "
-            "Avoid all robotic filler, repetitive corporate pleasantries, or canned openers."
+            "Talk like an actual close friend on desktop: warm, expressive, sharp, witty, sarcastic, and funny in English. "
+            "Give funny responses and playfully roast the user in real-time about their code, habits, or procrastination in crisp, hilarious English! "
+            "Show genuine emotional reactions (excitement, empathy, laughter, playful banter). "
+            "Avoid all robotic filler, repetitive corporate pleasantries, or canned openers. Reply strictly in English in real-time."
         )
+        if is_hinglish:
+            casual_hint = (
+                f"{hinglish_hint}\n\n"
+                "[DESI HOMIE DYNAMICS]: Talk like a real, witty Indian developer buddy sitting beside the user. "
+                "Use natural Roman-script Hinglish with slangs, Bollywood references, and zero robotic filler."
+            )
         max_tok = None
 
         # Check history for explicit brevity or concise preference
@@ -448,12 +490,13 @@ class ReasoningEngine:
 
         return TaskProfile(
             task_type=TaskType.CASUAL,
-            temperature=0.65,  # Natural, conversational variety
+            temperature=0.75 if is_hinglish else 0.65,  # Natural, conversational variety
             top_p=0.9,
-            repeat_penalty=1.15,
+            repeat_penalty=1.12 if is_hinglish else 1.15,
             system_tone_hint=casual_hint,
             max_tokens=max_tok
         )
+
 
     def verify_response(self, prompt: str, response: str, had_tool_execution: bool = False) -> str:
         """

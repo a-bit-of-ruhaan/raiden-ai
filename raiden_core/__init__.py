@@ -11,6 +11,19 @@ from .memory import MemoryDB
 from .web_research import WebSearch, WebScraper, ResearchAnswerer
 from .tools import ToolManager
 from .reasoning import ReasoningEngine, TaskType, DeterministicCalculator, DocumentRetriever
+from .hinglish import HinglishEngine, get_hinglish_engine
+from .activity_monitor import WindowsActivityMonitor
+from .humor_engine import HumorEngine
+from .companion_server import CompanionBridgeServer
+from .screen_observer import (
+    ScreenObserverService,
+    ScreenCaptureEngine,
+    VisionInferenceEngine,
+    ScreenPerceptionHistory,
+    SocialJudgmentEngine,
+    ContextualCommentaryGenerator,
+    PrivacyGuard
+)
 
 __all__ = [
     "ConfigManager",
@@ -25,5 +38,17 @@ __all__ = [
     "ReasoningEngine",
     "TaskType",
     "DeterministicCalculator",
-    "DocumentRetriever"
+    "DocumentRetriever",
+    "HinglishEngine",
+    "get_hinglish_engine",
+    "WindowsActivityMonitor",
+    "HumorEngine",
+    "CompanionBridgeServer",
+    "ScreenObserverService",
+    "ScreenCaptureEngine",
+    "VisionInferenceEngine",
+    "ScreenPerceptionHistory",
+    "SocialJudgmentEngine",
+    "ContextualCommentaryGenerator",
+    "PrivacyGuard"
 ]
